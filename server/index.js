@@ -12,9 +12,10 @@ const cookieParser = require('cookie-parser');
 app
   .prepare()
   .then(() => {
+    require('./config/db.config'); 
     const server = express();
     server.use(cookieParser());
-
+    // server.use(express.urlencoded({ extended: true }));
     server.use(express.json());
     server.use("/api", routes);
 
