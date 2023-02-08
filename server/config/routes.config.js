@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const secure = require("../middlewares/secure.middleware")
 const ongs = require("../controllers/ongs.controller")
-const users = require("../controllers/users.controllers")
 const auth = require('../middlewares/auth.middleware');
 
 //DAshboard and posts
@@ -10,14 +9,13 @@ const auth = require('../middlewares/auth.middleware');
 
 //Ongs
 
-router.post("/auth/login", ongs.login)
+router.post("/login", ongs.login)
 router.get("/login/info", secure.auth, ongs.prueba )
 
 
 // User
-router.post('/users', users.create);
-router.post('/login', users.login);
-router.get('/profile', auth, users.profile);
-router.get('/users/:id/validate', users.validate);
+router.post('/ongs', ongs.create);
+router.get('/ongs/:id/profile', secure.auth, ongs.profile);
+router.get('/ongs/:id/activate', ongs.activate);
 
 module.exports = router;
