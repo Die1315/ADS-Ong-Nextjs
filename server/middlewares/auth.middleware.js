@@ -6,7 +6,7 @@ const verifyToken = (req, res, next) => {
     const authorization = req.headers.authorization;
   
     if (!authorization) {
-      return next(createError(403, "forbidden: user is not admin"));
+      return next(createError(403, "forbidden: Login first"));
     }
 
     const token = authorization.split("Bearer ")[1];
