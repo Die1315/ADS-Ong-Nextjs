@@ -12,7 +12,7 @@ function LoginPage(){
         }
         const handleSubmit = (event) => {
             event.preventDefault();
-            axios.post('/api/auth/login', {
+            axios.post('/api/login', {
                 credentials
             }).then((response) => {
                 router.push("/dashboard")
