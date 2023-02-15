@@ -5,21 +5,27 @@ h2,
 h3,
 h4,
 h5,
-h6{
+h6 {
   @apply font-Ubuntu;
 }
 
-button.btn{
+button.btn {
   @apply bg-secondary hover:bg-primary font-Ubuntu text-white font-bold uppercase rounded-md py-3.5 mx-auto;
   width: 200px;
 }
 
-form > input{
-  @apply border-2 border-primary focus:border-secondary p-2.5 rounded-md text-sm
+@media only screen and (max-width:768px){
+  button.btn {
+    width: 100%;
+  }
 }
 
-::selection{
-  @apply bg-secondary text-primary
+form > input {
+  @apply border-2 border-primary focus:border-secondary p-2.5 rounded-md text-sm;
+}
+
+::selection {
+  @apply bg-secondary text-primary;
 }
 
 @tailwind components;
@@ -38,7 +44,7 @@ body {
 }
 
 body {
-  @apply font-Raleway
+  @apply font-Raleway;
 }
 
 a {
@@ -46,9 +52,31 @@ a {
   text-decoration: none;
 }
 
-.login-hero{
+.login-hero {
   background-image: url("../src/images/login-hero.jpg");
   background-size: cover;
   background-position: center -320px;
+  background-repeat: no-repeat;
+}
 
+@media only screen and (min-width: 768px) {
+  .login-hero {
+    background-position: center 100%;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .login-hero {
+    background-position: center -320px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .bg-sm-login {
+    background-image: url("../src/images/login-hero.jpg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+  }
 }
