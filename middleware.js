@@ -4,7 +4,7 @@ import Dashboard from "./pages/dashboard";
 
 export async function middleware(request) {
   const jwt = request.cookies.get("myTokenName");
-    console.log(jwt, "+++++++")
+    
   if (!jwt) return NextResponse.redirect(new URL("/login", request.url));
 
   try {
