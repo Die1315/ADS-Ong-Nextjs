@@ -9,7 +9,8 @@ module.exports = {
       colors: {
         primary: "#68D2DF",
         secondary: "#6393EB",
-        accent: "#63EBAF"
+        accent: "#63EBAF",
+        black: "#131311"
       },
       fontFamily: {
         Ubuntu: ["Ubuntu", "sans-serif"],

@@ -20,8 +20,8 @@ button.btn {
   }
 }
 
-form > input {
-  @apply border-2 border-primary focus:border-secondary p-2.5 rounded-md text-sm;
+form > input, form > textarea {
+  @apply border-b-2 border-primary focus:border-secondary p-2.5 text-sm;
 }
 
 ::selection {
@@ -59,6 +59,13 @@ a {
   background-repeat: no-repeat;
 }
 
+.register-hero {
+  background-image: url("../src/images/register-hero.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
 @media only screen and (min-width: 768px) {
   .login-hero {
     background-position: center 100%;
@@ -77,6 +84,11 @@ a {
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-
+  }
+  .bg-sm-register {
+    background-image: url("../src/images/register-hero.jpg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
   }
 }
