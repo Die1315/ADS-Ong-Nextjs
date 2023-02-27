@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Footer from "/components/loginFooter/loginFooter";
+import {login} from "../service/data-service"
 
 function LoginPage() {
     const [credentials, setCredentials] = useState({ email: '', password: '' })
@@ -14,16 +15,12 @@ function LoginPage() {
     }
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post('/api/login', {
-            credentials
-        }).then((response) => {
-
-
+        login(credentials).then((response) => {
             router.push("/dashboard")
             console.log(response)
         })
             .catch((err) => console.log(err.toJSON()));
-        console.log(credentials)
+        
     }
     return (
         <div className="h-screen flex flex-col md:flex-row justify-center items-stretch columns-1 md:columns-2  bg-sm-login">
