@@ -34,7 +34,7 @@ function LoginPage() {
                         onChange={handleChange} />
                     <input name="password" type="password" placeholder="password"
                         onChange={handleChange} />
-                    <button type="submit" className="btn">Login</button>
+                    <button type="submit" className="btn mt-5">Login</button>
                 </form>
                 <Footer />
             </div>
