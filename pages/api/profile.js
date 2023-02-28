@@ -9,7 +9,7 @@ export default function profileHandler(req, res) {
     }
   try {
     const user = verify(myTokenName, "secret"); //se pone en variable de entorno
-    console.log(user)
+    // console.log(user)
     return res.json({ email: user.email, username: user.username }); //devolver datos de usuario dela base de datos
   } catch (err) {
     return res.status(404).json({ error: "invalid token" });
