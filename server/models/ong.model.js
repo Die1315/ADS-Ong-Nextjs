@@ -12,10 +12,13 @@ const userSchema = new Schema(
       required: "A valid password is required",
       match: [PASSWORD_PATTERN, "the password is invalid"],
     },
-    description: { type: String },
+    CIF: { type: Number, required: true , unique: true },
+    description: { type: String, required: true },
+    telephone: {type: Number, unique: true},
     active: { type: Boolean, default: false },
     admin: { type: Boolean, default: false },
     aprovalState: { type: Boolean, default: false },
+    
   },
   {
     timestamps: true,
