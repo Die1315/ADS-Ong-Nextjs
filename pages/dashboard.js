@@ -17,7 +17,8 @@ function Dashboard() {
   const logout = () => {
     axios.post("/api/auth/logout").then((res) => {
         router.push("/login")
-        console.log(res)});
+        // console.log(res)
+      });
   };
   return (
     <div>
