@@ -17,7 +17,7 @@ function LoginPage() {
         event.preventDefault();
         login(credentials).then((response) => {
             router.push("/dashboard")
-            console.log(response)
+            // console.log(response)
         })
             .catch((err) => console.log(err.toJSON()));
         

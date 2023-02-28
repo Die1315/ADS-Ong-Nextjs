@@ -51,7 +51,7 @@ userSchema.pre("save", function (next) {
   }
 });
 userSchema.path("email").validate(function (email) {
-  console.log(email);
+  // console.log(email);
   return emailRegex.test(email);
 }, "Please check your email address.");
 
