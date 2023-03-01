@@ -18,7 +18,7 @@ module.exports.create = async (req, res, next) => {
     .then((ong) => {
       url_activate = `${hostname}${port}/api/ongs/${ong._id}/activate`;
       email_receiver = ong.email;
-      console.log(ong.email);
+      // console.log(ong.email);
       const mail = {
         from: '"Helpgo 👻" <info@helpgo.com>', // sender address
         to: email_receiver, // list of receivers
@@ -35,10 +35,13 @@ module.exports.create = async (req, res, next) => {
 };
 
 module.exports.login = (req, res, next) => {
-  const { email, password } = req.body.credentials;
+
+  // console.log(req.body)
+  const { email, password } = req.body;
 
   Ong.findOne({ email, active: true }).then((ong) => {
     if (ong) {
+      // console.log(ong);
       // expire in 2 days
       ong.checkPassword(password).then((match) => {
 
@@ -46,8 +49,9 @@ module.exports.login = (req, res, next) => {
         const token = jwt.sign(
           {
             exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 2,
-            email,
-            username: "fazt",
+            email: ong.email,
+            username: ong.name,
+            id: ong.id
           },
           "secret"
         );
@@ -88,6 +92,8 @@ module.exports.prueba = (req, res, next) => {
 module.exports.activate = (req, res, next) => {
   const { id } = req.params;
   Ong.findByIdAndUpdate(
+  // Ong.useFindAndModify(
+  // Ong.findOneAndUpdate(
     id,
     { active: true },
     { new: true, runValidators: true }
@@ -104,7 +110,7 @@ module.exports.activate = (req, res, next) => {
 };
 
 module.exports.profile = (req, res, next) =>{
-  const { id } = req.params;
+  const { id } = req.ong;
   Ong.findById(id)
     .then( ong=> { 
       if(ong) {
