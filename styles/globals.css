@@ -10,7 +10,7 @@ h6 {
 }
 
 button.btn {
-  @apply bg-secondary hover:bg-primary font-Ubuntu text-white font-bold uppercase rounded-md py-3.5 mx-auto;
+  @apply bg-primary hover:bg-secondary font-Ubuntu text-white font-bold uppercase rounded-md py-3.5 mx-auto;
   width: 200px;
 }
 
@@ -20,12 +20,12 @@ button.btn {
   }
 }
 
-form > input, form > textarea {
-  @apply border-b-2 border-primary focus:border-secondary p-2.5 text-sm;
+form input, form textarea {
+  @apply border-b-2 border-primary focus:border-secondary p-2 text-sm;
 }
 
 ::selection {
-  @apply bg-secondary text-primary;
+  @apply bg-secondary text-dark;
 }
 
 @tailwind components;
@@ -51,6 +51,9 @@ a {
   color: inherit;
   text-decoration: none;
 }
+*,*:focus,*:hover{
+  outline:none;
+}
 
 .login-hero {
   background-image: url("../src/images/login-hero.jpg");
@@ -62,7 +65,7 @@ a {
 .register-hero {
   background-image: url("../src/images/register-hero.jpg");
   background-size: cover;
-  background-position: center center;
+  background-position: center -80px;
   background-repeat: no-repeat;
 }
 
