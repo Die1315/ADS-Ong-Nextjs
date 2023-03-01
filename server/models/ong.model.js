@@ -16,6 +16,10 @@ const userSchema = new Schema(
     active: { type: Boolean, default: false },
     admin: { type: Boolean, default: false },
     aprovalState: { type: Boolean, default: false },
+    posts:[{
+      type: Schema.Types.ObjectId,
+      ref: "Post"
+    }]
   },
   {
     timestamps: true,

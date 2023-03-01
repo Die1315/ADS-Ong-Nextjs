@@ -3,11 +3,11 @@ const jwt = require("jsonwebtoken");
 const Ong = require("../models/ong.model");
 const sendMail = require("../config/email.config");
 const cookie = require("cookie");
-const dev = process.env.NODE_ENV !== "production";
+// const dev = process.env.NODE_ENV !== "production";
 const hostname =  process.env.HOST || 'localhost:';
 const port = process.env.PORT || '3000';
-const next = require("next");
-const app = next({ dev });
+// const next = require("next");
+// const app = next({ dev });
 
 module.exports.create = async (req, res, next) => {
   // console.log(req.body);
@@ -85,9 +85,9 @@ module.exports.login = (req, res, next) => {
 
 };
 
-module.exports.prueba = (req, res, next) => {
-  return res.status(200).json({ message: "ok" });
-};
+// module.exports.prueba = (req, res, next) => {
+//   return res.status(200).json({ message: "ok" });
+// };
 
 module.exports.activate = (req, res, next) => {
   const { id } = req.params;
@@ -110,7 +110,8 @@ module.exports.activate = (req, res, next) => {
 };
 
 module.exports.profile = (req, res, next) =>{
-  const { id } = req.ong;
+  // const { id } = req.ong;
+  const { id } = req.params;
   Ong.findById(id)
     .then( ong=> { 
       if(ong) {
