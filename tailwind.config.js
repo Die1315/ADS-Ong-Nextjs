@@ -7,10 +7,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#68D2DF",
-        secondary: "#6393EB",
-        accent: "#63EBAF",
-        black: "#131311"
+        primary: "#5CE1E6",
+        secondary: "#FFDE59",
+        light: "#f7f7f7",
+        dark: "#131311"
       },
       fontFamily: {
         Ubuntu: ["Ubuntu", "sans-serif"],
