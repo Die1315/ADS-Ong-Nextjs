@@ -22,9 +22,9 @@ function Dashboard() {
   return (
     <div>
       <h1>Dashboard</h1>
-      <pre>{JSON.stringify(user, null, 2)}</pre>
-      <button onClick={logout}>Logout</button>
-      <button onClick={getProfile}>get profile</button>
+      
+      <button onClick={logout} className="absolute top-5 right-5">Logout</button>
+      <button onClick={getProfile} className="absolute top-5 right-20">get profile</button>
     </div>
   );
 }
