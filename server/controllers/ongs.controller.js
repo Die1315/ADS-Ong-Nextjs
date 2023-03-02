@@ -37,7 +37,7 @@ module.exports.create = async (req, res, next) => {
 module.exports.login = (req, res, next) => {
 
   // console.log(req.body)
-  const { email, password } = req.body;
+  const { email, password } = req.body.credentials;
 
   Ong.findOne({ email, active: true }).then((ong) => {
     if (ong) {
