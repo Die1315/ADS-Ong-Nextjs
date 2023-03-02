@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import {useRouter} from "next/router"
-
+import {logout} from "../service/data-service"
 function Dashboard() {
   const [user, setUser] = useState({
     email: "",

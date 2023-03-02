@@ -20,14 +20,14 @@ function LoginPage() {
         event.preventDefault();
         login(credentials).then((response) => {
             router.push("/dashboard")
-            // console.log(response)
+            console.log(response)
         })
-            .catch((err) => console.log(err.toJSON()));
+        .catch((err) => console.log(err.message));
         
     }
     return (
         <div className="relative h-screen flex flex-col md:flex-row justify-center items-stretch columns-1 md:columns-2  bg-sm-login">
-            <Link href="/registrar-ong" className="absolute top-5 right-5 flex justify-center items-center h-24 w-24 rounded-full bg-secondary hover:bg-primary text-dark hover:text-light text-center text-sm z-50">Registrar<br/>ONG</Link>
+            <Link href="/register" className="absolute top-5 right-5 flex justify-center items-center h-24 w-24 rounded-full bg-secondary hover:bg-primary text-dark hover:text-light text-center text-sm z-50">Registrar<br/>ONG</Link>
             <div className="login-hero relative w-full md:w-3/6 flex justify-center items-center bg-accent">
             </div>
             <div className="static md:relative h-6/6 py-8 bg-white md:h-full w-11/12 md:w-3/6 flex mx-auto flex-col justify-center items-center rounded-md md:rounded-none">

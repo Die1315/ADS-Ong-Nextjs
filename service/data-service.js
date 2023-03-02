@@ -7,5 +7,12 @@ export function login(credentials) {
       credentials,
     })
     .then((response) => response.data)
-    .catch((err) => console.log(err));
+    .catch((err) => err.message);
 }
+export function logout() {
+  axios.post("/api/auth/logout").then((res) => {
+    router.push("/login")
+   })
+   .catch((err)=>err.message);
+    
+};
