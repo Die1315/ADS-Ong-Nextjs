@@ -14,13 +14,7 @@ function Dashboard() {
       .then((response) => setUser(response.data))
       .catch((err) => console.log(err.toJSON()));
   };
-  const logout = () => {
-    axios.post("/api/auth/logout").then((res) => {
-        router.push("/login")
-        // console.log(res)
-      });
-  };
-  return (
+ return (
     <div>
       <h1>Dashboard</h1>
       

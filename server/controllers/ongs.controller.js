@@ -37,7 +37,7 @@ module.exports.create = async (req, res, next) => {
 module.exports.login = (req, res, next) => {
 
   // console.log(req.body)
-  const { email, password } = req.body;
+  const { email, password } = req.body.credentials;
 
   Ong.findOne({ email, active: true }).then((ong) => {
     if (ong) {
@@ -48,18 +48,18 @@ module.exports.login = (req, res, next) => {
         if (match){
         const token = jwt.sign(
           {
-            exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 2,
+            //exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 2,
             email: ong.email,
             username: ong.name,
             id: ong.id
           },
-          "secret"
+          "secret", { expiresIn: '24h' }
         );
 
         const serialized = cookie.serialize("myTokenName", token, {
           httpOnly: true,
           sameSite: "strict",
-          maxAge: 1000 * 60 * 60 * 24 * 2,
+          maxAge: Math.floor(Date.now() / 1000) + 1000 * 60 * 60 * 24 * 2,
           path: "/",
         });
 
@@ -85,15 +85,14 @@ module.exports.login = (req, res, next) => {
 
 };
 
-module.exports.prueba = (req, res, next) => {
+module.exports.logout = (req, res, next) => {
+  res.clearCookie("myTokenName")
   return res.status(200).json({ message: "ok" });
 };
 
 module.exports.activate = (req, res, next) => {
   const { id } = req.params;
-  Ong.findByIdAndUpdate(
-  // Ong.useFindAndModify(
-  // Ong.findOneAndUpdate(
+ Ong.findOneAndUpdate(
     id,
     { active: true },
     { new: true, runValidators: true }

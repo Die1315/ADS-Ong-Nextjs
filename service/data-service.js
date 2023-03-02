@@ -10,7 +10,7 @@ export function login(credentials) {
     .catch((err) => err.message);
 }
 export function logout() {
-  axios.post("/api/auth/logout").then((res) => {
+  axios.post("/api/logout").then((res) => {
     router.push("/login")
    })
    .catch((err)=>err.message);
