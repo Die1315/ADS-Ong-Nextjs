@@ -35,6 +35,10 @@ const userSchema = new Schema(
     webPage: { type: String, unique: true },
     instagram: { type: String, unique: true },
     facebook: { type: String, unique: true },
+    posts:[{
+      type: Schema.Types.ObjectId,
+      ref: "Post"
+    }]
   },
   {
     timestamps: true,

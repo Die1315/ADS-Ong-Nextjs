@@ -8,7 +8,7 @@ function addOng() {
 
     return (
 
-        <div className="h-screen flex flex-col md:flex-row justify-center items-stretch columns-1 md:columns-2 py-5 md:py-0 bg-sm-register">
+        <div className="h-screen flex flex-col md:flex-row justify-center items-stretch columns-1 md:columns-2 py-5 md:py-0 bg-register-hero bg-cover bg-center md:bg-white">
             <div className="static md:relative py-14 overflow-auto bg-white h-auto w-11/12 md:w-3/6 flex mx-auto flex-col justify-start items-center rounded-md md:rounded-none">
                 <Image
                     src={logo}
@@ -70,7 +70,7 @@ function addOng() {
                     <button type="submit" className="btn mt-5">Registrar ONG</button>
                 </form>
             </div>
-            <div className="register-hero relative w-full md:w-3/6 flex justify-center items-center bg-accent">
+            <div className="bg-register-hero bg-cover bg-no-repeat bg-center relative w-full md:w-3/6 flex justify-center items-center bg-accent">
             </div>
         </div>
     )
