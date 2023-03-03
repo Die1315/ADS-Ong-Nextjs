@@ -1,6 +1,12 @@
 import axios from "axios";
 import { useState } from "react";
-import {useRouter} from "next/router"
+import { useRouter } from "next/router"
+import Navbar from "../components/Navbar/navbar";
+import CardProfile from "../components/CardProfile/cardprofile";
+import CardTags from "../components/CardTags/cardtags";
+import CardContacts from "../components/CardContacts/cardcontacts";
+
+const logo = require("../src/images/logo.svg")
 
 function Dashboard() {
   const [user, setUser] = useState({
@@ -16,16 +22,34 @@ function Dashboard() {
   };
   const logout = () => {
     axios.post("/api/auth/logout").then((res) => {
-        router.push("/login")
-        // console.log(res)
-      });
+      router.push("/login")
+      // console.log(res)
+    });
   };
+
+
+  const tags = ['Caridad', 'Servicios', 'Participación', 'Empoderamiento'];
+  const categories = ['Comunitarias', 'Locales', 'Nacionales', 'Internacionales'];
+
   return (
     <div>
-      <h1>Dashboard</h1>
-      
-      <button onClick={logout} className="absolute top-5 right-5">Logout</button>
-      <button onClick={getProfile} className="absolute top-5 right-20">get profile</button>
+      <Navbar />
+      <div className="container mx-auto py-5 flex gap-5">
+        <div className="w-3/12 flex flex-col gap-5 sticky">
+          <CardProfile
+            name="Nombre ONG"
+            title="Categoría/Descripción"
+            imageSrc={logo}
+          />
+          <CardTags title="Descubrir" tags={tags} categories={categories} />
+        </div>
+        <div className="w-6/12 bg-white">
+
+        </div>
+        <div className="w-3/12">
+          <CardContacts/>
+        </div>
+      </div>
     </div>
   );
 }

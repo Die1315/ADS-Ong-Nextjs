@@ -34,7 +34,7 @@ function addOng() {
                         <input name="website" type="url" placeholder="Sitio Web" className="w-full md:w-3/6"/>
                         <input name="Teléfono" type="tel" placeholder="Teléfono" className="w-full md:w-3/6"/>
                     </div>
-                    <textarea name="description" rows="3" placeholder="Breve descripción" />
+                    <textarea name="description" rows="1" maxLength="60" placeholder="Breve descripción" />
                     <div>
                         <label className="block text-sm text-gray-400 px-3">Logo ONG*</label>
                         <div className="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
