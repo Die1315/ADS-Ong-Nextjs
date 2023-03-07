@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useContext, useEffect} from "react";
 import {useRouter} from "next/router"
 
 function Dashboard() {
@@ -15,9 +15,8 @@ function Dashboard() {
       .catch((err) => console.log(err.toJSON()));
   };
   const logout = () => {
-    axios.post("/api/auth/logout").then((res) => {
+    axios.post("/api/logout").then((res) => {
         router.push("/login")
-        // console.log(res)
       });
   };
   return (
