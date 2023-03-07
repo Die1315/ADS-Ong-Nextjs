@@ -121,3 +121,10 @@ module.exports.profile = (req, res, next) =>{
     }}) 
     .catch(next)
 }
+
+module.exports.list = (req, res, next) => {
+  Ong.find({})
+    // Devuelve HTTP 200 OK con el listado JSON de ongs almacenados en la Base de Datos en memoria
+    .then((ongs) => res.json(ongs))
+    .catch(next);
+};
