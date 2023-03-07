@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 const urlRegex =
   /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/;
-const userSchema = new Schema(
+const ongSchema = new Schema(
   {
     name: {
       type: String,
@@ -38,6 +38,14 @@ const userSchema = new Schema(
     posts:[{
       type: Schema.Types.ObjectId,
       ref: "Post"
+    }],
+    following : [{
+      type: Schema.Types.ObjectId,
+      ref: 'Ong'
+    }],
+    followers : [{
+      type: Schema.Types.ObjectId,
+      ref: 'Ong'
     }]
   },
   {
@@ -63,7 +71,7 @@ const userSchema = new Schema(
   }
 );
 
-userSchema.pre("save", function (next) {
+ongSchema.pre("save", function (next) {
   if (this.isModified("password")) {
     bcrypt.hash(this.password, 10).then((hash) => {
       this.password = hash;
@@ -73,19 +81,19 @@ userSchema.pre("save", function (next) {
     next();
   }
 });
-userSchema.path("email").validate(function (email) {
+ongSchema.path("email").validate(function (email) {
   return emailRegex.test(email);
 }, "Please check your email address.");
 
 var validateUrl = function (webPage) {
   return urlRegex.test(webPage);
 };
-userSchema.path("webPage").validate(validateUrl, "Invalid url.");
-userSchema.path("facebook").validate(validateUrl, "Invalid url.");
-userSchema.path("instagram").validate(validateUrl, "Invalid url.");
-userSchema.methods.checkPassword = function (passwordToCheck) {
+ongSchema.path("webPage").validate(validateUrl, "Invalid url.");
+ongSchema.path("facebook").validate(validateUrl, "Invalid url.");
+ongSchema.path("instagram").validate(validateUrl, "Invalid url.");
+ongSchema.methods.checkPassword = function (passwordToCheck) {
   return bcrypt.compare(passwordToCheck, this.password);
 };
 
-const Ong = mongoose.model("Ong", userSchema);
+const Ong = mongoose.model("Ong", ongSchema);
 module.exports = Ong;
