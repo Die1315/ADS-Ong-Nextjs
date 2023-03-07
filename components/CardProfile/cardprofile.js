@@ -3,8 +3,8 @@ import Link from 'next/link';
 
 const CardProfile = ({ name, title, imageSrc }) => {
     return (
-        <div className="bg-white shadow-md rounded-md overflow-hiddenm flex flex-col items-stretch">
-            <div className="relative h-auto">
+        <div className="bg-white shadow-md rounded-md overflow-hiddenm flex flex-col items-stretch  sticky top-5">
+            <div className="relative h-auto p-2">
                 <Image
                     src={imageSrc}
                     width="200"
@@ -29,7 +29,7 @@ const CardProfile = ({ name, title, imageSrc }) => {
                     <p className="text-sm">15/02/23</p>
                 </div>
             </div>
-            <Link href="/crear-proyecto" className='w-full bg-primary hover:bg-secondary text-white hover:text-dark text-center p-4'>Crear Projecto</Link>
+            <Link href="/crear-proyecto" className='w-full bg-primary hover:bg-secondary text-white hover:text-dark text-center p-4'>Crear Proyecto</Link>
         </div>
     );
 };
