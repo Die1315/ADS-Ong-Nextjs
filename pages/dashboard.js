@@ -9,6 +9,7 @@ import PostsList from "../components/PostsList/postsList";
 
 const logo = require("../src/images/logo.svg")
 
+
 function Dashboard() {
   const [user, setUser] = useState({
     email: "",
@@ -22,10 +23,11 @@ function Dashboard() {
       .catch((err) => console.log(err.toJSON()));
   };
   const logout = () => {
-    axios.post("/api/auth/logout").then((res) => {
-      router.push("/login")
-      // console.log(res)
-    });
+
+    axios.post("/api/logout").then((res) => {
+        router.push("/login")
+      });
+
   };
 
 

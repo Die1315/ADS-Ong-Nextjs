@@ -48,7 +48,10 @@ mongoose.connect(
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true,
+    bufferCommands: false,
+    bufferMaxEntries: 0,
+    useFindAndModify: false,
+    useCreateIndex: true
   },
   () => {
     console.log("mongdb is connected");

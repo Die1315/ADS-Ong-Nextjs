@@ -9,13 +9,13 @@ const comments = require("../controllers/comments.controller")
 //DAshboard and posts
 //router.get("/dashboard" )
 
-//Ongs
 
+//Login 
 router.post("/login", ongs.login)
-// router.get("/login/info", secure.auth, ongs.prueba )
+router.post("/logout", ongs.logout )
 
 
-// User
+//Ongs
 router.post('/ongs', ongs.create);
 router.get('/ongs/:id/profile', secure.auth, ongs.profile);
 router.get('/ongs/:id/activate', ongs.activate);
