@@ -19,7 +19,14 @@ function OngList() {
       <ul>
         {!ongList
           ? "Cargando..."
-          : ongList.map((ong, index) => <ListItem key={index} text={ong.name} />)}
+          : ongList.map((ong, index) => (
+              <ListItem
+                key={index}
+                name={ong.name}
+                description={ong.description}
+                active={ong.active}
+              />
+            ))}
       </ul>
     </div>
   );

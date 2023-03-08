@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
 import Image from "next/image";
 // import "mapbox-gl/dist/mapbox-gl.css";
-import Map, { Marker, Popup } from "react-map-gl";
+import Map, { Marker, Popup, NavigationControl, ScaleControl } from "react-map-gl";
 
 const data = [
   {
@@ -58,6 +57,8 @@ function MapView() {
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
         mapStyle="mapbox://styles/mapbox/streets-v9"
       >
+        <NavigationControl position="top-right"/>
+        <ScaleControl position="bottom-left" />
         {data.map((project) => (
           <Marker
             key={project.id}
