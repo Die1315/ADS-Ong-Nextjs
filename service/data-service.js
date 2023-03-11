@@ -3,6 +3,8 @@ import axios from "axios"
 import cookie from "js-cookie";
 
 
+const currentOng =   cookie.get("ONG");
+
 export function login(credentials) {
   return axios
     .post("/api/login", {
@@ -28,9 +30,18 @@ export function register(dataRegister){
 }
 
 export function getCurrentOng(){
-  const currentOng =   cookie.get("ONG");
   return axios.get(`/api/ongs/${currentOng}/profile`).then((res) =>{ 
     return res.data})
     .catch((err)=>console.log(err.message));
   
+}
+
+export function registerProject(data) {
+  let dataRegister = {
+    ...data, owner: currentOng
+  }
+  // console.log(dataRegister);
+  return axios.post("/api/posts", {dataRegister})
+              .then((response) => response.data)
+              .catch((err) => { return err });
 }
