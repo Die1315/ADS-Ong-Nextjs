@@ -1,36 +1,5 @@
 @tailwind base;
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  @apply font-Ubuntu;
-}
-
-button.btn {
-  @apply bg-secondary hover:bg-primary font-Ubuntu text-white font-bold uppercase rounded-md py-3.5 mx-auto;
-  width: 200px;
-}
-
-@media only screen and (max-width:768px){
-  button.btn {
-    width: 100%;
-  }
-}
-
-form > input, form > textarea {
-  @apply border-b-2 border-primary focus:border-secondary p-2.5 text-sm;
-}
-
-::selection {
-  @apply bg-secondary text-primary;
-}
-
-@tailwind components;
-@tailwind utilities;
-
 * {
   box-sizing: border-box;
   padding: 0;
@@ -41,6 +10,7 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  @apply bg-gray-100
 }
 
 body {
@@ -51,44 +21,38 @@ a {
   color: inherit;
   text-decoration: none;
 }
-
-.login-hero {
-  background-image: url("../src/images/login-hero.jpg");
-  background-size: cover;
-  background-position: center -320px;
-  background-repeat: no-repeat;
+*,*:focus,*:hover{
+  outline:none;
 }
 
-.register-hero {
-  background-image: url("../src/images/register-hero.jpg");
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-Ubuntu;
 }
 
-@media only screen and (min-width: 768px) {
-  .login-hero {
-    background-position: center 100%;
+::selection {
+  @apply bg-secondary text-dark;
+}
+
+@tailwind components;
+
+button.btn {
+  @apply bg-primary hover:bg-secondary font-Ubuntu text-white font-bold uppercase rounded-md py-3.5 mx-auto;
+  width: 200px;
+}
+
+@media only screen and (max-width:768px){
+  button.btn {
+    width: 100%;
   }
 }
 
-@media only screen and (min-width: 1024px) {
-  .login-hero {
-    background-position: center -320px;
-  }
+form input, form textarea {
+  @apply border-b-2 border-primary focus:border-secondary p-2 text-sm;
 }
 
-@media only screen and (max-width: 768px) {
-  .bg-sm-login {
-    background-image: url("../src/images/login-hero.jpg");
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-  }
-  .bg-sm-register {
-    background-image: url("../src/images/register-hero.jpg");
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-  }
-}
+@tailwind utilities;

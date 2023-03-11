@@ -6,11 +6,22 @@ module.exports = {
   ],
   theme: {
     extend: {
+      backgroundPosition: {
+        'top-xl': 'center -300px',
+        'top-lg': 'center -200px'
+      },
+      backgroundImage: {
+        'login-hero': "url('https://res.cloudinary.com/de9uql5fm/image/upload/v1677758224/login-hero_txli5s.jpg')",
+        'register-hero': "url('https://res.cloudinary.com/de9uql5fm/image/upload/v1677758224/register-hero_xwgyrl.jpg')",
+      },
+      zIndex: {
+        '100': '100',
+      },
       colors: {
-        primary: "#68D2DF",
-        secondary: "#6393EB",
-        accent: "#63EBAF",
-        black: "#131311"
+        primary: "#5CE1E6",
+        secondary: "#FFDE59",
+        light: "#f7f7f7",
+        dark: "#131311"
       },
       fontFamily: {
         Ubuntu: ["Ubuntu", "sans-serif"],
