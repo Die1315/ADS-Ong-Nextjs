@@ -2,11 +2,12 @@ const jwt = require("jsonwebtoken");
 const Post = require("../models/post.model");
 
 module.exports.create = async (req, res, next) => {
-    // console.log(req.body);
-    const token = req.cookies.myTokenName;
-    const decoded = jwt.verify(token, "secret");
+    // console.log(req.body.dataRegister);
+    // const token = req.cookies.myTokenName;
+    // const decoded = jwt.verify(token, "secret");
 
-    await Post.create({ ...req.body, owner:decoded.id })
+    // await Post.create({ ...req.body, owner:decoded.id })
+    await Post.create({ ...req.body.dataRegister})
         .then((post) => {
             // console.log(post);
             res.status(201).json(post);
