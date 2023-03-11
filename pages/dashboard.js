@@ -16,12 +16,6 @@ function Dashboard() {
     username: "",
   });
   const router = useRouter()
-  const getProfile = () => {
-    axios
-      .get("/api/profile")
-      .then((response) => setUser(response.data))
-      .catch((err) => console.log(err.toJSON()));
-  };
   const logout = () => {
 
     axios.post("/api/logout").then((res) => {

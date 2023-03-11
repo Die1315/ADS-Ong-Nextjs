@@ -1,5 +1,6 @@
 import { createContext } from 'react';
 
-const UserContext = createContext({});
+const OngContext = createContext();
 
-export default UserContext;
+export default OngContext;
+
