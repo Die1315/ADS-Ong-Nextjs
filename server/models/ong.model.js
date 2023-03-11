@@ -3,8 +3,7 @@ const { Schema } = mongoose;
 const PASSWORD_PATTERN = /^.{8,}$/;
 const bcrypt = require("bcrypt");
 const emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-const urlRegex =
-  /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/;
+const urlRegex = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/;
 const ongSchema = new Schema(
   {
     name: {

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { jwtVerify } from "jose"; // No funciona jwbtoken no soporta la red edge (CDN) se reemplaza por jose 
-import Dashboard from "./pages/dashboard";
+
 
 export async function middleware(request) {
   const jwt = request.cookies.get("myTokenName");

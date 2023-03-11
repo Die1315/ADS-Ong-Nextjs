@@ -19,7 +19,7 @@ router.post("/logout", ongs.logout )
 router.post('/ongs', ongs.create);
 router.get('/ongs/:id/profile', secure.auth, ongs.profile);
 router.get('/ongs/:id/activate', ongs.activate);
-
+router.post('/ongs/:id/follow', secure.auth, ongs.follow)
 
 // Post
 router.post('/posts', secure.auth, posts.create);

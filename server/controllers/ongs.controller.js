@@ -67,8 +67,14 @@ module.exports.login = (req, res, next) => {
                 maxAge: 1000 * 60 * 60 * 24 * 2,
                 path: "/",
               });
-
-              res.setHeader("Set-Cookie", serialized);
+              const serialized2 = cookie.serialize("ONG", ong.id, {
+                httpOnly: false,
+                sameSite: "strict",
+                maxAge: 1000 * 60 * 60 * 24 * 2,
+                path: "/",
+              });
+              res.cookie(serialized2);
+              res.cookie(serialized);
               return res.status(200).json({
                 message: "Login successful",
               });
@@ -115,8 +121,40 @@ module.exports.profile = (req, res, next) => {
       if (ong) {
         res.status(200).json(ong);
       } else {
-        next();
+        next(createError(404, "Ong not Found"));
       }
     })
     .catch(next);
 };
+
+module.exports.follow  = (req,res,next) => {
+  const {id} =  req.params;
+  const token = req.cookies.myTokenName;
+  const decoded = jwt.verify(token, "secret");
+  
+  if( id === decoded.id){
+    next(createError(400, "You cannot follow yourself"))
+  }
+    Ong.findById(decoded.id).then(ong =>{
+      if(ong.following.filter( following => following.toString() === id).length > 0){
+        ong.following.splice(ong.following.findIndex(e => e.id === id),1)
+        ong.save()
+        Ong.findById(id).then(ongToUnfollow =>{
+          ongToUnfollow.followers.splice(ongToUnfollow.followers.findIndex(e => e.id === id),1)
+          ongToUnfollow.save()
+        })
+         res.status(200).json({follow: false, message : "unfollow"})
+      } else {
+        
+        Ong.findById(id).then((ongToFollow)=>{
+          ongToFollow.followers.push(ong)
+          ongToFollow.save()
+          ong.following.push(ongToFollow)
+          ong.save()
+          
+        })        
+        res.status(200).json({follow: true, message : "follow"})
+      }
+
+    }).catch(next);
+  }
