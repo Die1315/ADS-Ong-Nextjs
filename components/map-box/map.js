@@ -1,99 +1,119 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-// import "mapbox-gl/dist/mapbox-gl.css";
-import Map, { Marker, Popup, NavigationControl, ScaleControl } from "react-map-gl";
+import Map, {
+  Marker,
+  Popup,
+  NavigationControl,
+  ScaleControl,
+} from "react-map-gl";
+import configData from "./map.config.json";
 
-const data = [
-  {
-    id: 1,
-    name: "Somewhere in Morocco",
-    description: "Sahara Desert",
-    coordinates: { lat: 32.2380665, lon: -3.7284298 },
-  },
-  {
-    id: 2,
-    name: "Somewhere in Morocco Two",
-    description: "Sahara Desert",
-    coordinates: { lat: 33.2380665, lon: -3.7284298 },
-  },
-  {
-    id: 3,
-    name: "Somewhere in Morocco 3",
-    description: "Sahara Desert",
-    coordinates: { lat: 32.2380665, lon: -4.7284298 },
-  },
-];
-
-// ref: https://www.youtube.com/watch?v=JJatzkPcmoI
-// ref: https://stackoverflow.com/questions/71348403/mapbox-popup-only-opens-once-and-never-again
-function MapView() {
-  const [viewState, setViewState] = useState({
-    latitude: 16.754205,
-    longitude: 14.018788,
-    zoom: 3,
-  });
-
-  const [selectedProject, setSelectedPoject] = useState(null);
-
-  useEffect(() => {
-    const listener = e => {
-      if(e.key === "Escape"){
-        setSelectedPoject(null);
-      }
+function MapView({ data, setLngLat, initialViewState }) {
+  // map viewstate
+  const [viewState, setViewState] = useState(
+    initialViewState || {
+      latitude: 0,
+      longitude: 0,
+      zoom: 0,
     }
+  );
+
+  const [selectedLngLat, setSelectedLngLat] = useState(null);
+
+  // map selected post popup
+  const [selectedPost, setSelectedPost] = useState(null);
+  useEffect(() => {
+    const listener = (e) => {
+      if (e.key === "Escape") {
+        setSelectedPost(null);
+      }
+    };
     window.addEventListener("keydown", listener);
 
     return () => {
       window.removeEventListener("keydown", listener);
-    }
+    };
   }, []);
 
+  // map of project type to load proper image
+  function markerImgSrc(projectType) {
+    if (projectType && configData) {
+      const imgMap = configData["marker-images-map"];
+      return imgMap[projectType];
+    } else return "charity.svg";
+  }
+
   return (
-    <div>
       <Map
         {...viewState}
-        style={{ height: "600px", width: "800px" }}
-        onMove={(evt) => setViewState(evt.viewState)}
+        // style={{width: "100%"}}
+        // trackResize={true}
+        // projection="globe"
+        renderWorldCopies={false}
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
-        mapStyle="mapbox://styles/mapbox/streets-v9"
+        mapStyle="mapbox://styles/mapbox/outdoors-v11"
+        onMove={(evt) => setViewState(evt.viewState)}
+        onClick={(e) => {
+          setLngLat && setLngLat(e.lngLat);
+          setSelectedLngLat(e.lngLat);
+        }}
       >
-        <NavigationControl position="top-right"/>
+        <NavigationControl position="top-right" />
         <ScaleControl position="bottom-left" />
-        {data.map((project) => (
-          <Marker
-            key={project.id}
-            latitude={project.coordinates.lat}
-            longitude={project.coordinates.lon}
-          >
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                setSelectedPoject(project);
-                console.log(`::: ${project.name}`);
+        {
+          // This marker is displayed when a user clicks on the map
+          // the conditions are checking for a selected location and
+          // theh setLngLat external function is defined
+          selectedLngLat && setLngLat && (
+            <Marker
+              key={0}
+              longitude={selectedLngLat.lng}
+              latitude={selectedLngLat.lat}
+              element="default"
+            ></Marker>
+          )
+        }
+        {
+          // General loop for adding markers as per provided data
+          data &&
+            data.map((post) => (
+              <Marker key={post.id} latitude={post.lat} longitude={post.lon}>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setSelectedPost(post);
+                  }}
+                >
+                  <Image
+                    src={markerImgSrc(post.projecttype)}
+                    alt="ONG"
+                    height={30}
+                    width={30}
+                  />
+                </button>
+              </Marker>
+            ))
+        }
+
+        {
+          // popup to show post information on data driven markers
+          selectedPost && (
+            <Popup
+              closeOnClick={false}
+              latitude={selectedPost.lat}
+              longitude={selectedPost.lon}
+              onClose={() => {
+                setSelectedPost(null);
               }}
             >
-              <Image src="well.svg" alt="Well" width={30} height={30} />
-            </button>
-          </Marker>
-        ))}
-
-        {selectedProject && (
-          <Popup
-            closeOnClick={false}
-            latitude={selectedProject.coordinates.lat}
-            longitude={selectedProject.coordinates.lon}
-            onClose={() => {
-              setSelectedPoject(null);
-            }}
-          >
-            <div>
-              <h1>{selectedProject.name}</h1>
-              <p>{selectedProject.description}</p>
-            </div>
-          </Popup>
-        )}
+              <div>
+                <h1>{selectedPost.title}</h1>
+                <p>{selectedPost.description}</p>
+              </div>
+            </Popup>
+          )
+        }
       </Map>
-    </div>
   );
 }
 

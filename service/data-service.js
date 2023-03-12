@@ -11,12 +11,6 @@ export function login(credentials) {
     return err});
 }
 
-export function getOngList() {
-  return axios
-    .get("/api/ongs", {})
-    .then((response) => response.data);
-}
-
 export function logout() {
   
   axios.post("/api/logout").then((res) => {
