@@ -30,11 +30,4 @@ module.exports.auth = (req, res, next) => {
   }
 };
 
-//  module.exports.isActive = (req, res, next) => {
-//     if (req.admin.active){
-//         next()
-//     } else {
-//         next(createError(403, "forbidden: User is not active"))
-//    }
 
-// }

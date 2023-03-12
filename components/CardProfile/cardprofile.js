@@ -29,7 +29,7 @@ const CardProfile = ({ name, title, imageSrc }) => {
                     <p className="text-sm">15/02/23</p>
                 </div>
             </div>
-            <Link href="/crear-proyecto" className='w-full bg-primary hover:bg-secondary text-white hover:text-dark text-center p-4'>Crear Proyecto</Link>
+            <Link href="/createProject" className='w-full bg-primary hover:bg-secondary text-white hover:text-dark text-center p-4'>Crear Proyecto</Link>
         </div>
     );
 };
