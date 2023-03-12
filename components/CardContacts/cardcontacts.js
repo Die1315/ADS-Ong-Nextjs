@@ -37,6 +37,16 @@ const CardContacts = () => {
       job: 'Product Manager',
       imageSrc: 'https://randomuser.me/api/portraits/men/97.jpg',
     },
+    {
+      name: 'Camila Sanchez',
+      job: 'UX Designer',
+      imageSrc: 'https://randomuser.me/api/portraits/women/14.jpg',
+    },
+    {
+      name: 'Carl Johnson',
+      job: 'Product Manager',
+      imageSrc: 'https://randomuser.me/api/portraits/men/17.jpg',
+    },
   ];
 
   return (
