@@ -17,7 +17,7 @@ const CardProfile = ({ name, title, imageSrc }) => {
                 <p className="text-sm text-gray-600">{title}</p>
             </div>
             <hr />
-            <div className="p-6 flex justify-between">
+            <div className="p-6 hidden md:flex  justify-between">
                 <div className="w-4/6 flex flex-col gap-2">
                     <p className="text-sm">No. de Proyectos:</p>
                     <p className="text-sm">Conexiones:</p>

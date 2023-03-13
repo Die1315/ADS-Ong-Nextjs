@@ -1,7 +1,12 @@
 import Navbar from "../components/Navbar/navBar";
 const logo = require("../src/images/logo.svg");
+import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 import { getCurrentOng } from "../service/data-service";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope, faCircleInfo, faIdBadge, faGlobe, faFacebook, faInstagram } from "@fortawesome/free-solid-svg-icons";
+import Following from "../components/Following/following";
+import Link from "next/link";
 
 function Profile() {
   const [currentOng, setDataOng] = useState([]);
@@ -13,22 +18,72 @@ function Profile() {
     });
   }, []);
 
+  const webPage = getCurrentOng.webPage
+  const facebook = getCurrentOng.facebook
+  const instagram = getCurrentOng.instagram
+
   return (
     <div>
       <Navbar />
       <div className="container mx-auto py-5 flex gap-5">
-        <div className="w-9/12 flex flex-col gap-5 bg-white">
-          <h1>PERFIL</h1>
-          <p>Nombre: {currentOng.name}</p>
-          <p>Email: {currentOng.email}</p>
-          <p>CIF: {currentOng.CIF}</p>
-          {currentOng.webPage  && <p>Pagina Web: {currentOng.webPage}</p>}
-          {currentOng.inatagram  && <p>Instagram: {currentOng.instagram}</p>}
-          {currentOng.facebook  && <p>Facebook: {currentOng.facebook}</p>}
-          <p>Descripción: {currentOng.description}</p>
+        <div className="w-3/12 flex flex-col justify-center items-center gap-5 bg-white rounded-md p-5">
+          <div className="w-12/12 flex flex-col justify-center items-center">
+            <Image
+              src='https://randomuser.me/api/portraits/men/17.jpg'
+              alt="profile picture"
+              width="200"
+              height="200"
+              className="rounded-full" />
+            <h1 className="-translate-y-6 font-bold text-2xl bg-primary border-2 border-primary rounded-full px-6">{currentOng.name}</h1>
+            <div className="flex">
+              <Link href="#">
+                <FontAwesomeIcon
+                  icon={faGlobe}
+                  style={{ fontSize: 15 }} />
+              </Link>
+              <Link href="#">
+                <FontAwesomeIcon
+                  icon={faFacebook}
+                  style={{ fontSize: 15 }} />
+              </Link>
+              <Link href="#">
+                <FontAwesomeIcon
+                  icon={faInstagram}
+                  style={{ fontSize: 15 }} />
+              </Link>
+            </div>
+          </div>
+          <div className="w-full flex flex-col gap-3">
+            <div className="w-full flex justify-start items-center gap-3">
+              <FontAwesomeIcon
+                icon={faEnvelope}
+                style={{ fontSize: 15 }}
+                className="w-1/12"
+              />
+              {currentOng.email}
+            </div>
+            <div className="w-full flex justify-start items-center gap-3">
+              <FontAwesomeIcon
+                icon={faIdBadge}
+                style={{ fontSize: 15 }}
+                className="w-1/12"
+              />
+              {currentOng.CIF}
+            </div>
+            <div className="w-full flex justify-start items-center gap-3">
+              <FontAwesomeIcon
+                icon={faCircleInfo}
+                style={{ fontSize: 15 }}
+                className="w-1/12"
+              />
+              {currentOng.description}
+            </div>
+          </div>
         </div>
-        <div className="w-3/12 bg-white">
-          <p>hola</p>
+        <div className="w-12/12 md:w-6/12"></div>
+        <div className="w-3/12">
+
+          <Following />
         </div>
       </div>
     </div>

@@ -116,7 +116,7 @@ const Navbar = () => {
                                         style={{ fontSize: 20 }}
                                     />
                                 </Link>
-                                <Link href="/crear-proyecto" className="text-gray-700 mx-4 hover:text-primary">
+                                <Link href="/createProject" className="text-gray-700 mx-4 hover:text-primary">
                                     <FontAwesomeIcon
                                         icon={faPlus}
                                         style={{ fontSize: 20 }}

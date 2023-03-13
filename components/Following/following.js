@@ -20,7 +20,7 @@ const Contact = ({ name, job, imageSrc }) => {
   );
 };
 
-const CardContacts = () => {
+const Following = () => {
   const contacts = [
     {
       name: 'John Doe',
@@ -51,7 +51,7 @@ const CardContacts = () => {
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-4">
-      <h3 className="font-medium text-gray-900 mb-4">ONGs que te pueden interesar:</h3>
+      <h3 className="font-medium text-gray-900 mb-4">ONGs con las que estás conectando:</h3>
       {contacts.map((contact) => (
         <Contact key={contact.name} {...contact} />
       ))}
@@ -59,4 +59,4 @@ const CardContacts = () => {
   );
 };
 
-export default CardContacts;
+export default Following;

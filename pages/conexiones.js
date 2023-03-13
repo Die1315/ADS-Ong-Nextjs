@@ -1,11 +1,11 @@
 
 import Navbar from "../components/Navbar/navBar";
-import ContactCard from "../components/CardConexion/cardCaonexion";
-import CardContacts from "../components/CardContacts/cardContacts";
+import ContactCard from "../components/CardConexion/cardConexion";
+import SearchBar from "../components/SearchBar/searchBar";
 
 const trendingContacts = [
     {
-        nombre: "Juan Pérez",
+        nombre: "Fernando Pérez",
         puesto: "Desarrollador Frontend",
         foto: "https://randomuser.me/api/portraits/men/57.jpg",
     },
@@ -15,14 +15,14 @@ const trendingContacts = [
         foto: "https://randomuser.me/api/portraits/women/28.jpg",
     },
     {
-        nombre: "Pedro Rodríguez",
+        nombre: "Carolina Mendez",
         puesto: "Gerente de Ventas",
         foto: "https://randomuser.me/api/portraits/women/5.jpg",
     },
     {
         nombre: "Pedro Rodríguez",
         puesto: "Gerente de Ventas",
-        foto: "https://randomuser.me/api/portraits/women/5.jpg",
+        foto: "https://randomuser.me/api/portraits/men/8.jpg",
     },
 ];
 
@@ -34,9 +34,9 @@ function Conexiones() {
     return (
         <div>
             <Navbar />
-            <div className="container mx-auto py-5 flex gap-5">
-                <div className="w-9/12 flex flex-col gap-5">
-                    <div className="grid grid-cols-3 gap-4">
+            <div className="container mx-auto py-5 flex flex-col-reverse md:flex-row gap-5 p-5">
+                <div className="w-12/12 md:w-9/12 flex flex-col gap-5">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         {trendingContacts.map((contact) => (
                             <ContactCard
                                 key={contact.nombre}
@@ -47,8 +47,8 @@ function Conexiones() {
                         ))}
                     </div>
                 </div>
-                <div className="w-3/12">
-                    <CardContacts/>
+                <div className="w-12/12 md:w-3/12">
+                    <SearchBar/>
                 </div>
             </div>
         </div>
