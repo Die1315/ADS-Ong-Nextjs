@@ -7,7 +7,7 @@ function Profile() {
   const [currentOng, setDataOng] = useState([]);
 
   useEffect(() => {
-    getCurrentOng().then((ong) => {
+    getCurrentOng(true).then((ong) => {
       console.log(ong)
       setDataOng(ong);
     });
@@ -23,7 +23,7 @@ function Profile() {
           <p>Email: {currentOng.email}</p>
           <p>CIF: {currentOng.CIF}</p>
           {currentOng.webPage  && <p>Pagina Web: {currentOng.webPage}</p>}
-          {currentOng.inatagram  && <p>Instagram: {currentOng.instagram}</p>}
+          {currentOng.instagram  && <p>Instagram: {currentOng.instagram}</p>}
           {currentOng.facebook  && <p>Facebook: {currentOng.facebook}</p>}
           <p>Descripción: {currentOng.description}</p>
         </div>

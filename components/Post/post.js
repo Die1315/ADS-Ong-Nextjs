@@ -8,7 +8,7 @@ import Resources from '../Resources/resources';
 const Post = ({ title, description, image, startDate, endDate, userProfilePic, userName, lat, lon }) => {
     const [showFullDescription, setShowFullDescription] = useState(false);
     const shortDescription = description.slice(0, 120);
-
+    console.log(title, description, image, startDate, endDate, userProfilePic, userName)
     const toggleDescription = () => {
         setShowFullDescription(!showFullDescription);
     };
@@ -27,7 +27,7 @@ const Post = ({ title, description, image, startDate, endDate, userProfilePic, u
                         </div>
                         <div>
                             <p className="text-white font-bold text-lg">{userName}</p>
-                            <p className="text-gray-300 text-sm">De <span className="text-primary">{`${formatDate(startDate)}`}</span> a <span className="text-primary">{`${formatDate(endDate)}`}</span></p>
+                            <p className="text-gray-300 text-sm">De <span className="text-primary">{`${formatDate(startDate.toString())}`}</span> a <span className="text-primary">{endDate && `${formatDate(endDate.toString())}`}</span></p>
                             <LikeButton/>
                         </div>
                     </div>

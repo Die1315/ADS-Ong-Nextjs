@@ -1,18 +1,17 @@
 const jwt = require("jsonwebtoken");
 const Post = require("../models/post.model");
-
+const Ong = require("../models/ong.model")
 module.exports.create = async (req, res, next) => {
-    // console.log(req.body.dataRegister);
-    // const token = req.cookies.myTokenName;
-    // const decoded = jwt.verify(token, "secret");
-
-    // await Post.create({ ...req.body, owner:decoded.id })
-    await Post.create({ ...req.body.dataRegister})
+    //console.log(req.body.dataRegister);
+    const currentOng = req.ong;
+    
+    await Post.create({ ...req.body.dataRegister, owner:currentOng.id })
         .then((post) => {
-            // console.log(post);
+            currentOng.posts.push(post)
+            currentOng.save()
             res.status(201).json(post);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => next(error));
 };
 
 module.exports.postByOng = async (req, res, next) => {
@@ -55,3 +54,17 @@ module.exports.postDelete = (req, res, next) => {
         .catch(next);
 
 }
+
+module.exports.postList = (req, res, next) => {
+    const currentOng = req.ong;
+    Post.find({owner : { $in :currentOng.following}}).then((posts)=>{
+        console.log(posts)
+        res.status(200).json(posts)
+    }).catch(next);
+}
+
+// const currentOng = req.ong;
+//     Post.find({ owner : currentOng.id})
+//     .then((posts)=>{
+//         res.status(200).json(posts)
+//     }).catch(next)

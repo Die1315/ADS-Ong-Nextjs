@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const CardProfile = ({ name, title, imageSrc }) => {
+
     return (
         <div className="bg-white shadow-md rounded-md overflow-hiddenm flex flex-col items-stretch  sticky top-5">
             <div className="relative h-auto p-2">
