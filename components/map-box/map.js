@@ -65,6 +65,7 @@ function MapView({ data, setLngLat, initialViewState }) {
         <GeolocateControl // https://visgl.github.io/react-map-gl/docs/api-reference/geolocate-control
           onGeolocate={(e) => {
             // when using geolocation, set external lnglat with coords
+            // TODO: only one can be shown on screen, make disappear when user selects with click
             setLngLat &&
               setLngLat({ lng: e.coords.latitude, lat: e.coords.longitude });
           }}

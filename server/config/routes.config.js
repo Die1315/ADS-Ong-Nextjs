@@ -17,8 +17,8 @@ router.post("/logout", ongs.logout )
 
 //Ongs
 router.post('/ongs', ongs.create);
-router.get('/ongs', ongs.list); //esancaro TODO: pagination
-router.get('/ongwithpostlist', ongs.ongWithPost); //esancaro TODO: pagination
+router.get('/ongs', secure.auth, ongs.list);
+router.get('/ongwithpostlist', secure.auth, ongs.ongWithPost);
 router.get('/ongs/:id/profile', secure.auth, ongs.profile);
 router.get('/ongs/:id/activate', ongs.activate);
 router.post('/ongs/:id/follow', secure.auth, ongs.follow)
