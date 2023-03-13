@@ -2,10 +2,10 @@ import Link from 'next/link';
 
 import Project from '../components/Project/project';
 
-import Navbar from "../components/Navbar/navBar";
-import CardProfile from "../components/CardProfile/cardProfile";
-import CardTags from "../components/CardTags/cardTags";
-import CardContacts from "../components/CardContacts/cardContacts";
+import Navbar from "../components/Navbar/navbar";
+import CardProfile from "../components/CardProfile/cardprofile";
+import CardTags from "../components/CardTags/cardtags";
+import CardContacts from "../components/CardContacts/cardcontacts";
 
 const CreateProject = () => {
 

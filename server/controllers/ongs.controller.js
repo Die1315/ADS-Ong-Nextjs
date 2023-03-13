@@ -41,7 +41,9 @@ module.exports.login = (req, res, next) => {
   Ong.findOne({ email })
     .then((ong) => {
       if (ong) {
-       if (ong.active === false) {
+        // console.log(ong);
+        // expire in 2 days
+        if (ong.active === false) {
           next(createError(401, "User is not active"));
         }
         ong
@@ -160,4 +162,29 @@ module.exports.follow = (req, res, next) => {
     });
     res.status(200).json({ follow: true, message: "follow" });
   }
+
+module.exports.list = (req, res, next) => {
+  Ong.find({})
+    // Devuelve HTTP 200 OK con el listado JSON de ongs almacenados en la Base de Datos en memoria
+    .then((ongs) => res.json(ongs))
+    .catch(next);
+};
+
+module.exports.ongWithPost = (req, res, next) => {
+  Ong.aggregate([
+    { $match: {} },
+    {
+      $lookup: {
+        from: "posts",
+        localField: "_id",
+        foreignField: "owner",
+        as: "post_list",
+      },
+    },
+  ])
+    // Devuelve HTTP 200 OK con el listado JSON de ongs almacenados en la Base de Datos en memoria
+    .then((ongs) => res.json(ongs))
+    .catch(next);
+};
+
 };

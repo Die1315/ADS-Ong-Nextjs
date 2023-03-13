@@ -3,7 +3,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
-import Footer from "/components/LoginFooter/loginFooter";
+import Footer from "../components/loginFooter/loginFooter";
 const logo = require("../src/images/logo.svg")
 import {login} from "../service/data-service"
 

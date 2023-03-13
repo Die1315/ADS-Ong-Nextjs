@@ -54,6 +54,7 @@ export function registerProject(data) {
               .catch((err) => { return err });
 }
 
+
 export function  getPostFollowing(){
   return axios.get('/api/posts/followers')
               .then((response) => response.data)
