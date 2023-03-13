@@ -12,7 +12,7 @@ function Profile() {
   const [currentOng, setDataOng] = useState([]);
 
   useEffect(() => {
-    getCurrentOng().then((ong) => {
+    getCurrentOng(true).then((ong) => {
       console.log(ong)
       setDataOng(ong);
     });
@@ -26,6 +26,7 @@ function Profile() {
     <div>
       <Navbar />
       <div className="container mx-auto py-5 flex gap-5">
+
         <div className="w-3/12 flex flex-col justify-center items-center gap-5 bg-white rounded-md p-5">
           <div className="w-12/12 flex flex-col justify-center items-center">
             <Image
@@ -79,6 +80,7 @@ function Profile() {
               {currentOng.description}
             </div>
           </div>
+
         </div>
         <div className="w-12/12 md:w-6/12"></div>
         <div className="w-3/12">

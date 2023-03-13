@@ -1,15 +1,26 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { registerProject } from "../../service/data-service";
+import MapView from "../map-box/map";
 
 const Project = () => {
 
     const [error, setError] = useState();
     const router = useRouter();
     const [dataRegister, setDataRegister] = useState();
+    const [userLngLat, setUserLngLat] = useState(null);
 
     // image lo enviare por defecto ya que no existe funcionalidad para las imagenes.
     const image = "https://temporary.png";
+
+    const setLngLat = (lngLat) => {
+        setUserLngLat(lngLat);
+        setDataRegister({
+            ...dataRegister,
+            lon: lngLat.lng,
+            lat: lngLat.lat,
+        });
+    }
 
     const handleChange = (event) => {
         setDataRegister({
@@ -23,8 +34,8 @@ const Project = () => {
         event.preventDefault();
         // console.log(dataRegister);
         registerProject(dataRegister)
-            .then((response) => {                
-                // console.log(response);
+            .then((response) => {
+                console.log(response);
                 if (response.code === "ERR_BAD_REQUEST") {
                     setError(response.response.data.message);
                 } else {
@@ -65,7 +76,7 @@ const Project = () => {
                         rows="3"
                     />
                 </div>
-                <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3">
+                {/* <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3">
                     <input
                         onChange={handleChange}
                         name="lat"
@@ -84,6 +95,9 @@ const Project = () => {
                         className="w-full md:w-3/6"
                         step="any"
                     />
+                </div> */}
+                <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3 h-64">
+                    <MapView setLngLat={setLngLat}/>
                 </div>
                 <div className="input-group flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
                     <label>Fecha Inicio: </label>
