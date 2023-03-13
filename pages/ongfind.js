@@ -6,7 +6,7 @@ import Navbar from "../components/Navbar/navbar";
 
 function OngFind() {
   //TODO TEST ONLY, THIS IS NOT USED IN THIS LIST VIEW
-  const [userLngLat, setUserLngLat] = useState(null);
+  // const [userLngLat, setUserLngLat] = useState(null);
 
   // data from DB, ong list
   const [ongList, setOngList] = useState([]);

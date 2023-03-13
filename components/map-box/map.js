@@ -5,6 +5,7 @@ import Map, {
   Popup,
   NavigationControl,
   ScaleControl,
+  GeolocateControl,
 } from "react-map-gl";
 import configData from "./map.config.json";
 
@@ -44,39 +45,49 @@ function MapView({ data, setLngLat, initialViewState }) {
   }
 
   return (
-      <Map
-        {...viewState}
-        // style={{width: "100%"}}
-        // trackResize={true}
-        // projection="globe"
-        renderWorldCopies={false}
-        mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
-        mapStyle="mapbox://styles/mapbox/outdoors-v11"
-        onMove={(evt) => setViewState(evt.viewState)}
-        onClick={(e) => {
-          setLngLat && setLngLat(e.lngLat);
-          setSelectedLngLat(e.lngLat);
-        }}
-      >
-        <NavigationControl position="top-right" />
-        <ScaleControl position="bottom-left" />
-        {
-          // This marker is displayed when a user clicks on the map
-          // the conditions are checking for a selected location and
-          // theh setLngLat external function is defined
-          selectedLngLat && setLngLat && (
-            <Marker
-              key={0}
-              longitude={selectedLngLat.lng}
-              latitude={selectedLngLat.lat}
-              element="default"
-            ></Marker>
-          )
-        }
-        {
-          // General loop for adding markers as per provided data
-          data &&
-            data.map((post) => (
+    <Map
+      {...viewState}
+      // style={{width: "100%"}}
+      // trackResize={true}
+      // projection="globe"
+      renderWorldCopies={false}
+      mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
+      mapStyle="mapbox://styles/mapbox/outdoors-v11"
+      onMove={(evt) => setViewState(evt.viewState)}
+      onClick={(e) => {
+        setLngLat && setLngLat(e.lngLat);
+        setSelectedLngLat(e.lngLat);
+      }}
+    >
+      <NavigationControl position="top-right" />
+      <ScaleControl position="bottom-left" />
+      {setLngLat && ( // show only when we are in input mode
+        <GeolocateControl // https://visgl.github.io/react-map-gl/docs/api-reference/geolocate-control
+          onGeolocate={(e) => {
+            // when using geolocation, set external lnglat with coords
+            setLngLat &&
+              setLngLat({ lng: e.coords.latitude, lat: e.coords.longitude });
+          }}
+        />
+      )}
+      {
+        // This marker is displayed when a user clicks on the map
+        // the conditions are checking for a selected location and
+        // theh setLngLat external function is defined
+        selectedLngLat && setLngLat && (
+          <Marker
+            key={0}
+            longitude={selectedLngLat.lng}
+            latitude={selectedLngLat.lat}
+            element="default"
+          ></Marker>
+        )
+      }
+      {
+        // General loop for adding markers as per provided data
+        data &&
+          data.map((post) =>
+            Math.abs(post.lat) < 90 && Math.abs(post.lon) < 180 ? ( // lat lon validation
               <Marker key={post.id} latitude={post.lat} longitude={post.lon}>
                 <button
                   onClick={(e) => {
@@ -92,28 +103,31 @@ function MapView({ data, setLngLat, initialViewState }) {
                   />
                 </button>
               </Marker>
-            ))
-        }
-
-        {
-          // popup to show post information on data driven markers
-          selectedPost && (
-            <Popup
-              closeOnClick={false}
-              latitude={selectedPost.lat}
-              longitude={selectedPost.lon}
-              onClose={() => {
-                setSelectedPost(null);
-              }}
-            >
-              <div>
-                <h1>{selectedPost.title}</h1>
-                <p>{selectedPost.description}</p>
-              </div>
-            </Popup>
+            ) : null
           )
-        }
-      </Map>
+      }
+
+      {
+        // popup to show post information on data driven markers
+        selectedPost && (
+          <Popup
+            closeOnClick={false}
+            latitude={selectedPost.lat}
+            longitude={selectedPost.lon}
+            onClose={() => {
+              setSelectedPost(null);
+            }}
+          >
+            <div>
+              <h1 className="text-lg">{selectedPost.title}</h1>
+              <p>{`${selectedPost.description.slice(0, 100)}${
+                selectedPost.description.length >= 100 ? "..." : ""
+              }`}</p>
+            </div>
+          </Popup>
+        )
+      }
+    </Map>
   );
 }
 
