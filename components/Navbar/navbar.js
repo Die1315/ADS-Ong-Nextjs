@@ -80,28 +80,28 @@ const Navbar = () => {
                             </nav>
                         </div>
                         <div className="hidden md:flex items-center gap-2">
-                            <Link href="#" className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs">
+                            <Link href="/dashboard" className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs">
                                 <FontAwesomeIcon
                                     icon={faHome}
                                     style={{ fontSize: 15 }}
                                 />
                                 <span>Inicio</span>
                             </Link>
-                            <Link href="#" className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs">
+                            <Link href="/conexiones" className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs">
                                 <FontAwesomeIcon
                                     icon={faUserFriends}
                                     style={{ fontSize: 15 }}
                                 />
                                 <span>Conexiones</span>
                             </Link>
-                            <Link href="#" className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs">
+                            <Link href="/mensajes" className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs">
                                 <FontAwesomeIcon
                                     icon={faComment}
                                     style={{ fontSize: 15 }}
                                 />
                                 <span>Mensajes</span>
                             </Link>
-                            <Link href="#" className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs">
+                            <Link href="/notificaciones" className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs">
                                 <FontAwesomeIcon
                                     icon={faBell}
                                     style={{ fontSize: 15 }}
@@ -116,7 +116,7 @@ const Navbar = () => {
                                         style={{ fontSize: 20 }}
                                     />
                                 </Link>
-                                <Link href="#" className="text-gray-700 mx-4 hover:text-primary">
+                                <Link href="/createProject" className="text-gray-700 mx-4 hover:text-primary">
                                     <FontAwesomeIcon
                                         icon={faPlus}
                                         style={{ fontSize: 20 }}

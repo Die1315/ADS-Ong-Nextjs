@@ -1,12 +1,15 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router"
-import Navbar from "../components/Navbar/navbar";
-import CardProfile from "../components/CardProfile/cardprofile";
-import CardTags from "../components/CardTags/cardtags";
-import CardContacts from "../components/CardContacts/cardcontacts";
+
+import Navbar from "../components/Navbar/navBar";
+import CardProfile from "../components/CardProfile/cardProfile";
+import CardTags from "../components/CardTags/cardTags";
+import Following from "../components/Following/following";
 import PostsList from "../components/PostsList/postsList";
+import Follow from "../components/Follow/follow";
 import { getPostFollowing } from "../service/data-service";
+
 const logo = require("../src/images/logo.svg")
 
 
@@ -46,8 +49,9 @@ function Dashboard() {
         <div className="w-6/12 flex flex-col gap-5">
           <PostsList posts={posts} />
         </div>
-        <div className="w-3/12">
-          <CardContacts />
+        <div className="w-12 md:w-3/12 flex flex-col gap-5">
+          <Following />
+          <Follow />
         </div>
       </div>
     </div>
