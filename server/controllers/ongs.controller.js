@@ -162,7 +162,7 @@ module.exports.follow = (req, res, next) => {
     });
     res.status(200).json({ follow: true, message: "follow" });
   }
-
+};
 module.exports.list = (req, res, next) => {
   Ong.find({})
     // Devuelve HTTP 200 OK con el listado JSON de ongs almacenados en la Base de Datos en memoria
@@ -187,4 +187,4 @@ module.exports.ongWithPost = (req, res, next) => {
     .catch(next);
 };
 
-};
+
