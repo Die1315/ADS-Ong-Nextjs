@@ -43,7 +43,7 @@ module.exports.login = (req, res, next) => {
       if (ong) {
         // console.log(ong);
         // expire in 2 days
-        if(ong.active === false){
+        if (ong.active === false) {
           next(createError(401, "User is not active"));
         }
         ong
@@ -102,7 +102,11 @@ module.exports.logout = (req, res, next) => {
 
 module.exports.activate = (req, res, next) => {
   const { id } = req.params;
-  Ong.findOneAndUpdate({_id:id}, { active: true }, { new: true, runValidators: true })
+  Ong.findOneAndUpdate(
+    { _id: id },
+    { active: true },
+    { new: true, runValidators: true }
+  )
     .then((ong) => {
       if (ong) {
         res.status(200).json(ong);
@@ -127,34 +131,66 @@ module.exports.profile = (req, res, next) => {
     .catch(next);
 };
 
-module.exports.follow  = (req,res,next) => {
-  const {id} =  req.params;
+module.exports.list = (req, res, next) => {
+  Ong.find({})
+    // Devuelve HTTP 200 OK con el listado JSON de ongs almacenados en la Base de Datos en memoria
+    .then((ongs) => res.json(ongs))
+    .catch(next);
+};
+
+module.exports.ongWithPost = (req, res, next) => {
+  Ong.aggregate([
+    { $match: {} },
+    {
+      $lookup: {
+        from: "posts",
+        localField: "_id",
+        foreignField: "owner",
+        as: "post_list",
+      },
+    },
+  ])
+    // Devuelve HTTP 200 OK con el listado JSON de ongs almacenados en la Base de Datos en memoria
+    .then((ongs) => res.json(ongs))
+    .catch(next);
+};
+
+module.exports.follow = (req, res, next) => {
+  const { id } = req.params;
   const token = req.cookies.myTokenName;
   const decoded = jwt.verify(token, "secret");
-  
-  if( id === decoded.id){
-    next(createError(400, "You cannot follow yourself"))
-  }
-    Ong.findById(decoded.id).then(ong =>{
-      if(ong.following.filter( following => following.toString() === id).length > 0){
-        ong.following.splice(ong.following.findIndex(e => e.id === id),1)
-        ong.save()
-        Ong.findById(id).then(ongToUnfollow =>{
-          ongToUnfollow.followers.splice(ongToUnfollow.followers.findIndex(e => e.id === id),1)
-          ongToUnfollow.save()
-        })
-         res.status(200).json({follow: false, message : "unfollow"})
-      } else {
-        
-        Ong.findById(id).then((ongToFollow)=>{
-          ongToFollow.followers.push(ong)
-          ongToFollow.save()
-          ong.following.push(ongToFollow)
-          ong.save()
-          
-        })        
-        res.status(200).json({follow: true, message : "follow"})
-      }
 
-    }).catch(next);
+  if (id === decoded.id) {
+    next(createError(400, "You cannot follow yourself"));
   }
+  Ong.findById(decoded.id)
+    .then((ong) => {
+      if (
+        ong.following.filter((following) => following.toString() === id)
+          .length > 0
+      ) {
+        ong.following.splice(
+          ong.following.findIndex((e) => e.id === id),
+          1
+        );
+        ong.save();
+        Ong.findById(id).then((ongToUnfollow) => {
+          ongToUnfollow.followers.splice(
+            ongToUnfollow.followers.findIndex((e) => e.id === id),
+            1
+          );
+          ongToUnfollow.save();
+        });
+        res.status(200).json({ follow: false, message: "unfollow" });
+      } else {
+        Ong.findById(id).then((ongToFollow) => {
+          ongToFollow.followers.push(ong);
+          ongToFollow.save();
+          ong.following.push(ongToFollow);
+          ong.save();
+        });
+        res.status(200).json({ follow: true, message: "follow" });
+      }
+    })
+    .catch(next);
+};
