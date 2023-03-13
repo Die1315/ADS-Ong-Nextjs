@@ -11,7 +11,8 @@ const postSchema = new Schema(
         enddate: { type: Date },
         resources: { type: String },
         image: { type: String, required: true },
-        likes: { type: Number, default: 0 },
+        likes: {  type: Schema.Types.ObjectId,
+                ref: "Ong" },
         owner: {
             type: Schema.Types.ObjectId,
             ref: "Ong"
