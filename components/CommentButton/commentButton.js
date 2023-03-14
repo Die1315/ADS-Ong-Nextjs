@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faComment } from '@fortawesome/free-solid-svg-icons';
 
-const LikeButton = () => {
+const CommentButton = () => {
     const [likes, setLikes] = useState(0);
 
     const handleLikeClick = () => {
@@ -12,7 +12,7 @@ const LikeButton = () => {
     return (
         <button className="flex flex-col justify-center items-center px-4 py-2 transition duration-500 bg-dark hover:bg-primary text-xs text-white">
             <FontAwesomeIcon
-                icon={faHeart}
+                icon={faComment}
                 style={{ fontSize: 15 }}
             />
             <span>{likes}</span>
@@ -21,4 +21,4 @@ const LikeButton = () => {
     );
 };
 
-export default LikeButton
+export default CommentButton

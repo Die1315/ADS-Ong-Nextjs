@@ -15,7 +15,7 @@ module.exports = {
         'register-hero': "url('https://res.cloudinary.com/de9uql5fm/image/upload/v1677758224/register-hero_xwgyrl.jpg')",
       },
       zIndex: {
-        '100': '100',
+        '100': '9999999',
       },
       colors: {
         primary: "#5CE1E6",
@@ -26,7 +26,13 @@ module.exports = {
       fontFamily: {
         Ubuntu: ["Ubuntu", "sans-serif"],
         Raleway: ["Raleway", "sans-serif"]
-      }
+      },
+      transitionDuration: {
+        '500': '0.5s',
+      },
+      transitionTimingFunction: {
+        'in-out': 'ease-in-out',
+      },
     },
   },
   plugins: [],

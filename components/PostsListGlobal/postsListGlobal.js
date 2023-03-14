@@ -3,7 +3,7 @@ import Post from '../Post/post';
 const PostsList = ({ posts }) => {
   return (
     <div className="w-full flex flex-col gap-2">
-      {posts.map((post) => (
+      {posts?.map((post) => (
         <Post
           key={post.id}
           title={post.title}

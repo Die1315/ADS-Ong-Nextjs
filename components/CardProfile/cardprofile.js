@@ -1,7 +1,10 @@
+import { useContext } from 'react';
+import { DashboardContext } from '../../pages/dashboard';
 import Image from 'next/image';
-import Link from 'next/link';
 
 const CardProfile = ({ name, title, imageSrc }) => {
+
+    const { mostrarPostsList, setMostrarPostsList } = useContext(DashboardContext);
 
     return (
         <div className="bg-white shadow-md rounded-md overflow-hiddenm flex flex-col items-stretch  sticky top-5">
@@ -30,7 +33,9 @@ const CardProfile = ({ name, title, imageSrc }) => {
                     <p className="text-sm">15/02/23</p>
                 </div>
             </div>
-            <Link href="/createProject" className='w-full bg-primary hover:bg-secondary text-white hover:text-dark text-center p-4'>Crear Proyecto</Link>
+            <button onClick={() => setMostrarPostsList(!mostrarPostsList)} className='w-full transition duration-500 bg-primary hover:bg-secondary text-white hover:text-dark text-center p-4'>
+                {mostrarPostsList ? 'Crear Proyecto' : 'Ver Proyectos'}
+            </button>
         </div>
     );
 };
