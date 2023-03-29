@@ -9,9 +9,9 @@ const PostsList = ({ posts }) => {
           title={post.title}
           description={post.description}
           image={post.image}
-          startDate={post.startDate}
-          endDate={post.endDate}
-          userName={post.userName}
+          startDate={post.startdate}
+          endDate={post.enddate}
+          userName={post.owner}
           userProfilePic={post.userProfilePic}
         />
       ))}

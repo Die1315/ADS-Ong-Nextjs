@@ -1,15 +1,26 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { registerProject } from "../../service/data-service";
+import MapView from "../map-box/map";
 
 const Project = () => {
 
     const [error, setError] = useState();
     const router = useRouter();
     const [dataRegister, setDataRegister] = useState();
+    const [userLngLat, setUserLngLat] = useState(null);
 
     // image lo enviare por defecto ya que no existe funcionalidad para las imagenes.
     const image = "https://temporary.png";
+
+    const setLngLat = (lngLat) => {
+        setUserLngLat(lngLat);
+        setDataRegister({
+            ...dataRegister,
+            lon: lngLat.lng,
+            lat: lngLat.lat,
+        });
+    }
 
     const handleChange = (event) => {
         setDataRegister({
@@ -23,8 +34,8 @@ const Project = () => {
         event.preventDefault();
         // console.log(dataRegister);
         registerProject(dataRegister)
-            .then((response) => {                
-                // console.log(response);
+            .then((response) => {
+                console.log(response);
                 if (response.code === "ERR_BAD_REQUEST") {
                     setError(response.response.data.message);
                 } else {
@@ -40,7 +51,7 @@ const Project = () => {
         <>
             {/* <div className="h-screen flex flex-col md:flex-row justify-center items-stretch columns-1 md:columns-2 py-5 md:py-0 bg-register-hero bg-cover bg-center md:bg-white"> */}
             {/* <div className="static md:relative py-14 overflow-auto bg-white h-auto w-11/12 md:w-3/6 flex mx-auto flex-col justify-start items-center rounded-md md:rounded-none"> */}
-            <p className="w-5/6 md:w-4/6 my-5 text-center mx-auto">Crear Proyecto</p>
+            <h1 className="w-full mb-3 text-3xl fond-semibold display-1 text-dark mx-auto">Crear Proyecto</h1>
             <form onSubmit={handleSubmit}
                   className="flex flex-col justify-center items-stretch gap-5"
             >
@@ -62,9 +73,10 @@ const Project = () => {
                         placeholder="Descripción del Proyecto"
                         required
                         className="w-full"
+                        rows="3"
                     />
                 </div>
-                <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3">
+                {/* <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3">
                     <input
                         onChange={handleChange}
                         name="lat"
@@ -83,15 +95,18 @@ const Project = () => {
                         className="w-full md:w-3/6"
                         step="any"
                     />
+                </div> */}
+                <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3 h-64">
+                    <MapView setLngLat={setLngLat}/>
                 </div>
-                <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3">
+                <div className="input-group flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
                     <label>Fecha Inicio: </label>
                     <input
                         onChange={handleChange}
                         name="startdate"
                         type="date"
                         required
-                        className="w-full md:w-3/6"
+                        className="w-full md:w-5/6"
                     />
                 </div>
                 <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3">
@@ -100,7 +115,7 @@ const Project = () => {
                         onChange={handleChange}
                         name="enddate"
                         type="date"
-                        className="w-full md:w-3/6"
+                        className="w-full md:w-5/6"
                     />
                 </div>
                 <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3">
@@ -155,7 +170,7 @@ const Project = () => {
                 </div>
 
                 <button type="submit" className="btn mt-5">
-                    Registrar ONG
+                    Crear Proyecto
                 </button>
             </form>
 

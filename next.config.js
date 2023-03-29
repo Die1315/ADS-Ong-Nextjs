@@ -3,7 +3,9 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['res.cloudinary.com', 'randomuser.me']
+
+    domains: ['res.cloudinary.com', 'randomuser.me','temporary.png']
+
   },
   //useFileSystemPublicRoutes: false,
 }

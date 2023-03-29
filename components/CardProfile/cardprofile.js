@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const CardProfile = ({ name, title, imageSrc }) => {
+
     return (
         <div className="bg-white shadow-md rounded-md overflow-hiddenm flex flex-col items-stretch  sticky top-5">
             <div className="relative h-auto p-2">
@@ -17,7 +18,7 @@ const CardProfile = ({ name, title, imageSrc }) => {
                 <p className="text-sm text-gray-600">{title}</p>
             </div>
             <hr />
-            <div className="p-6 flex justify-between">
+            <div className="p-6 hidden md:flex  justify-between">
                 <div className="w-4/6 flex flex-col gap-2">
                     <p className="text-sm">No. de Proyectos:</p>
                     <p className="text-sm">Conexiones:</p>
