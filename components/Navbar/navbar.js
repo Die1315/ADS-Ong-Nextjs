@@ -87,7 +87,7 @@ const Navbar = () => {
                                 />
                                 <span>Inicio</span>
                             </Link>
-                            <Link href="/conexiones" className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs">
+                            <Link href="/connections" className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs">
                                 <FontAwesomeIcon
                                     icon={faUserFriends}
                                     style={{ fontSize: 15 }}

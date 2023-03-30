@@ -2,20 +2,26 @@ import Navbar from "../components/Navbar/navBar";
 const logo = require("../src/images/logo.svg");
 import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
-import { getCurrentOng } from "../service/data-service";
+import { getCurrentOng, getPostsOwner } from "../service/data-service";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faCircleInfo, faIdBadge, faGlobe, faFacebook, faInstagram } from "@fortawesome/free-solid-svg-icons";
 import Following from "../components/Following/following";
 import Link from "next/link";
+import PostsList from "../components/PostsList/postsList";
 
 function Profile() {
   const [currentOng, setDataOng] = useState([]);
+  const [posts, setPosts] = useState([])
 
   useEffect(() => {
     getCurrentOng(true).then((ong) => {
-      console.log(ong)
       setDataOng(ong);
     });
+    getPostsOwner().then((posts) =>{
+      console.log(posts)
+      setPosts(posts);
+    })
+    
   }, []);
 
   const webPage = getCurrentOng.webPage
@@ -82,7 +88,10 @@ function Profile() {
           </div>
 
         </div>
-        <div className="w-12/12 md:w-6/12"></div>
+        <div className="w-6/12 flex flex-col gap-5">
+        <PostsList posts={posts} />
+        </div>
+                
         <div className="w-3/12">
 
           <Following />

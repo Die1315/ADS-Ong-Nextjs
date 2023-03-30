@@ -4,7 +4,7 @@ import axios from "axios"
 import cookie from "js-cookie";
 
 
-const currentOng =   cookie.get("ONG");
+
 
 export function login(credentials) {
   return axios
@@ -30,14 +30,14 @@ export function register(dataRegister){
     return err});
 }
 
-export function getCurrentOng(owner=false){
+export function getCurrentOng(owner=false, ongToSearch){
   if(owner===true){
     return axios.get(`/api/ongs/profile`
   ).then((res) =>{ 
     return res.data})
     .catch((err)=>console.log(err.message));
   } else {
-    return axios.get(`/api/ongs/${currentOng}/profile`
+    return axios.get(`/api/ongs/${ongToSearch}/profile`
     ).then((res) =>{ 
       return res.data})
       .catch((err)=>console.log(err.message));
@@ -46,7 +46,7 @@ export function getCurrentOng(owner=false){
 
 export function registerProject(data) {
   let dataRegister = {
-    ...data, owner: currentOng
+    ...data
   }
   // console.log(dataRegister);
   return axios.post("/api/posts", {dataRegister})
@@ -60,4 +60,15 @@ export function  getPostFollowing(){
               .then((response) => response.data)
               .catch((err)=>err)
 
+}
+export function getPostsOwner(){
+  return axios.get('/api/postsbyong/')
+              .then((response) => response.data)
+              .catch((err)=>err)
+}
+
+export function getConnections(){
+  return axios.get('/api/ongs/newConnections')
+              .then((response) => response.data)
+              .catch((err)=>err)
 }

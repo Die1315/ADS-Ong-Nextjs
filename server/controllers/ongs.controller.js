@@ -163,6 +163,15 @@ module.exports.follow = (req, res, next) => {
     res.status(200).json({ follow: true, message: "follow" });
   }
 };
+
+
+module.exports.Connections =  (req,res,next) => {
+const currentOng = req.ong;
+Ong.find({id : { $ne :currentOng.following}}).then((posts)=>{
+  console.log(posts)
+  res.status(200).json(posts)
+})
+}
 module.exports.list = (req, res, next) => {
   Ong.find({})
     // Devuelve HTTP 200 OK con el listado JSON de ongs almacenados en la Base de Datos en memoria

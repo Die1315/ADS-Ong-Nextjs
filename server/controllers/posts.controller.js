@@ -15,7 +15,10 @@ module.exports.create = async (req, res, next) => {
 };
 
 module.exports.postByOng = async (req, res, next) => {
-    const { id } = req.params;
+    let { id } = req.params;
+    if(!id){
+        id=req.ong.id
+    }
     let postsByOng = await Post.find({ owner: id }).populate("posts");
     res.status(200).json(postsByOng)
 }
@@ -63,6 +66,9 @@ module.exports.postList = (req, res, next) => {
     }).catch(next);
 }
 
+module.exports.Liketoggle = (req, res, next)=>{
+
+}
 // const currentOng = req.ong;
 //     Post.find({ owner : currentOng.id})
 //     .then((posts)=>{
