@@ -1,6 +1,6 @@
 import { useState, useEffect, createContext } from "react";
 
-import Navbar from "../components/NavBar/navBar";
+import Navbar from "../components/Navbar/navBar";
 import CardProfile from "../components/CardProfile/cardProfile";
 import CardTags from "../components/CardTags/cardTags";
 import Following from "../components/Following/following";
