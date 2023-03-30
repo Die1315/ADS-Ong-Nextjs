@@ -57,7 +57,7 @@ const Project = () => {
     };
 
     return (
-        <>
+        <div className="relative w-12/12 flex flex-col gap-5 bg-white rounded-md px-4 py-6 overflow-auto">
             {/* <div className="h-screen flex flex-col md:flex-row justify-center items-stretch columns-1 md:columns-2 py-5 md:py-0 bg-register-hero bg-cover bg-center md:bg-white"> */}
             {/* <div className="static md:relative py-14 overflow-auto bg-white h-auto w-11/12 md:w-3/6 flex mx-auto flex-col justify-start items-center rounded-md md:rounded-none"> */}
             <h1 className="w-full mb-3 text-3xl fond-semibold display-1 text-dark mx-auto">Crear Proyecto</h1>
@@ -186,7 +186,7 @@ const Project = () => {
 
             {/* </div> */}
             {/* </div> */}
-        </>
+        </div>
     );
 };
 

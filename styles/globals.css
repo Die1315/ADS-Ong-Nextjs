@@ -41,8 +41,7 @@ h6 {
 @tailwind components;
 
 button.btn {
-  @apply bg-primary hover:bg-secondary font-Ubuntu text-white font-bold uppercase rounded-md py-3.5 mx-auto;
-  width: 200px;
+  @apply w-full bg-primary hover:bg-secondary font-Ubuntu text-white font-bold uppercase rounded-md py-2 mx-auto transition duration-500;
 }
 
 @media only screen and (max-width:768px){

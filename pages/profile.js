@@ -25,9 +25,9 @@ function Profile() {
   return (
     <div>
       <Navbar />
-      <div className="container mx-auto py-5 flex gap-5">
+      <div className="container mx-auto px-2 md:px-0 py-5 flex flex-col md:flex-row gap-5">
 
-        <div className="w-3/12 flex flex-col justify-center items-center gap-5 bg-white rounded-md p-5">
+        <div className="w-12/12 md:w-3/12 flex flex-col justify-center items-center gap-5 bg-white rounded-md p-5">
           <div className="w-12/12 flex flex-col justify-center items-center">
             <Image
               src='https://randomuser.me/api/portraits/men/17.jpg'
@@ -83,7 +83,7 @@ function Profile() {
 
         </div>
         <div className="w-12/12 md:w-6/12"></div>
-        <div className="w-3/12">
+        <div className="w-12/12 md:w-3/12">
 
           <Following />
         </div>
