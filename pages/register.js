@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { register } from "../service/data-service";
+import { register, uploadCloudinary } from "../service/data-service";
 import Image from "next/image";
 
 const logo = require("../src/images/logo.svg");
@@ -9,7 +9,12 @@ function addOng() {
   const [error, setError] = useState();
   const router = useRouter();
   const [dataRegister, setDataRegister] = useState();
+
+  // Cloudinary
+  const [uploadFile, setUploadFile] = useState("");
+  
   const handleChange = (event) => {
+
     setDataRegister({
       ...dataRegister,
       [event.target.name]: event.target.value,
@@ -19,21 +24,34 @@ function addOng() {
   const handleSubmit = (event) => {
     event.preventDefault();
     if(dataRegister.password === dataRegister.passwordConfirmation){
-    register(dataRegister)
-      .then((response) => {
-        if (response.code === "ERR_BAD_REQUEST") {
-          setError(response.response.data.message);
-        } else {
-          router.push("/login");
-        }
-        console.log(response);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-    } else{
-        setError("Las contraseñas no coinciden.")
-    }
+
+
+      const formData = new FormData();
+      formData.append("file", uploadFile);
+      formData.append("upload_preset", "ovclfrex");
+
+      uploadCloudinary(formData)
+        .then((response) => {        
+            register({...dataRegister, image: response.data.secure_url})
+            .then((response) => {
+              if (response.code === "ERR_BAD_REQUEST") {
+                setError(response.response.data.message);
+              } else {
+                router.push("/login");
+              }
+              console.log(response);
+            })
+            .catch((err) => {
+              console.log(err.message);
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      } else{
+          setError("Las contraseñas no coinciden.")
+      }
   };
 
   return (
@@ -152,15 +170,16 @@ function addOng() {
                 </svg>
                 <div className="flex text-sm text-gray-600">
                   <label
-                    htmlFor="file-upload"
+                    htmlFor="image"
                     className="relative cursor-pointer rounded-md bg-white font-medium text-primary focus-within:outline-none focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 hover:text-primary"
                   >
                     <span>Upload a file</span>
                     <input
-                      id="file-upload"
-                      name="file-upload"
+                      id="image"
+                      name="image"
                       type="file"
                       className="sr-only"
+                      onChange={(event) => { setUploadFile(event.target.files[0]); }}
                     />
                   </label>
                   <p className="pl-1">or drag and drop</p>

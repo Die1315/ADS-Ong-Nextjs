@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { registerProject } from "../../service/data-service";
+import { registerProject, uploadCloudinary } from "../../service/data-service";
 import MapView from "../map-box/map";
 
 const Project = () => {
@@ -10,8 +10,8 @@ const Project = () => {
     const [dataRegister, setDataRegister] = useState();
     const [userLngLat, setUserLngLat] = useState(null);
 
-    // image lo enviare por defecto ya que no existe funcionalidad para las imagenes.
-    const image = "https://temporary.png";
+    // Cloudinary
+    const [uploadFile, setUploadFile] = useState("");
 
     const setLngLat = (lngLat) => {
         setUserLngLat(lngLat);
@@ -25,15 +25,20 @@ const Project = () => {
     const handleChange = (event) => {
         setDataRegister({
             ...dataRegister,
-            [event.target.name]: event.target.value,
-            image: image
+            [event.target.name]: event.target.value
         });
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // console.log(dataRegister);
-        registerProject(dataRegister)
+        
+        const formData = new FormData();
+        formData.append("file", uploadFile);
+        formData.append("upload_preset", "ovclfrex");
+
+        uploadCloudinary(formData)
+        .then((response) => {  
+            registerProject({...dataRegister, image: response.data.secure_url})
             .then((response) => {
                 console.log(response);
                 if (response.code === "ERR_BAD_REQUEST") {
@@ -45,6 +50,10 @@ const Project = () => {
             .catch((err) => {
                 console.log(err.message);
             });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     };
 
     return (
@@ -149,15 +158,16 @@ const Project = () => {
                             </svg>
                             <div className="flex text-sm text-gray-600">
                                 <label
-                                    htmlFor="file-upload"
+                                    htmlFor="image"
                                     className="relative cursor-pointer rounded-md bg-white font-medium text-primary focus-within:outline-none focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 hover:text-primary"
                                 >
                                     <span>Upload a file</span>
                                     <input
-                                        id="file-upload"
-                                        name="file-upload"
+                                        id="image"
+                                        name="image"
                                         type="file"
                                         className="sr-only"
+                                        onChange={(event) => { setUploadFile(event.target.files[0]); }}
                                     />
                                 </label>
                                 <p className="pl-1">or drag and drop</p>
