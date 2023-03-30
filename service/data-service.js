@@ -61,3 +61,10 @@ export function  getPostFollowing(){
               .catch((err)=>err)
 
 }
+
+export function uploadCloudinary(data) {
+  return axios.post(
+    "https://api.cloudinary.com/v1_1/disqrp2r2/image/upload",
+    data
+  );
+}
