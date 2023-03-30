@@ -111,7 +111,7 @@ const Navbar = () => {
                                 />
                                 <span>Inicio</span>
                             </Link>
-                            <Link href="/conexiones" className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs transition duration-500">
+                            <Link href="/connections" className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs transition duration-500">
                                 <FontAwesomeIcon
                                     icon={faUserFriends}
                                     style={{ fontSize: 15 }}
