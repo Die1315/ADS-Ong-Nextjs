@@ -23,9 +23,15 @@ module.exports.postByOng = async (req, res, next) => {
     res.status(200).json(postsByOng)
 }
 
-module.exports.postsAll = async (req, res, next) => {
-    let postsAll = await Post.find();
-    res.status(200).json(postsAll)
+module.exports.postsGlobal = async (req, res, next) => {
+    const currentOng = req.ong;
+    let postsAll = await Post.find({owner : { $ne :currentOng.id}}).then(
+        (posts)=>{
+            console.log(posts)
+            res.status(200).json(posts)
+        }
+    ).catch(next);
+    
 }
 
 module.exports.postEdit = async (req, res, next) => {
@@ -60,8 +66,8 @@ module.exports.postDelete = (req, res, next) => {
 
 module.exports.postList = (req, res, next) => {
     const currentOng = req.ong;
-    Post.find({owner : { $in :currentOng.following}}).then((posts)=>{
-        console.log(posts)
+    Post.find({owner : { $in :currentOng.following}})
+        .then((posts)=>{
         res.status(200).json(posts)
     }).catch(next);
 }
