@@ -5,7 +5,7 @@ import CardProfile from "../components/CardProfile/cardProfile";
 import CardTags from "../components/CardTags/cardTags";
 import Following from "../components/Following/following";
 import PostsListGlobal from "../components/PostsListGlobal/postsListGlobal";
-import PostsListFollowing from "../components/PostsListFollowing/postsListFollowing";
+import PostsList from "../components/PostsList/postsList";
 import Project from '../components/Project/project';
 import Follow from "../components/Follow/follow";
 import { getPostFollowing } from "../service/data-service";
