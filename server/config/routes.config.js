@@ -4,7 +4,7 @@ const secure = require("../middlewares/secure.middleware")
 const ongs = require("../controllers/ongs.controller")
 const posts = require("../controllers/posts.controller")
 const comments = require("../controllers/comments.controller")
-
+const messages = require("../controllers/messages.controller");
 
 //DAshboard and posts
 //router.get("/dashboard" )
@@ -37,5 +37,9 @@ router.get('/posts/followers', secure.auth, posts.postList)
 // Comment
 router.post('/createComment/:id', secure.auth, comments.createComment);
 router.delete('/deleteComment/:id', secure.auth, comments.deleteComment);
+
+// Message
+router.post("/addMessage", secure.auth, messages.addMessage);
+router.post("/getMessages", secure.auth, messages.getAllMessages);
 
 module.exports = router;

@@ -1,6 +1,6 @@
-const jwt = require("jsonwebtoken");
 const Post = require("../models/post.model");
-const Ong = require("../models/ong.model")
+const Ong = require("../models/ong.model");
+
 module.exports.create = async (req, res, next) => {
     //console.log(req.body.dataRegister);
     const currentOng = req.ong;
