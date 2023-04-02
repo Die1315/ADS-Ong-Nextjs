@@ -35,7 +35,8 @@ const CardProfile = ({ name, title, imageSrc }) => {
             </div>
             <button onClick={() => setMostrarPostsList(!mostrarPostsList)} className='w-full transition duration-500 bg-primary hover:bg-secondary text-white hover:text-dark text-center p-4'>
                 {mostrarPostsList ? 'Crear Proyecto' : 'Ver Proyectos'}
-            </button>
+            </button> 
+            
         </div>
     );
 };
