@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 
-const LikeButton = () => {
+const FollowButton = () => {
 
     return (
         <button className="text-primary hover:text-dark transition duration-500">
@@ -15,4 +15,4 @@ const LikeButton = () => {
     );
 };
 
-export default LikeButton
+export default FollowButton
