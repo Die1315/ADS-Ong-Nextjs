@@ -2,13 +2,11 @@ import { useState, useEffect, createContext } from "react";
 
 import Navbar from "../components/Navbar/navBar";
 import CardProfile from "../components/CardProfile/cardProfile";
-import CardTags from "../components/CardTags/cardTags";
-import Following from "../components/Following/following";
-import PostsListGlobal from "../components/PostsListGlobal/postsListGlobal";
+import Newest from "../components/Newest/newest";
 import PostsList from "../components/PostsList/postsList";
 import Project from '../components/Project/project';
-import Follow from "../components/Follow/follow";
 import { getGLobalPosts, getPostFollowing } from "../service/data-service";
+
 
 const logo = require("../src/images/logo.svg")
 
@@ -43,12 +41,11 @@ function Dashboard() {
     }
   }, [typePosts]);
 
-  const tags = ['Caridad', 'Servicios', 'Participación', 'Empoderamiento'];
-  const categories = ['Comunitarias', 'Locales', 'Nacionales', 'Internacionales'];
 
   return (
     
     <DashboardContext.Provider value={{ mostrarPostsList, setMostrarPostsList }}>
+
       <Navbar /><div className="container mx-auto px-2 md:px-0 py-5 flex flex-col md:flex-row gap-5">
       <div className="w-12/12 md:w-3/12 flex flex-col gap-5">
         <CardProfile
@@ -65,11 +62,10 @@ function Dashboard() {
 
         {mostrarPostsList ? <PostsList posts={posts}/> : <Project />}
 
+
       </div>
       <div className="w-12/12 md:w-3/12 flex flex-col gap-5">
-        <Following />
-        <Follow />
-      </div>
+         <Newest /></div>
     </div>
     </DashboardContext.Provider >
 

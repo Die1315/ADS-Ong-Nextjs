@@ -54,13 +54,6 @@ export function registerProject(data) {
               .catch((err) => { return err });
 }
 
-
-export function  getPostFollowing(){
-  return axios.get('/api/posts/followers')
-              .then((response) => response.data)
-              .catch((err)=>err)
-
-}
 export function getPostsOwner(){
   return axios.get('/api/postsbyong/')
               .then((response) => response.data)
@@ -90,4 +83,16 @@ export function uploadCloudinary(data) {
     "https://api.cloudinary.com/v1_1/disqrp2r2/image/upload",
     data
   );
+}
+
+export function getGLobalPosts(){
+  return axios.get('/api/postsGlobal')
+              .then((response) => response.data)
+              .catch((err)=>err)
+}
+
+export function getPostFollowing(){
+  return axios.get('/api/posts/followers')
+              .then((response) => response.data)
+              .catch((err)=>err)
 }

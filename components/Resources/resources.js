@@ -11,7 +11,7 @@ function Resources() {
 
     return (
         <div className="bg-white">
-            <button onClick={toggleListVisibility} className="mb-2 w-full bg-secondary text-dark text-center rounded-md px-6 py-2 text-xs font-medium">
+            <button onClick={toggleListVisibility} className="mb-2 w-full bg-primary hover:bg-secondary text-dark text-center rounded-md px-6 py-2 text-xs font-medium">
                 Recursos
             </button>
             {isListVisible && (
