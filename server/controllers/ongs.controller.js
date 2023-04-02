@@ -167,9 +167,10 @@ module.exports.follow = (req, res, next) => {
 
 module.exports.Connections =  (req,res,next) => {
 const currentOng = req.ong;
-Ong.find({id : { $ne :currentOng.following}}).then((posts)=>{
-  console.log(posts)
-  res.status(200).json(posts)
+console.log(currentOng.following)
+Ong.find({ _id : { $nin : currentOng.following}}).then((ongs)=>{
+  //console.log(posts)
+  res.status(200).json(ongs)
 })
 }
 module.exports.list = (req, res, next) => {

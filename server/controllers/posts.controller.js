@@ -25,6 +25,7 @@ module.exports.postByOng = async (req, res, next) => {
 
 module.exports.postsGlobal = async (req, res, next) => {
     const currentOng = req.ong;
+    console.log(currentOng.id)
     let postsAll = await Post.find({owner : { $ne :currentOng.id}}).then(
         (posts)=>{
             console.log(posts)

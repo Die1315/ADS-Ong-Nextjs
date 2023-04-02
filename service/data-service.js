@@ -65,13 +65,11 @@ export function getConnections(){
               .then((response) => response.data)
               .catch((err)=>err)
 }
-
 export function getGLobalPosts(){
   return axios.get('/api/postsGlobal')
               .then((response) => response.data)
               .catch((err)=>err)
 }
-
 export function followUnfollow(id){
   return axios.put(`/api/ongs/${id}/follow`)
               .then((response) => response.data)
@@ -83,12 +81,6 @@ export function uploadCloudinary(data) {
     "https://api.cloudinary.com/v1_1/disqrp2r2/image/upload",
     data
   );
-}
-
-export function getGLobalPosts(){
-  return axios.get('/api/postsGlobal')
-              .then((response) => response.data)
-              .catch((err)=>err)
 }
 
 export function getPostFollowing(){
