@@ -1,11 +1,14 @@
 import { useState } from 'react';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { formatDate } from '../../utils/dateUtils';
 import LikeButton from '../LikeButton/likeButton'
+import CommentButton from '../CommentButton/commentButton'
 import Resources from '../Resources/resources';
 
 const Post = ({ title, description, image, startDate, endDate, userProfilePic, userName, lat, lon }) => {
+
     const [showFullDescription, setShowFullDescription] = useState(false);
     const shortDescription = description.slice(0, 120);
     console.log(title, description, image, startDate, endDate, userProfilePic, userName)
@@ -17,7 +20,7 @@ const Post = ({ title, description, image, startDate, endDate, userProfilePic, u
         <div className="bg-white border border-gray-200 rounded-md overflow-hidden">
             <div className="relative">
                 <div>
-                    <Link href="#" className="absolute top-0 right-0 bg-white hover:bg-dark rounded-bl-md px-4 py-2 text-primary hover:font-bold">Ver mapa</Link>
+                    <Link href="#" className="absolute top-0 right-0 bg-white hover:bg-dark rounded-bl-md px-4 py-2 text-primary hover:font-bold transition duration-500">Ver mapa</Link>
                 </div>
                 <Image className="w-full object-cover min-h-80 max-h-80" src={image} alt="Post" width={800} height={600} />
                 <div className="absolute bottom-0 left-0 bg-gray-900 bg-opacity-50 w-full py-2">
@@ -25,10 +28,15 @@ const Post = ({ title, description, image, startDate, endDate, userProfilePic, u
                         <div className="w-10 h-10 rounded-full mr-2 overflow-hidden">
                             <Image className="object-cover" src={userProfilePic} alt="User Profile" width={40} height={40} />
                         </div>
-                        <div>
-                            <p className="text-white font-bold text-lg">{userName}</p>
-                            <p className="text-gray-300 text-sm">De <span className="text-primary">{`${formatDate(startDate.toString())}`}</span> a <span className="text-primary">{endDate && `${formatDate(endDate.toString())}`}</span></p>
-                            <LikeButton/>
+                        <div className='w-full flex justify-between items-center'>
+                            <div className="w-12/12">
+                                <p className="text-white font-bold text-lg">{userName}</p>
+                                <p className="text-gray-300 text-sm">De <span className="text-primary">{`${formatDate(startDate.toString())}`}</span> a <span className="text-primary">{endDate && `${formatDate(endDate.toString())}`}</span></p>
+                            </div>
+                            <div className="flex gap-1">
+                                <CommentButton />
+                                <LikeButton />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -41,7 +49,7 @@ const Post = ({ title, description, image, startDate, endDate, userProfilePic, u
                         {showFullDescription ? 'Leer menos' : 'Leer más'}
                     </button>
                 )}
-                <Resources/>
+                <Resources />
             </div>
         </div>
     );

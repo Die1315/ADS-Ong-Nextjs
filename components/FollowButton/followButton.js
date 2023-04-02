@@ -5,7 +5,7 @@ import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 const LikeButton = () => {
 
     return (
-        <button className="text-primary hover:text-dark">
+        <button className="text-primary hover:text-dark transition duration-500">
             <FontAwesomeIcon
                 icon={faPlusSquare}
                 style={{ fontSize: 30 }}

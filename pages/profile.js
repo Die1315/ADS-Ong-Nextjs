@@ -2,20 +2,26 @@ import Navbar from "../components/Navbar/navBar";
 const logo = require("../src/images/logo.svg");
 import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
-import { getCurrentOng } from "../service/data-service";
+import { getCurrentOng, getPostsOwner } from "../service/data-service";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faCircleInfo, faIdBadge, faGlobe, faFacebook, faInstagram } from "@fortawesome/free-solid-svg-icons";
 import Following from "../components/Following/following";
 import Link from "next/link";
+import PostsList from "../components/PostsList/postsList";
 
 function Profile() {
   const [currentOng, setDataOng] = useState([]);
+  const [posts, setPosts] = useState([])
 
   useEffect(() => {
     getCurrentOng(true).then((ong) => {
-      console.log(ong)
       setDataOng(ong);
     });
+    getPostsOwner().then((posts) =>{
+      console.log(posts)
+      setPosts(posts);
+    })
+    
   }, []);
 
   const webPage = getCurrentOng.webPage
@@ -25,9 +31,9 @@ function Profile() {
   return (
     <div>
       <Navbar />
-      <div className="container mx-auto py-5 flex gap-5">
+      <div className="container mx-auto px-2 md:px-0 py-5 flex flex-col md:flex-row gap-5">
 
-        <div className="w-3/12 flex flex-col justify-center items-center gap-5 bg-white rounded-md p-5">
+        <div className="w-12/12 md:w-3/12 flex flex-col justify-center items-center gap-5 bg-white rounded-md p-5">
           <div className="w-12/12 flex flex-col justify-center items-center">
             <Image
               src='https://randomuser.me/api/portraits/men/17.jpg'
@@ -82,8 +88,10 @@ function Profile() {
           </div>
 
         </div>
-        <div className="w-12/12 md:w-6/12"></div>
-        <div className="w-3/12">
+        <div className="w-12/12 md:w-6/12">
+        <PostsList posts={posts} />
+        </div>
+        <div className="w-12/12 md:w-3/12">
 
           <Following />
         </div>

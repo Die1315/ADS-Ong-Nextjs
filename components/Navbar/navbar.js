@@ -1,3 +1,6 @@
+import axios from "axios";
+import { useState } from "react";
+import { useRouter } from "next/router"
 import Image from "next/image";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,12 +10,33 @@ import {
     faComment,
     faBell,
     faUserCircle,
-    faPlus,
+    faArrowRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
+import Notifications from "../Notifications/notifications";
 
 const logo = require("../../src/images/logo.svg")
 
 const Navbar = () => {
+
+    const router = useRouter()
+    const logout = () => {
+
+        axios.post("/api/logout").then((res) => {
+            router.push("/login")
+        });
+
+    };
+
+    const [showNotifications, setShowNotifications] = useState(false);
+
+    const handleNotificationsClick = () => {
+        setShowNotifications(true);
+    };
+
+    const closeNotifications = () => {
+        setShowNotifications(false);
+    };
+
     return (
         <>
             <nav className="bg-white shadow-md">
@@ -80,14 +104,14 @@ const Navbar = () => {
                             </nav>
                         </div>
                         <div className="hidden md:flex items-center gap-2">
-                            <Link href="/dashboard" className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs">
+                            <Link href="/dashboard" className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs transition duration-500">
                                 <FontAwesomeIcon
                                     icon={faHome}
                                     style={{ fontSize: 15 }}
                                 />
                                 <span>Inicio</span>
                             </Link>
-                            <Link href="/conexiones" className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs">
+                            <Link href="/connections" className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs transition duration-500">
                                 <FontAwesomeIcon
                                     icon={faUserFriends}
                                     style={{ fontSize: 15 }}
@@ -95,33 +119,35 @@ const Navbar = () => {
                                 <span>Conexiones</span>
                             </Link>
                             <Link href="/messages" className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs">
+
                                 <FontAwesomeIcon
                                     icon={faComment}
                                     style={{ fontSize: 15 }}
                                 />
                                 <span>Mensajes</span>
                             </Link>
-                            <Link href="/notificaciones" className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs">
+                            <button onClick={handleNotificationsClick} className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs transition duration-500">
                                 <FontAwesomeIcon
                                     icon={faBell}
                                     style={{ fontSize: 15 }}
                                 />
                                 <span>Notificaciones</span>
-                            </Link>
+                                {showNotifications && <Notifications closeNotifications={closeNotifications} />}
+                            </button>
 
                             <div className="flex items-center border-l-2 border-gray-300">
-                                <Link href="/profile" className="text-gray-700 mx-4 hover:text-gray-400">
+                                <Link href="/profile" className="text-gray-700 mx-5 hover:text-primary transition duration-500">
                                     <FontAwesomeIcon
                                         icon={faUserCircle}
                                         style={{ fontSize: 20 }}
                                     />
                                 </Link>
-                                <Link href="/createProject" className="text-gray-700 mx-4 hover:text-primary">
+                                <button onClick={logout} className="text-gray-700 hover:text-secondary transition duration-500">
                                     <FontAwesomeIcon
-                                        icon={faPlus}
+                                        icon={faArrowRightFromBracket}
                                         style={{ fontSize: 20 }}
                                     />
-                                </Link>
+                                </button>
                             </div>
                         </div>
                     </div>
