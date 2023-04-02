@@ -118,7 +118,8 @@ const Navbar = () => {
                                 />
                                 <span>Conexiones</span>
                             </Link>
-                            <Link href="/mensajes" className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs transition duration-500">
+                            <Link href="/messages" className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs">
+
                                 <FontAwesomeIcon
                                     icon={faComment}
                                     style={{ fontSize: 15 }}
