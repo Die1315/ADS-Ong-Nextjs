@@ -1,12 +1,21 @@
 import { useEffect, useState } from "react";
 import { getCurrentOng, getPostsOwner } from "../../service/data-service";
-import Follow from "../Follow/follow";
+import Following from "../Following/following";
 import PostsList from "../PostsList/postsList";
-import ProfileCard from "./ProfileCard/profileCard";
+import CardProfile from "./CardProfile/cardProfile";
+import Footer from "../Footer/footer";
 
 function ProfileComponent() {
   const [currentOng, setDataOng] = useState([]);
   const [posts, setPosts] = useState([])
+  
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const edit = document.getElementById("edit-profile")
+
+  if (modalIsOpen){
+    edit.style.zIndex = 0
+  }
 
   useEffect(() => {
     getCurrentOng(true).then((ong) => {
@@ -28,14 +37,15 @@ function ProfileComponent() {
       <div className="container mx-auto px-2 md:px-0 py-5 flex flex-col md:flex-row gap-5">
 
         <div className="h-min w-12/12 md:w-3/12 flex flex-col justify-center items-center gap-5 bg-white rounded-md p-0">
-          <ProfileCard />
+          <CardProfile/>
         </div>
         <div className="w-12/12 md:w-6/12">
-          <PostsList posts={posts} />
+          <PostsList posts={posts}/>
         </div>
         <div className="w-12/12 md:w-3/12">
 
-          <Follow />
+          <Following />
+          <Footer />
         </div>
       </div>
     </div>

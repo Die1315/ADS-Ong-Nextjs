@@ -1,8 +1,10 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import EditProfile from "../../EditProfile/editProfile";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getCurrentOng, getPostsOwner } from "../../../service/data-service";
-import { faEnvelope, faCircleInfo, faIdBadge, faGlobe, faFacebook, faInstagram } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope, faCircleInfo, faIdBadge, faGlobe } from "@fortawesome/free-solid-svg-icons";
+import { faFacebookF, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import Link from "next/link";
 
 function ProfileComponent() {
@@ -22,7 +24,8 @@ function ProfileComponent() {
     }, []);
 
     return (
-        <div className="w-full">
+        <div className="relative w-full">
+            <EditProfile/>
             <div className="w-full h-48 flex flex-col justify-center items-center relative">
                 <Image
                     src='https://randomuser.me/api/portraits/men/17.jpg'
@@ -32,26 +35,29 @@ function ProfileComponent() {
                     object-fit="cover"
                     className="rounded-tr-md rounded-tl-md" />
             </div>
-            <div className="w-full flex flex-col gap-3 p-5">
+            <div className="w-full flex flex-col gap-5 p-5">
 
 
                 <h1 className="text-center font-bold text-2xl px-6">{currentOng.name}</h1>
-                <div className="flex justify-center items-center">
+                <div className="flex justify-center items-center gap-5">
 
                     <Link href="#">
                         <FontAwesomeIcon
                             icon={faGlobe}
-                            style={{ fontSize: 15 }} />
+                            style={{ fontSize: 15 }}
+                            className="text-dark hover:text-primary" />
                     </Link>
                     <Link href="#">
                         <FontAwesomeIcon
-                            icon={faFacebook}
-                            style={{ fontSize: 15 }} />
+                            icon={faFacebookF}
+                            style={{ fontSize: 15 }}
+                            className="text-dark hover:text-primary" />
                     </Link>
                     <Link href="#">
                         <FontAwesomeIcon
                             icon={faInstagram}
-                            style={{ fontSize: 15 }} />
+                            style={{ fontSize: 16 }}
+                            className="text-dark hover:text-primary" />
                     </Link>
                 </div>
                 <div className="w-full flex justify-start items-center gap-3">
@@ -79,6 +85,7 @@ function ProfileComponent() {
                     {currentOng.description}
                 </div>
             </div>
+            
         </div>
     )
 }
