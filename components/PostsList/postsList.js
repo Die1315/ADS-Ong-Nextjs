@@ -13,6 +13,7 @@ const PostsListFollowing = ({ posts }) => {
                     endDate={post.enddate}
                     userName={post.owner}
                     userProfilePic={post.userProfilePic}
+                    likes={post.likes}
                 />
             ))}
         </div>

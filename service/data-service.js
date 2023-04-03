@@ -88,3 +88,9 @@ export function getPostFollowing(){
               .then((response) => response.data)
               .catch((err)=>err)
 }
+
+export function toggleLike(id){
+  return axios.put(`/api/posts/${id}/like`)
+              .then((response) => response.data)
+              .catch((err)=>err)
+}

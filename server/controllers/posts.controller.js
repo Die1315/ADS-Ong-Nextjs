@@ -73,8 +73,28 @@ module.exports.postList = (req, res, next) => {
     }).catch(next);
 }
 
-module.exports.Liketoggle = (req, res, next)=>{
-
+module.exports.likeToggle = (req, res, next)=>{
+    let { id } = req.params;
+    const currentOng = req.ong
+    let like = {
+        state: false,
+        message: "unLike"
+    }
+    Post.findById(id).then((post)=>{
+        if(id in post.likes){
+            post.likes.splice(
+                post.likes.findIndex((e) => e.id === currentOng.id),
+        1
+      );                 
+        } else {
+            post.likes.push(currentOng.id)
+            like.state=true
+            like.message="like"
+        }
+        post.save()
+        res.status(200).json(like)
+    }
+    ).catch(next);
 }
 // const currentOng = req.ong;
 //     Post.find({ owner : currentOng.id})
