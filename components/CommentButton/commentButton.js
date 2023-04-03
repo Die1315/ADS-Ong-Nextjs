@@ -10,7 +10,7 @@ const CommentButton = () => {
     };
 
     return (
-        <button className="flex flex-col justify-center items-center px-4 py-2 transition duration-500 bg-dark hover:bg-primary text-xs text-white">
+        <button className="flex flex-col justify-center items-center rounded-full px-4 py-2 transition duration-200 bg-dark hover:bg-primary text-xs text-white">
             <FontAwesomeIcon
                 icon={faComment}
                 style={{ fontSize: 15 }}

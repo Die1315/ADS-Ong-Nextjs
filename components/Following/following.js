@@ -54,7 +54,7 @@ const Follow = () => {
   ];
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-4">
+    <div className="bg-white rounded-md shadow-sm p-4">
       <h3 className="font-medium text-gray-900 mb-4">ONGs con las que conectas:</h3>
       {contacts.map((contact) => (
         <Contact key={contact.name} {...contact} />

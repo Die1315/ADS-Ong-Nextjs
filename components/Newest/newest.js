@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import FollowButton from '../FollowButton/followButton'
+import Link from 'next/link';
 
 const Contact = ({ name, job, imageSrc }) => {
   return (
@@ -54,11 +55,12 @@ const Following = () => {
   ];
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-4">
-      <h3 className="font-medium text-gray-900 mb-4">ONGs con proyectos recientes:</h3>
+    <div className="w-full bg-white rounded-md shadow-sm p-4 flex flex-col gap-5">
+      <h3 className="font-medium text-gray-900">ONGs con proyectos recientes:</h3>
       {contacts.map((contact) => (
-        <Contact key={contact.name} {...contact} />
+        <Contact key={contact.name} {...contact}/>
       ))}
+      <Link href='/connections' className='w-full text-center text-primary text-sm font-semibold'>Ver más...</Link>
     </div>
   );
 };

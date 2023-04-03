@@ -7,7 +7,7 @@ const CardProfile = ({ name, title, imageSrc }) => {
     const { mostrarPostsList, setMostrarPostsList } = useContext(DashboardContext);
 
     return (
-        <div className="bg-white shadow-md rounded-md overflow-hiddenm flex flex-col items-stretch  sticky top-5">
+        <div className="bg-white shadow-sm rounded-md overflow-hiddenm flex flex-col items-stretch  sticky top-5">
             <div className="relative h-auto p-2">
                 <Image
                     src={imageSrc}
@@ -33,10 +33,10 @@ const CardProfile = ({ name, title, imageSrc }) => {
                     <p className="text-sm">15/02/23</p>
                 </div>
             </div>
-            <button onClick={() => setMostrarPostsList(!mostrarPostsList)} className='w-full transition duration-500 bg-primary hover:bg-secondary text-white hover:text-dark text-center p-4'>
+            <button onClick={() => setMostrarPostsList(!mostrarPostsList)} className={mostrarPostsList ? 'w-full bg-dark text-secondary text-center font-bold p-4 rounded-b-md' : 'w-full bg-secondary text-center font-bold p-4 rounded-b-md'}>
                 {mostrarPostsList ? 'Crear Proyecto' : 'Ver Proyectos'}
-            </button> 
-            
+            </button>
+
         </div>
     );
 };

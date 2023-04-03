@@ -1,9 +1,14 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useRouter } from "next/router";
+import { DashboardContext } from '../../pages/dashboard';
 import { registerProject, uploadCloudinary } from "../../service/data-service";
 import MapView from "../map-box/map";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const Project = () => {
+
+    const { mostrarPostsList, setMostrarPostsList } = useContext(DashboardContext);
 
     const [error, setError] = useState();
     const router = useRouter();
@@ -12,6 +17,7 @@ const Project = () => {
 
     // Cloudinary
     const [uploadFile, setUploadFile] = useState("");
+    const [preview, setPreview] = useState(null);
 
     const setLngLat = (lngLat) => {
         setUserLngLat(lngLat);
@@ -31,38 +37,43 @@ const Project = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        
+
         const formData = new FormData();
         formData.append("file", uploadFile);
         formData.append("upload_preset", "ovclfrex");
 
         uploadCloudinary(formData)
-        .then((response) => {  
-            registerProject({...dataRegister, image: response.data.secure_url})
             .then((response) => {
-                console.log(response);
-                if (response.code === "ERR_BAD_REQUEST") {
-                    setError(response.response.data.message);
-                } else {
-                    router.push("/dashboard");
-                }
+                registerProject({ ...dataRegister, image: response.data.secure_url })
+                    .then((response) => {
+                        console.log(response);
+                        if (response.code === "ERR_BAD_REQUEST") {
+                            setError(response.response.data.message);
+                        } else {
+                            router.push("/dashboard");
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(err.message);
+                    });
             })
-            .catch((err) => {
-                console.log(err.message);
+            .catch((error) => {
+                console.log(error);
             });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
     };
 
     return (
         <div className="relative w-12/12 flex flex-col gap-5 bg-white rounded-md px-4 py-6 overflow-auto">
+            <button onClick={() => setMostrarPostsList(!mostrarPostsList)} className="absolute top-6 right-5">
+                <FontAwesomeIcon
+                    icon={faTimes}
+                    style={{ fontSize: 20 }} />
+            </button>
             {/* <div className="h-screen flex flex-col md:flex-row justify-center items-stretch columns-1 md:columns-2 py-5 md:py-0 bg-register-hero bg-cover bg-center md:bg-white"> */}
             {/* <div className="static md:relative py-14 overflow-auto bg-white h-auto w-11/12 md:w-3/6 flex mx-auto flex-col justify-start items-center rounded-md md:rounded-none"> */}
             <h1 className="w-full mb-3 text-3xl fond-semibold display-1 text-dark mx-auto">Crear Proyecto</h1>
             <form onSubmit={handleSubmit}
-                  className="flex flex-col justify-center items-stretch gap-5"
+                className="flex flex-col justify-center items-stretch gap-5"
             >
                 <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3">
                     <input
@@ -106,7 +117,7 @@ const Project = () => {
                     />
                 </div> */}
                 <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3 h-64">
-                    <MapView setLngLat={setLngLat}/>
+                    <MapView setLngLat={setLngLat} />
                 </div>
                 <div className="input-group flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
                     <label>Fecha Inicio: </label>
@@ -140,7 +151,7 @@ const Project = () => {
                     <label className="block text-sm text-gray-400 px-3">
                         Imagen del Proyecto
                     </label>
-                    <div className="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
+                    <div id="img-preview" className="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
                         <div className="space-y-1 text-center">
                             <svg
                                 className="mx-auto h-12 w-12 text-gray-400"
@@ -156,24 +167,27 @@ const Project = () => {
                                     strokeLinejoin="round"
                                 />
                             </svg>
-                            <div className="flex text-sm text-gray-600">
-                                <label
-                                    htmlFor="image"
-                                    className="relative cursor-pointer rounded-md bg-white font-medium text-primary focus-within:outline-none focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 hover:text-primary"
-                                >
-                                    <span>Upload a file</span>
+                            <div className="flex flex-col gap-3 text-sm text-gray-600">
+                                <label htmlFor="image" className="relative flex flex-col w-full cursor-pointer rounded-md bg-white font-medium text-primary focus-within:outline-none focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 hover:text-primary">
+                                    <span className="font-bold w-48">Upload a file</span>
                                     <input
                                         id="image"
                                         name="image"
                                         type="file"
+                                        accept="image/*"
                                         className="sr-only"
-                                        onChange={(event) => { setUploadFile(event.target.files[0]); }}
+                                        onChange={(event) => {
+                                            const file = event.target.files[0];
+                                            const imgPreview = URL.createObjectURL(file);
+                                            setUploadFile(file);
+                                            setPreview(imgPreview);
+                                        }}
                                     />
+                                    {preview && <img src={preview} alt="Preview" className="mt-5" />}
                                 </label>
-                                <p className="pl-1">or drag and drop</p>
                             </div>
                             <p className="text-xs text-gray-500">
-                                PNG, JPG, GIF up to 10MB
+                                PNG, JPG, SVG
                             </p>
                         </div>
                     </div>
@@ -181,6 +195,9 @@ const Project = () => {
 
                 <button type="submit" className="btn mt-5">
                     Crear Proyecto
+                </button>
+                <button onClick={() => setMostrarPostsList(!mostrarPostsList)} className="btn-alt bg-dark">
+                    Cancelar
                 </button>
             </form>
 
