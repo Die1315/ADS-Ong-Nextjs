@@ -7,11 +7,11 @@ import LikeButton from '../LikeButton/likeButton'
 import CommentButton from '../CommentButton/commentButton'
 import Resources from '../Resources/resources';
 
-const Post = ({ title, description, image, startDate, endDate, userProfilePic, userName, lat, lon }) => {
+const Post = ({ key,title, description, image, startDate, endDate, userProfilePic, userName, lat, likes }) => {
 
     const [showFullDescription, setShowFullDescription] = useState(false);
     const shortDescription = description.slice(0, 120);
-    console.log(title, description, image, startDate, endDate, userProfilePic, userName)
+    console.log(key,title, description, image, startDate, endDate, userProfilePic, userName)
     const toggleDescription = () => {
         setShowFullDescription(!showFullDescription);
     };
@@ -35,7 +35,7 @@ const Post = ({ title, description, image, startDate, endDate, userProfilePic, u
                             </div>
                             <div className="flex gap-1">
                                 <CommentButton />
-                                <LikeButton />
+                                <LikeButton likes={likes} id={key}/>
                             </div>
                         </div>
                     </div>

@@ -1,63 +1,47 @@
 import Image from 'next/image';
 import FollowButton from '../FollowButton/followButton'
+import { useEffect, useState } from 'react';
+import { getConnections } from '../../service/data-service';
 
-const Contact = ({ name, job, imageSrc }) => {
+
+const Contact = ({ ong }) => {
+  
   return (
     <div className="flex justify-between items-center py-2">
       <div className='flex'>
         <div className="relative w-16 h-12 mr-3">
           <Image
-            src={imageSrc}
+            src={ong.image}
             layout="fill"
             objectFit="cover"
-            alt={`Profile picture of ${name}`}
+            alt={`Profile picture of ${ong.name}`}
             className="rounded-full"
           />
         </div>
         <div className='w-full'>
-          <h4 className="text-sm font-medium text-gray-900">{name}</h4>
-          <p className="text-sm text-gray-500">{job}</p>
+          <h4 className="text-sm font-medium text-gray-900">{ong.name}</h4>
+          <p className="text-sm text-gray-500">{}</p>
         </div>
       </div>
-      <FollowButton />
+      <FollowButton ong={ong} />
     </div>
   );
 };
 
 const Following = () => {
-  const contacts = [
-    {
-      name: 'John Doe',
-      job: 'Software Engineer',
-      imageSrc: 'https://randomuser.me/api/portraits/men/84.jpg',
-    },
-    {
-      name: 'Jane Smith',
-      job: 'UX Designer',
-      imageSrc: 'https://randomuser.me/api/portraits/women/44.jpg',
-    },
-    {
-      name: 'Bob Johnson',
-      job: 'Product Manager',
-      imageSrc: 'https://randomuser.me/api/portraits/men/97.jpg',
-    },
-    {
-      name: 'Camila Sanchez',
-      job: 'UX Designer',
-      imageSrc: 'https://randomuser.me/api/portraits/women/14.jpg',
-    },
-    {
-      name: 'Carl Johnson',
-      job: 'Product Manager',
-      imageSrc: 'https://randomuser.me/api/portraits/men/17.jpg',
-    },
-  ];
+  const [trendingConnections, setConnections] = useState([]);
+  const [search, setSearch] = useState("")
+  useEffect(()=>{
+      getConnections().then((ongs)=>{
+           setConnections(ongs)
+      })
+  }, [])
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-4">
       <h3 className="font-medium text-gray-900 mb-4">ONGs con proyectos recientes:</h3>
-      {contacts.map((contact) => (
-        <Contact key={contact.name} {...contact} />
+      {trendingConnections.sort((x,y)=> x.updatedAt - y.updatedAt).map((ong) => (
+        <Contact key={ong.name} ong={ong} />
       ))}
     </div>
   );

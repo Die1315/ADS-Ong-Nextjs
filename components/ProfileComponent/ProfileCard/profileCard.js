@@ -25,7 +25,7 @@ function ProfileComponent() {
         <div className="w-full">
             <div className="w-full h-48 flex flex-col justify-center items-center relative">
                 <Image
-                    src='https://randomuser.me/api/portraits/men/17.jpg'
+                    src={currentOng.image}
                     alt="profile picture"
                     fill={true}
                     layout="fill"

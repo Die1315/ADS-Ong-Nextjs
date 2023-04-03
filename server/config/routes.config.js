@@ -33,7 +33,7 @@ router.get('/postsGlobal', secure.auth, posts.postsGlobal);
 router.post('/postEdit/:id', secure.auth, posts.postEdit);
 router.delete('/postDelete/:id', secure.auth, posts.postDelete);
 router.get('/posts/followers', secure.auth, posts.postList);
-router.put('/posts/:id/like', secure.auth)
+router.put('/posts/:id/like', secure.auth, posts.likeToggle)
 
 // Comment
 router.post('/createComment/:id', secure.auth, comments.createComment);
