@@ -14,7 +14,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 Modal.setAppElement('#__next');
 
-const Post = ({ title, description, image, startDate, endDate, userProfilePic, userName, lat, lon }) => {
+const Post = ({ key,title, description, image, startDate, endDate, userProfilePic, userName, lat, likes }) => {
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -23,7 +23,7 @@ const Post = ({ title, description, image, startDate, endDate, userProfilePic, u
 
     const [showFullDescription, setShowFullDescription] = useState(false);
     const shortDescription = description.slice(0, 120);
-    console.log(title, description, image, startDate, endDate, userProfilePic, userName)
+    console.log(key,title, description, image, startDate, endDate, userProfilePic, userName)
     const toggleDescription = () => {
         setShowFullDescription(!showFullDescription);
     };
@@ -47,8 +47,8 @@ const Post = ({ title, description, image, startDate, endDate, userProfilePic, u
                                 <p className="text-gray-300 text-sm">De <span className="text-primary hover:cursor-pointer" onClick={handleOpenModal}>{`${formatDate(startDate.toString())}`}</span> a <span className="text-primary hover:cursor-pointer" onClick={handleOpenModal}>{endDate && `${formatDate(endDate.toString())}`}</span></p>
                             </div>
                             <div className="flex gap-1">
-                                <CommentButton onClick={handleOpenModal}/>
-                                <LikeButton />
+                                <CommentButton />
+                                <LikeButton likes={likes} id={key}/>
                             </div>
                         </div>
                     </div>
