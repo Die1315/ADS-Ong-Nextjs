@@ -40,8 +40,12 @@ h6 {
 
 @tailwind components;
 
-button.btn {
+button.btn, .btn {
   @apply w-full bg-primary hover:bg-secondary font-Ubuntu text-white font-bold uppercase rounded-md py-2 mx-auto transition duration-500;
+}
+
+button.btn-alt{
+  @apply w-full bg-dark hover:bg-light hover:text-dark border border-dark hover:border font-Ubuntu text-white font-bold uppercase rounded-md py-2 mx-auto transition duration-500;
 }
 
 @media only screen and (max-width:768px){
@@ -52,6 +56,14 @@ button.btn {
 
 form input, form textarea {
   @apply border-b-2 border-primary focus:border-secondary p-2 text-sm;
+}
+
+#edit-profile{
+  z-index: 1;
+}
+
+.post-modal{
+  @apply w-screen h-full bg-black bg-opacity-50 flex justify-center items-center fixed left-0 z-20;
 }
 
 @tailwind utilities;

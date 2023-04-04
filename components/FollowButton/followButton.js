@@ -1,13 +1,21 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import { faPlusSquare, faMinusSquare } from '@fortawesome/free-solid-svg-icons';
+import { followUnfollow } from '../../service/data-service';
 
-const LikeButton = () => {
+
+const FollowButton = ({ong}) => {
+    const [buttomState , toggleButton]  = useState(false)
+    const handleFollow = ()=>{
+        toggleButton(!buttomState)
+        followUnfollow(ong.id)
+    }
+
 
     return (
-        <button className="text-primary hover:text-dark transition duration-500">
+        <button onClick={handleFollow} className="text-primary hover:text-dark transition duration-500">
             <FontAwesomeIcon
-                icon={faPlusSquare}
+                icon={buttomState ? faMinusSquare: faPlusSquare }
                 style={{ fontSize: 30 }}
                 className=""
             />
@@ -15,4 +23,5 @@ const LikeButton = () => {
     );
 };
 
-export default LikeButton
+
+export default FollowButton

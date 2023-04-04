@@ -23,9 +23,16 @@ module.exports.postByOng = async (req, res, next) => {
     res.status(200).json(postsByOng)
 }
 
-module.exports.postsAll = async (req, res, next) => {
-    let postsAll = await Post.find();
-    res.status(200).json(postsAll)
+module.exports.postsGlobal = async (req, res, next) => {
+    const currentOng = req.ong;
+    console.log(currentOng.id)
+    let postsAll = await Post.find({owner : { $ne :currentOng.id}}).then(
+        (posts)=>{
+            console.log(posts)
+            res.status(200).json(posts)
+        }
+    ).catch(next);
+    
 }
 
 module.exports.postEdit = async (req, res, next) => {
@@ -60,14 +67,34 @@ module.exports.postDelete = (req, res, next) => {
 
 module.exports.postList = (req, res, next) => {
     const currentOng = req.ong;
-    Post.find({owner : { $in :currentOng.following}}).then((posts)=>{
-        console.log(posts)
+    Post.find({owner : { $in :currentOng.following}})
+        .then((posts)=>{
         res.status(200).json(posts)
     }).catch(next);
 }
 
-module.exports.Liketoggle = (req, res, next)=>{
-
+module.exports.likeToggle = (req, res, next)=>{
+    let { id } = req.params;
+    const currentOng = req.ong
+    let like = {
+        state: false,
+        message: "unLike"
+    }
+    Post.findById(id).then((post)=>{
+        if(id in post.likes){
+            post.likes.splice(
+                post.likes.findIndex((e) => e.id === currentOng.id),
+        1
+      );                 
+        } else {
+            post.likes.push(currentOng.id)
+            like.state=true
+            like.message="like"
+        }
+        post.save()
+        res.status(200).json(like)
+    }
+    ).catch(next);
 }
 // const currentOng = req.ong;
 //     Post.find({ owner : currentOng.id})

@@ -39,7 +39,7 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className="bg-white shadow-md">
+            <nav className="bg-white shadow-sm">
                 <div className="container mx-auto">
                     <div className="flex justify-between items-center py-2 px-4 md:px-2">
                         <div className="flex justify-start">
