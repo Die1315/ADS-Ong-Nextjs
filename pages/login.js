@@ -48,7 +48,7 @@ function LoginPage() {
                         onChange={handleChange} />
                     <Link href="#" className="text-sm text-primary w-full text-center md:text-right">¿Has olvidad la constraseña?</Link>
                     <button type="submit" className="btn">Login</button>
-                    <Link href="/register" className="w-full flex justify-center items-center bg-dark hover:bg-secondary font-Ubuntu text-white font-bold uppercase rounded-md py-2 mx-auto transition duration-500">Registrar ONG</Link>
+                    <Link href="/register" className="w-full flex justify-center items-center bg-dark hover:bg-primary font-Ubuntu text-white font-bold uppercase rounded-md py-2 mx-auto">Registrar ONG</Link>
                 </form>
                 {error && <div className="alert alert-danger">{error}</div>}
                 <Footer />

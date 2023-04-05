@@ -10,7 +10,7 @@ const Contact = ({ ong }) => {
   return (
     <div className="flex justify-between items-center py-2">
       <div className='flex'>
-        <div className="relative w-16 h-12 mr-3">
+        <div className="relative w-20 h-12 mr-3">
           <Image
             src={ong.image}
             layout="fill"
@@ -29,7 +29,7 @@ const Contact = ({ ong }) => {
   );
 };
 
-const Following = () => {
+const Trends = () => {
   const [trendingConnections, setConnections] = useState([]);
   const [search, setSearch] = useState("")
   useEffect(()=>{
@@ -40,13 +40,12 @@ const Following = () => {
 
   return (
     <div className="w-full bg-white rounded-md shadow-sm p-4 flex flex-col gap-5">
-      <h3 className="font-medium text-gray-900 mb-4">ONGs con proyectos recientes:</h3>
+      <h3 className="font-medium text-gray-900 mb-4">ONGs más populares:</h3>
       {trendingConnections.sort((x,y)=> x.updatedAt - y.updatedAt).map((ong) => (
         <Contact key={ong.name} ong={ong} />
       ))}
-      <Link href='/connections' className='w-full text-center text-primary text-sm font-semibold'>Ver más...</Link>
     </div>
   );
 };
 
-export default Following;
+export default Trends;

@@ -10,15 +10,18 @@ import {
     faComment,
     faBell,
     faUserCircle,
-    faArrowRightFromBracket,
+    faArrowRightFromBracket
 } from "@fortawesome/free-solid-svg-icons";
 import Notifications from "../Notifications/notifications";
+import CreateProjectButton from "../CreateProjectButton/createProjectButton";
 
 const logo = require("../../src/images/logo.svg")
 
-const Navbar = () => {
+const Navbar = ({ createPost }) => {
+
 
     const router = useRouter()
+
     const logout = () => {
 
         axios.post("/api/logout").then((res) => {
@@ -32,7 +35,6 @@ const Navbar = () => {
     const handleNotificationsClick = () => {
         setShowNotifications(true);
     };
-
     const closeNotifications = () => {
         setShowNotifications(false);
     };
@@ -42,7 +44,7 @@ const Navbar = () => {
             <nav className="bg-white shadow-sm">
                 <div className="container mx-auto">
                     <div className="flex justify-between items-center py-2 px-4 md:px-2">
-                        <div className="flex justify-start">
+                        <div className="flex justify-start items-center gap-5">
                             <Link href="/dashboard" className="text-gray-800 text-xl font-bold">
                                 <Image
                                     src={logo}
@@ -50,6 +52,7 @@ const Navbar = () => {
                                     width={100}
                                 />
                             </Link>
+                            {createPost && (<CreateProjectButton />)}
                         </div>
                         <div className="lg:hidden">
                             <button className="navbar-burger flex items-center text-dark p-3">
@@ -104,14 +107,14 @@ const Navbar = () => {
                             </nav>
                         </div>
                         <div className="hidden md:flex items-center gap-2">
-                            <Link href="/dashboard" className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs transition duration-500">
+                            <Link href="/dashboard" className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs">
                                 <FontAwesomeIcon
                                     icon={faHome}
                                     style={{ fontSize: 15 }}
                                 />
                                 <span>Inicio</span>
                             </Link>
-                            <Link href="/connections" className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs transition duration-500">
+                            <Link href="/connections" className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs">
                                 <FontAwesomeIcon
                                     icon={faUserFriends}
                                     style={{ fontSize: 15 }}
@@ -126,7 +129,7 @@ const Navbar = () => {
                                 />
                                 <span>Mensajes</span>
                             </Link>
-                            <button onClick={handleNotificationsClick} className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs transition duration-500">
+                            <button onClick={handleNotificationsClick} className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs">
                                 <FontAwesomeIcon
                                     icon={faBell}
                                     style={{ fontSize: 15 }}
@@ -135,14 +138,14 @@ const Navbar = () => {
                                 {showNotifications && <Notifications closeNotifications={closeNotifications} />}
                             </button>
 
-                            <div className="flex items-center border-l-2 border-gray-300">
-                                <Link href="/profile" className="text-gray-700 mx-5 hover:text-primary transition duration-500">
+                            <div className="flex items-center border-l-2 border-gray-300 gap-5 px-5">
+                                <Link href="/profile" className="text-dark hover:text-primary">
                                     <FontAwesomeIcon
                                         icon={faUserCircle}
                                         style={{ fontSize: 20 }}
                                     />
                                 </Link>
-                                <button onClick={logout} className="text-gray-700 hover:text-secondary transition duration-500">
+                                <button onClick={logout} className="text-dark hover:text-secondary">
                                     <FontAwesomeIcon
                                         icon={faArrowRightFromBracket}
                                         style={{ fontSize: 20 }}

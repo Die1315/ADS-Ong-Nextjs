@@ -1,10 +1,10 @@
 
-import Navbar from "../components/Navbar/navBar";
+import Navbar from "../components/Navbar/navbar";
 import ContactCard from "../components/CardConexion/cardConexion";
 import SearchBar from "../components/SearchBar/searchBar";
-import Following from "../components/Following/following";
+import Trends from "../components/ConnectionTrends/connectionTrends";
 import Footer from "../components/Footer/footer";
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import { getConnections } from "../service/data-service";
 
 const logo = require("../src/images/logo.svg")
@@ -12,9 +12,9 @@ const logo = require("../src/images/logo.svg")
 function Conexiones() {
     const [trendingConnections, setConnections] = useState([]);
     const [search, setSearch] = useState("")
-    useEffect(()=>{
-        getConnections().then((ongs)=>{
-             setConnections(ongs)
+    useEffect(() => {
+        getConnections().then((ongs) => {
+            setConnections(ongs)
         })
     }, [])
     return (
@@ -24,15 +24,14 @@ function Conexiones() {
                 <div className="w-12/12 md:w-9/12 flex flex-col gap-5">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         {trendingConnections.filter((ong) => ong.name.includes(search)).map((ong, i) => (
-                            <ContactCard ong={ong}         
-                            />
+                            <ContactCard ong={ong}/>
                         ))}
                     </div>
                 </div>
                 <div className="w-12/12 md:w-3/12 flex flex-col gap-5">
-                    <SearchBar search={search} onSearch={setSearch}/>
-                    <Following/>
-                    <Footer/>
+                    <SearchBar search={search} onSearch={setSearch} />
+                    <Trends />
+                    <Footer />
                 </div>
             </div>
         </div>

@@ -15,7 +15,7 @@ const SearchBar = ({ search, onSearch }) => {
                     onSearch(event.target.value);
                 }}
             />
-            <button className="w-2/12 h-12 bg-gray-100 rounded-r-full text-dark font-bold py-2 px-4 transition duration-500">
+            <button className="w-2/12 h-12 bg-gray-100 rounded-r-full text-dark font-bold py-2 px-4">
                 <FontAwesomeIcon
                     icon={faSearch}
                     style={{ fontSize: 15 }} />
