@@ -11,7 +11,7 @@ const Contact = ({ ong }) => {
   return (
     <div className="flex justify-between items-center py-2">
       <div className='flex'>
-        <div className="relative w-16 h-12 mr-3">
+        <div className="relative w-20 h-12 mr-3">
           <Image
             src={ong.image}
             layout="fill"
@@ -30,7 +30,7 @@ const Contact = ({ ong }) => {
   );
 };
 
-const Following = () => {
+const Newest = () => {
   const [trendingConnections, setConnections] = useState([]);
   useEffect(()=>{
       getConnections().then((ongs)=>{
@@ -50,4 +50,4 @@ const Following = () => {
   );
 };
 
-export default Following;
+export default Newest;

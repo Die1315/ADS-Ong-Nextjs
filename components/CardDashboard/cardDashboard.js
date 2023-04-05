@@ -33,7 +33,7 @@ const CardProfile = ({ name, title, imageSrc }) => {
                     <p className="text-sm">15/02/23</p>
                 </div>
             </div>
-            <button onClick={() => setMostrarPostsList(!mostrarPostsList)} className={mostrarPostsList ? 'w-full bg-dark text-secondary text-center font-bold p-4 rounded-b-md' : 'w-full bg-secondary text-center font-bold p-4 rounded-b-md'}>
+            <button onClick={() => setMostrarPostsList(!mostrarPostsList)} className={mostrarPostsList ? 'w-full bg-dark text-light hover:text-secondary text-center font-bold p-4 rounded-b-md' : 'w-full bg-secondary text-center font-bold p-4 rounded-b-md'}>
                 {mostrarPostsList ? 'Crear Proyecto' : 'Ver Proyectos'}
             </button>
 

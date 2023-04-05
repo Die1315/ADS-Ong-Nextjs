@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { register, uploadCloudinary } from "../service/data-service";
 import Image from "next/image";
+import Link from "next/link";
 
 const logo = require("../src/images/logo.svg");
 
@@ -12,7 +13,7 @@ function addOng() {
 
   // Cloudinary
   const [uploadFile, setUploadFile] = useState("");
-  
+
   const handleChange = (event) => {
 
     setDataRegister({
@@ -23,7 +24,7 @@ function addOng() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if(dataRegister.password === dataRegister.passwordConfirmation){
+    if (dataRegister.password === dataRegister.passwordConfirmation) {
 
 
       const formData = new FormData();
@@ -31,8 +32,8 @@ function addOng() {
       formData.append("upload_preset", "ovclfrex");
 
       uploadCloudinary(formData)
-        .then((response) => {        
-            register({...dataRegister, image: response.data.secure_url})
+        .then((response) => {
+          register({ ...dataRegister, image: response.data.secure_url })
             .then((response) => {
               if (response.code === "ERR_BAD_REQUEST") {
                 setError(response.response.data.message);
@@ -49,15 +50,15 @@ function addOng() {
           console.log(error);
         });
 
-      } else{
-          setError("Las contraseñas no coinciden.")
-      }
+    } else {
+      setError("Las contraseñas no coinciden.")
+    }
   };
 
   return (
     <div className="h-screen flex flex-col md:flex-row justify-center items-stretch columns-1 md:columns-2 py-5 md:py-0 bg-register-hero bg-cover bg-center md:bg-white">
       <div className="static md:relative py-14 overflow-auto bg-white h-auto w-11/12 md:w-3/6 flex mx-auto flex-col justify-start items-center rounded-md md:rounded-none">
-        <Image src={logo} alt="logo Help Go" width="200" />
+        <Link href="/login"><Image src={logo} alt="logo Help Go" width="200" /></Link>
         <p className="w-5/6 md:w-4/6 my-5 text-center mx-auto">
           Registra tu ONG y ponte en contacto con la ayuda
         </p>
@@ -193,6 +194,7 @@ function addOng() {
           <button type="submit" className="btn mt-5">
             Registrar ONG
           </button>
+          <Link href="/login" className="btn text-center">Iniciar sesión</Link>
         </form>
         {error && <div className="alert alert-danger">{error}</div>}
       </div>

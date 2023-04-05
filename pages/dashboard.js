@@ -1,9 +1,9 @@
 import { useState, useEffect, createContext } from "react";
 
-import Navbar from "../components/Navbar/navBar";
+import Navbar from "../components/Navbar/navbar";
 import Footer from "../components/Footer/footer";
 import CardDashboard from "../components/CardDashboard/cardDashboard";
-import Newest from "../components/Newest/newest";
+import Newest from "../components/ConnectionNewest/connectionNewest";
 import PostsList from "../components/PostsList/postsList";
 import Project from '../components/Project/project';
 import { getGLobalPosts, getPostFollowing } from "../service/data-service";
@@ -48,7 +48,7 @@ function Dashboard() {
 
     <DashboardContext.Provider value={{ mostrarPostsList, setMostrarPostsList }}>
 
-      <Navbar /><div className="container mx-auto px-2 md:px-0 py-5 flex flex-col md:flex-row gap-5">
+      <Navbar createPost={true}/><div className="container mx-auto px-2 md:px-0 py-5 flex flex-col md:flex-row gap-5">
         <div className="w-12/12 md:w-3/12 flex flex-col gap-5">
           <CardDashboard
             name="Nombre ONG"
@@ -58,8 +58,8 @@ function Dashboard() {
         </div>
         <div className="w-12/12 md:w-6/12 flex flex-col gap-5">
           {mostrarPostsList ? <div className="flex justify-around items-center gap-1">
-            <button onClick={handlePosts} name="global" className={`py-2 font-bold text-sm w-3/6 rounded-md ${!typePosts ? 'bg-white text-dark' : ' bg-gray-500 text-primary'}`}>Global</button>
-            <button onClick={handlePosts} name="following" className={`py-2 font-bold text-sm w-3/6 rounded-md ${typePosts ? 'bg-white text-dark' : 'bg-gray-500 text-primary'}`}>ONGs que sigo</button>
+            <button onClick={handlePosts} name="global" className={`py-2 font-bold text-sm w-3/6 rounded-md ${!typePosts ? 'bg-white text-gray-400 hover:text-primary' : ' bg-gray-200 text-dark'}`}>Global</button>
+            <button onClick={handlePosts} name="following" className={`py-2 font-bold text-sm w-3/6 rounded-md ${typePosts ? 'bg-white text-gray-400 hover:text-primary' : 'bg-gray-200 text-dark'}`}>ONGs que sigo</button>
           </div> : <></>}
 
           {mostrarPostsList ? <PostsList posts={posts} search={search}/> : <Project />}

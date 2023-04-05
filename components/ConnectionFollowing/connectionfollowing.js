@@ -5,7 +5,7 @@ const Contact = ({ name, job, imageSrc }) => {
   return (
     <div className="flex justify-between items-center py-2">
       <div className='flex'>
-        <div className="relative w-16 h-12 mr-3">
+        <div className="relative w-20 h-12 mr-3">
           <Image
             src={imageSrc}
             layout="fill"
@@ -24,7 +24,7 @@ const Contact = ({ name, job, imageSrc }) => {
   );
 };
 
-const Follow = () => {
+const Following = () => {
   const contacts = [
     {
       name: 'John Doe',
@@ -55,7 +55,7 @@ const Follow = () => {
 
   return (
     <div className="bg-white rounded-md shadow-sm p-4">
-      <h3 className="font-medium text-gray-900 mb-4">ONGs con las que conectas:</h3>
+      <h3 className="font-medium text-gray-900 mb-4">ONGs que sigues:</h3>
       {contacts.map((contact) => (
         <Contact key={contact.name} {...contact} />
       ))}
@@ -63,4 +63,4 @@ const Follow = () => {
   );
 };
 
-export default Follow;
+export default Following;

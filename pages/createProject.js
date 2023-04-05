@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Project from '../components/Project/project';
 
 
-import Navbar from "../components/Navbar/navBar";
+import Navbar from "../components/Navbar/navbar";
 import CardProfile from "../components/CardProfile/cardProfile";
 import CardTags from "../components/CardTags/cardTags";
 import CardContacts from "../components/Following/following";

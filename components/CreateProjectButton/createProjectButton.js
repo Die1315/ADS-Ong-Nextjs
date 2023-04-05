@@ -1,0 +1,23 @@
+import Link from "next/link"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons"
+import { useContext } from 'react';
+import { DashboardContext } from '../../pages/dashboard';
+
+function CreateProjectButton() {
+
+    const { mostrarPostsList, setMostrarPostsList } = useContext(DashboardContext);
+
+    return (
+
+        <Link href="" onClick={() => setMostrarPostsList(!mostrarPostsList)}>
+            <FontAwesomeIcon
+                icon={faPlusCircle}
+                style={{ fontSize: 20 }}
+                className={mostrarPostsList ? "transform rotate-0  text-secondary" : "transform rotate-45 text-dark"}
+            />
+        </Link>
+    )
+}
+
+export default CreateProjectButton

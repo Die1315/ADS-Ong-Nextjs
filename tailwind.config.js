@@ -27,12 +27,9 @@ module.exports = {
         Ubuntu: ["Ubuntu", "sans-serif"],
         Raleway: ["Raleway", "sans-serif"]
       },
-      transitionDuration: {
-        '500': '0.5s',
-      },
-      transitionTimingFunction: {
-        'in-out': 'ease-in-out',
-      },
+      transitionDelay: {
+        '0': '0ms',
+      }
     },
   },
   plugins: [],

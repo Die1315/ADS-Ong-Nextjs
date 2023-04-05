@@ -1,11 +1,11 @@
-import Navbar from "../components/Navbar/navBar";
+import Navbar from "../components/Navbar/navbar";
 import ProfileComponent from "../components/ProfileComponent/profileComponent";
 
 function Profile() {
 
   return (
     <div>
-      <Navbar />
+      <Navbar createPost={false} />
       <ProfileComponent/>
     </div>
   );

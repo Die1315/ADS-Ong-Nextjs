@@ -16,6 +16,7 @@ const PostsList = ({ posts, search }) => {
                     userName={post.owner.name}
                     userProfilePic={post.owner.image}
                     likes={post.likes}
+                    resources={post.resources}
                     id={post.id}
                 />
             ))}
