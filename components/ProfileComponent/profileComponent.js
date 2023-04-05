@@ -11,7 +11,6 @@ function ProfileComponent() {
   
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const edit = document.getElementById("edit-profile")
 
   if (modalIsOpen){
     edit.style.zIndex = 0

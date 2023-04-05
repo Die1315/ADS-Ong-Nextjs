@@ -17,6 +17,7 @@ function Dashboard() {
 
   const [mostrarPostsList, setMostrarPostsList] = useState(true);
   const [posts, setPosts] = useState([]);
+  const [search, setSearch] = useState("");
   const [typePosts, setToggleGlobalPosts] = useState(true);
 
   const handlePosts = (event) => {
@@ -61,12 +62,12 @@ function Dashboard() {
             <button onClick={handlePosts} name="following" className={`py-2 font-bold text-sm w-3/6 rounded-md ${typePosts ? 'bg-white text-dark' : 'bg-gray-500 text-primary'}`}>ONGs que sigo</button>
           </div> : <></>}
 
-          {mostrarPostsList ? <PostsList posts={posts} /> : <Project />}
+          {mostrarPostsList ? <PostsList posts={posts} search={search}/> : <Project />}
 
 
         </div>
         <div className="w-12/12 md:w-3/12 flex flex-col gap-5">
-          <SearchBar />
+          <SearchBar search={search} onSearch={setSearch}/>
           <Newest />
           <Footer />
         </div>

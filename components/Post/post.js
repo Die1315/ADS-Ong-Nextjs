@@ -14,7 +14,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 Modal.setAppElement('#__next');
 
-const Post = ({ key,title, description, image, startDate, endDate, userProfilePic, userName, lat, likes }) => {
+const Post = ({ id,title, description, image, startDate, endDate, userProfilePic, userName, lat, likes }) => {
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -23,7 +23,6 @@ const Post = ({ key,title, description, image, startDate, endDate, userProfilePi
 
     const [showFullDescription, setShowFullDescription] = useState(false);
     const shortDescription = description.slice(0, 120);
-    console.log(key,title, description, image, startDate, endDate, userProfilePic, userName)
     const toggleDescription = () => {
         setShowFullDescription(!showFullDescription);
     };
@@ -48,7 +47,7 @@ const Post = ({ key,title, description, image, startDate, endDate, userProfilePi
                             </div>
                             <div className="flex gap-1">
                                 <CommentButton />
-                                <LikeButton likes={likes} id={key}/>
+                                <LikeButton likes={likes} id={id}/>
                             </div>
                         </div>
                     </div>
