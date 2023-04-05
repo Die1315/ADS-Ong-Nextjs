@@ -31,7 +31,7 @@ const Post = ({ key, title, description, image, startDate, endDate, userProfileP
 
     const [showFullDescription, setShowFullDescription] = useState(false);
     const shortDescription = description.slice(0, 120);
-    console.log(key, title, description, image, startDate, endDate, userProfilePic, userName, resources)
+
     const toggleDescription = () => {
         setShowFullDescription(!showFullDescription);
     };
@@ -54,8 +54,10 @@ const Post = ({ key, title, description, image, startDate, endDate, userProfileP
                             </div>
                         </div>
                         <div className='w-2/12 flex items-stretch justify-end'>
-                            <CommentButton />
-                            <LikeButton likes={likes} id={key} />
+                            <div className="flex gap-1">
+                                <CommentButton />
+                                <LikeButton likes={likes} id={id} />
+                            </div>
                         </div>
                     </div>
                 </div>

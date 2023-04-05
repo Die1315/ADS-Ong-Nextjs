@@ -3,6 +3,7 @@ import FollowButton from '../FollowButton/followButton'
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { getConnections } from '../../service/data-service';
+import { formatDate } from '../../utils/dateUtils';
 
 
 const Contact = ({ ong }) => {
@@ -31,7 +32,6 @@ const Contact = ({ ong }) => {
 
 const Newest = () => {
   const [trendingConnections, setConnections] = useState([]);
-  const [search, setSearch] = useState("")
   useEffect(()=>{
       getConnections().then((ongs)=>{
            setConnections(ongs)
@@ -41,9 +41,10 @@ const Newest = () => {
   return (
     <div className="w-full bg-white rounded-md shadow-sm p-4 flex flex-col gap-5">
       <h3 className="font-medium text-gray-900 mb-4">ONGs con proyectos recientes:</h3>
-      {trendingConnections.sort((x,y)=> x.updatedAt - y.updatedAt).map((ong) => (
+      {trendingConnections.sort((x,y)=>  y.updatedAt.localeCompare(x.updatedAt)).map((ong) => {
+       return (
         <Contact key={ong.name} ong={ong} />
-      ))}
+      )})}
       <Link href='/connections' className='w-full text-center text-primary text-sm font-semibold'>Ver más...</Link>
     </div>
   );

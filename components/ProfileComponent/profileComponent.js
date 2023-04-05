@@ -11,6 +11,16 @@ import Project from "../Project/project";
 
 function ProfileComponent() {
   const [posts, setPosts] = useState([])
+<<<<<<< HEAD
+=======
+  
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+
+  if (modalIsOpen){
+    edit.style.zIndex = 0
+  }
+>>>>>>> dev
 
   useEffect(() => {
     getPostsOwner().then((posts) => {
