@@ -23,7 +23,7 @@ function ProfileComponent() {
   const [activeItem, setActiveItem] = useState("Proyectos");
 
   let componentToRender;
-  if (activeItem === 'posts') {
+  if (activeItem === 'Proyectos') {
     componentToRender = <PostsList />;
   } else if (activeItem === 'contacts') {
     componentToRender = <ConnectionsList />;
@@ -43,7 +43,7 @@ function ProfileComponent() {
           <ProfileDetails />
         </div>
         <div className="w-12/12 md:w-6/12">
-          {activeItem === "Proyectos" && <PostsList posts={posts} />}
+          {activeItem === "Proyectos" && <PostsList posts={posts} search={""} />}
           {activeItem === "Conexiones" && <ConnectionsList />}
           {activeItem === "Información" && <p>Información del perfil</p>}
         </div>
