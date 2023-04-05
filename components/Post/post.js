@@ -14,7 +14,7 @@ import { formatDate } from '../../utils/dateUtils';
 
 Modal.setAppElement('#__next');
 
-const Post = ({ key, title, description, image, startDate, endDate, userProfilePic, userName, lat, likes, resources }) => {
+const Post = ({ id, title, description, image, startDate, endDate, userProfilePic, userName, lat, likes, resources }) => {
 
     const exampleComments = [
         'Este es un comentario de ejemplo',
