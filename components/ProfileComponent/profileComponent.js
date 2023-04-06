@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
 import { getPostsOwner } from "../../service/data-service";
-import Following from "../ConnectionFollowing/connectionfollowing";
-import PostsList from "../PostsList/postsList";
+
 import CardProfile from "./CardProfile/cardProfile";
-import ProfileDetails from "./ProfileDetails/profileDetails";
-import Footer from "../Footer/footer";
 import MenuProfile from "../MenuProfile/menuProfile";
+import ProfileDetails from "./ProfileDetails/profileDetails";
+import PostsList from "../PostsList/postsList";
+import InfoProfile from "../InfoProfile/infoProfile"
 import ConnectionsList from "../ConnectionsList/connectionsList";
+import EditCover from "../EditCover/editCover";
+import EditProfile from "../EditProfile/editProfile";
 import Project from "../Project/project";
+import Following from "../ConnectionFollowing/connectionfollowing";
+import Footer from "../Footer/footer";
 
 function ProfileComponent() {
   const [posts, setPosts] = useState([])
@@ -45,7 +49,9 @@ function ProfileComponent() {
         <div className="w-12/12 md:w-6/12">
           {activeItem === "Proyectos" && <PostsList posts={posts} search={""} />}
           {activeItem === "Conexiones" && <ConnectionsList />}
-          {activeItem === "Información" && <p>Información del perfil</p>}
+          {activeItem === "Información" && <InfoProfile/>}
+          {activeItem === "Perfil" && <EditProfile/>}
+          {activeItem === "Portada" && <EditCover/>}
         </div>
         <div className="w-12/12 md:w-3/12">
 

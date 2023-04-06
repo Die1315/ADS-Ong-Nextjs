@@ -1,5 +1,6 @@
 import { useState, useEffect, createContext } from "react";
 
+import Loading from "../components/Loading/loading";
 import Navbar from "../components/Navbar/navbar";
 import Footer from "../components/Footer/footer";
 import CardDashboard from "../components/CardDashboard/cardDashboard";
@@ -14,6 +15,16 @@ const logo = require("../src/images/logo.svg")
 export const DashboardContext = createContext();
 
 function Dashboard() {
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+
+    return () => clearTimeout(timeoutId);
+  }, []);
 
   const [mostrarPostsList, setMostrarPostsList] = useState(true);
   const [posts, setPosts] = useState([]);
@@ -45,35 +56,39 @@ function Dashboard() {
 
 
   return (
+    <>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <DashboardContext.Provider value={{ mostrarPostsList, setMostrarPostsList }}>
 
-    <DashboardContext.Provider value={{ mostrarPostsList, setMostrarPostsList }}>
+          <Navbar createPost={true} /><div className="container mx-auto px-2 md:px-0 py-5 flex flex-col md:flex-row gap-5">
+            <div className="w-12/12 md:w-3/12 relative">
+              <CardDashboard
+                name="Nombre ONG"
+                title="Categoría/Descripción"
+                imageSrc={logo}
+                onClick={() => setMostrarPostsList(!mostrarPostsList)} />
+            </div>
+            <div className="w-12/12 md:w-6/12 flex flex-col gap-5">
+              {mostrarPostsList ? <div className="flex justify-around items-center gap-1">
+                <button onClick={handlePosts} name="global" className={`py-2 font-bold text-sm w-3/6 rounded-md ${!typePosts ? 'bg-white text-gray-400 hover:text-primary' : ' bg-gray-200 text-dark'}`}>Global</button>
+                <button onClick={handlePosts} name="following" className={`py-2 font-bold text-sm w-3/6 rounded-md ${typePosts ? 'bg-white text-gray-400 hover:text-primary' : 'bg-gray-200 text-dark'}`}>ONGs que sigo</button>
+              </div> : <></>}
 
-      <Navbar createPost={true}/><div className="container mx-auto px-2 md:px-0 py-5 flex flex-col md:flex-row gap-5">
-        <div className="w-12/12 md:w-3/12 flex flex-col gap-5">
-          <CardDashboard
-            name="Nombre ONG"
-            title="Categoría/Descripción"
-            imageSrc={logo}
-            onClick={() => setMostrarPostsList(!mostrarPostsList)} />
-        </div>
-        <div className="w-12/12 md:w-6/12 flex flex-col gap-5">
-          {mostrarPostsList ? <div className="flex justify-around items-center gap-1">
-            <button onClick={handlePosts} name="global" className={`py-2 font-bold text-sm w-3/6 rounded-md ${!typePosts ? 'bg-white text-gray-400 hover:text-primary' : ' bg-gray-200 text-dark'}`}>Global</button>
-            <button onClick={handlePosts} name="following" className={`py-2 font-bold text-sm w-3/6 rounded-md ${typePosts ? 'bg-white text-gray-400 hover:text-primary' : 'bg-gray-200 text-dark'}`}>ONGs que sigo</button>
-          </div> : <></>}
-
-          {mostrarPostsList ? <PostsList posts={posts} search={search}/> : <Project />}
+              {mostrarPostsList ? <PostsList posts={posts} search={search} /> : <Project />}
 
 
-        </div>
-        <div className="w-12/12 md:w-3/12 flex flex-col gap-5">
-          <SearchBar search={search} onSearch={setSearch}/>
-          <Newest />
-          <Footer />
-        </div>
-      </div>
-    </DashboardContext.Provider >
-
+            </div>
+            <div className="w-12/12 md:w-3/12 flex flex-col gap-5">
+              <SearchBar search={search} onSearch={setSearch} />
+              <Newest />
+              <Footer />
+            </div>
+          </div>
+        </DashboardContext.Provider >
+      )}
+    </>
   );
 }
 

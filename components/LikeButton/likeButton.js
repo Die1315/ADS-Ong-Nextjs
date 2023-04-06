@@ -23,13 +23,13 @@ const LikeButton = ({likes, id}) => {
     
 
     return (
-        <button  onClick={handleLikeClick}  className="flex flex-col justify-center items-center  px-4 py-2 transition duration-200 bg-transparent hover:bg-secondary text-xs text-white">
+        <button  onClick={handleLikeClick}  className={like ? "bg-secondary text-dark flex flex-col justify-center items-center border-l border-gray-400 px-4 py-2 transition duration-200 text-xs" : "bg-transparent hover:bg-secondary text-white flex flex-col justify-center items-center border-l border-gray-400 px-4 py-2 transition duration-200 text-xs"}>
             <FontAwesomeIcon
                 icon={faHeart}
                 style={{ fontSize: 15 }}
+                className={like ? "text-red-500" : "text-inherit"}
             />
             <span>{like}</span>
-            <button className="sr-only">Like</button>
         </button>
     );
 };

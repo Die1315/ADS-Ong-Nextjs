@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import { getCurrentOng, getPostsOwner } from "../../../service/data-service";
-import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faGlobe,
+    faLink,
     faCircleInfo,
     faEnvelope,
     faIdBadge
 } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faInstagram } from "@fortawesome/free-brands-svg-icons";
+import Link from "next/link";
+
+import { getCurrentOng } from "../../../service/data-service";
 
 function ProfileDetails() {
     const [currentOng, setDataOng] = useState([]);
@@ -26,7 +27,7 @@ function ProfileDetails() {
 
     return (
         <div className="flex flex-col gap-5">
-            <h2 className="font-Ubuntu font-bold text-xl">Detalles</h2>
+            <h2 className="font-bold text-xl">Detalles</h2>
             <div className="flex justify-start items-center gap-5">
                 <FontAwesomeIcon
                     icon={faEnvelope}
@@ -50,23 +51,20 @@ function ProfileDetails() {
             </div>
             <div className="flex justify-start items-center gap-5">
 
-                <Link href="#">
+                <Link href="#" className="bg-dark flex justify-center items-center text-light hover:text-primary rounded-full w-10 h-10">
                     <FontAwesomeIcon
-                        icon={faGlobe}
-                        style={{ fontSize: 15 }}
-                        className="text-dark hover:text-primary" />
+                        icon={faLink}
+                        style={{ fontSize: 15 }} />
                 </Link>
-                <Link href="#">
+                <Link href="#" className="bg-dark flex justify-center items-center text-light hover:text-primary rounded-full w-10 h-10">
                     <FontAwesomeIcon
                         icon={faFacebookF}
-                        style={{ fontSize: 15 }}
-                        className="text-dark hover:text-primary" />
+                        style={{ fontSize: 15 }} />
                 </Link>
-                <Link href="#">
+                <Link href="#" className="bg-dark flex justify-center items-center text-light hover:text-primary rounded-full w-10 h-10">
                     <FontAwesomeIcon
                         icon={faInstagram}
-                        style={{ fontSize: 16 }}
-                        className="text-dark hover:text-primary" />
+                        style={{ fontSize: 16 }} />
                 </Link>
             </div>
         </div>

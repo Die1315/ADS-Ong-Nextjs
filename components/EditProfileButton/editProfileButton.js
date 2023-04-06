@@ -25,7 +25,7 @@ const EditProfileButton = () => {
           <div>
             <Link
               href="#"
-              className="block px-4 py-3 text-sm rounded-b-md text-gray-700 hover:bg-primary hover:text-gray-900"
+              className="block px-4 py-3 text-sm rounded-t-md text-gray-700 hover:bg-primary hover:text-gray-900"
             >
               Editar portada
             </Link>
