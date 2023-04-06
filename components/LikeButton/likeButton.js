@@ -23,7 +23,7 @@ const LikeButton = ({likes, id}) => {
     
 
     return (
-        <button  onClick={handleLikeClick}  className="flex flex-col justify-center items-center rounded-full px-4 py-2 transition duration-200 bg-dark hover:bg-secondary text-xs text-white">
+        <button  onClick={handleLikeClick}  className="flex flex-col justify-center items-center  px-4 py-2 transition duration-200 bg-transparent hover:bg-secondary text-xs text-white">
             <FontAwesomeIcon
                 icon={faHeart}
                 style={{ fontSize: 15 }}
