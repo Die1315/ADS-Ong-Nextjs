@@ -132,7 +132,7 @@ const ProjectForm = () => {
                             />
                         </svg>
                         <div className="flex flex-col gap-3 text-sm text-gray-600">
-                            <label htmlFor="image" className="relative flex flex-col w-full cursor-pointer rounded-md bg-white font-medium text-primary focus-within:outline-none focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 hover:text-primary">
+                            <label htmlFor="image" className="relative flex flex-col justify-center items-center w-full cursor-pointer rounded-md bg-white font-medium text-primary focus-within:outline-none focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 hover:text-primary">
                                 <span className="font-bold w-48">Upload a file</span>
                                 <input
                                     id="image"

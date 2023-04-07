@@ -1,6 +1,7 @@
 import React from "react";
-import FollowButton from "../FollowButton/followButton"
 import Image from "next/image";
+
+import FollowButton from "../FollowButton/followButton"
 
 const CardConexion = ({ ong }) => {
   return (
@@ -8,9 +9,8 @@ const CardConexion = ({ ong }) => {
       <Image 
       src={ong.image} 
       alt={ong.name}
-      width="200"
-      height="150"
-      objectFit="contain"
+      width={320}
+      height={150}
       className="w-full h-24 object-cover"  />
       <div className="bg-white flex justify-between items-center p-4">
         <div className="flex flex-col">

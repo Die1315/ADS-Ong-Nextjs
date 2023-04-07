@@ -1,23 +1,33 @@
-import { useContext } from 'react';
-import { DashboardContext } from '../../pages/dashboard';
+import { useEffect, useState, useContext } from 'react';
 import Image from 'next/image';
+
+import { DashboardContext } from '../../pages/dashboard';
+import { getCurrentOng, getPostsOwner } from "../../service/data-service";
 
 const CardProfile = ({ name, title, imageSrc }) => {
 
     const { mostrarPostsList, setMostrarPostsList } = useContext(DashboardContext);
+    const [currentOng, setDataOng] = useState([]);
+
+    useEffect(() => {
+        getCurrentOng(true).then((ong) => {
+            setDataOng(ong);
+        });
+    }, []);
 
     return (
-        <div className="bg-white shadow-sm rounded-md overflow-hiddenm flex flex-col items-stretch  sticky top-5">
-            <div className="relative h-auto p-2">
+        <div className="bg-white shadow-sm rounded-md overflow-hiddenm flex flex-col items-stretch sticky top-5">
+            <div className="relative ">
                 <Image
-                    src={imageSrc}
-                    width="200"
-                    alt={`Profile picture of ${name}`}
-                    className="mx-auto mt-5"
+                    src={currentOng.image}
+                    alt={`Profile picture of ${currentOng.name}`}
+                    width={320}
+                    height={150}
+                    className="w-full h-32 object-cover rounded-t-md"
                 />
             </div>
             <div className="px-6 py-4 text-center ">
-                <h3 className="text-lg font-medium text-gray-900">{name}</h3>
+                <h3 className="text-3xl font-bold text-gray-900">{currentOng.name}</h3>
                 <p className="text-sm text-gray-600">{title}</p>
             </div>
             <hr />
@@ -28,8 +38,8 @@ const CardProfile = ({ name, title, imageSrc }) => {
                     <p className="text-sm">Última actualización:</p>
                 </div>
                 <div className="w-2/6 flex flex-col gap-2 text-right text-primary font-semibold">
-                    <p className="text-sm">2</p>
-                    <p className="text-sm">115</p>
+                    <p className="text-sm">{currentOng.posts?.length}</p>
+                    <p className="text-sm">{currentOng.following?.length}</p>
                     <p className="text-sm">15/02/23</p>
                 </div>
             </div>

@@ -16,7 +16,6 @@ const CommentButton = () => {
                 style={{ fontSize: 15 }}
             />
             <span>{likes}</span>
-            <button onClick={handleLikeClick} className="sr-only">Like</button>
         </button>
     );
 };

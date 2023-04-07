@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { getCurrentOng, getPostsOwner } from "../../../service/data-service";
 import Link from "next/link";
 
-function ProfileComponent() {
+function CardProfile() {
 
     const [currentOng, setDataOng] = useState([]);
     const [posts, setPosts] = useState([])
@@ -41,7 +41,7 @@ function ProfileComponent() {
                         className="rounded-full w-24 h-24 object-cover border-4 border-white" />
                     <div className="flex flex-col">
                         <h1 className="text-center font-bold text-4xl">{currentOng.name}</h1>
-                        <p><Link href="#" className="text-primary text-sm font-bold">8</Link> conexiones</p>
+                        <p><Link href="#" className="text-primary text-sm font-bold">{currentOng.following?.length}</Link> conexiones</p>
                     </div>
                 </div>
             </div>
@@ -49,4 +49,4 @@ function ProfileComponent() {
     )
 }
 
-export default ProfileComponent;
+export default CardProfile;
