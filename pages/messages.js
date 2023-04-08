@@ -2,8 +2,7 @@
 import { useState, useEffect } from "react";
 import BannerContact from "../components/Message/BannerContact";
 import ChatContact from "../components/Message/chatContact";
-import Navbar from "../components/Navbar/navBar";
-
+import Navbar from "../components/Navbar/navbar";
 import { getFollowedUsers } from "../service/data-service";
 
 
