@@ -1,13 +1,9 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import EditProfile from "../../EditProfile/editProfile";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getCurrentOng, getPostsOwner } from "../../../service/data-service";
-import { faEnvelope, faCircleInfo, faIdBadge, faGlobe } from "@fortawesome/free-solid-svg-icons";
-import { faFacebookF, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import Link from "next/link";
 
-function ProfileComponent() {
+function CardProfile() {
 
     const [currentOng, setDataOng] = useState([]);
     const [posts, setPosts] = useState([])
@@ -24,70 +20,33 @@ function ProfileComponent() {
     }, []);
 
     return (
-        <div className="relative w-full">
-            <EditProfile/>
+        <div className="relative flex flex-col w-full">
+
             <div className="w-full h-48 flex flex-col justify-center items-center relative">
                 <Image
-                    src={currentOng.image}
-                    alt="profile picture"
+                    src="https://res.cloudinary.com/de9uql5fm/image/upload/v1680642284/cover_dark_jwwhgs.jpg"
+                    alt="cover picture"
                     fill={true}
                     layout="fill"
                     object-fit="cover"
-                    className="rounded-tr-md rounded-tl-md" />
+                    className="rounded-t-md object-cover" />
             </div>
-            <div className="w-full flex flex-col gap-5 p-5">
-
-
-                <h1 className="text-center font-bold text-2xl px-6">{currentOng.name}</h1>
-                <div className="flex justify-center items-center gap-5">
-
-                    <Link href="#">
-                        <FontAwesomeIcon
-                            icon={faGlobe}
-                            style={{ fontSize: 15 }}
-                            className="text-dark hover:text-primary" />
-                    </Link>
-                    <Link href="#">
-                        <FontAwesomeIcon
-                            icon={faFacebookF}
-                            style={{ fontSize: 15 }}
-                            className="text-dark hover:text-primary" />
-                    </Link>
-                    <Link href="#">
-                        <FontAwesomeIcon
-                            icon={faInstagram}
-                            style={{ fontSize: 16 }}
-                            className="text-dark hover:text-primary" />
-                    </Link>
-                </div>
-                <div className="w-full flex justify-start items-center gap-3">
-                    <FontAwesomeIcon
-                        icon={faEnvelope}
-                        style={{ fontSize: 15 }}
-                        className="w-1/12"
-                    />
-                    {currentOng.email}
-                </div>
-                <div className="w-full flex justify-start items-center gap-3">
-                    <FontAwesomeIcon
-                        icon={faIdBadge}
-                        style={{ fontSize: 15 }}
-                        className="w-1/12"
-                    />
-                    {currentOng.CIF}
-                </div>
-                <div className="w-full flex justify-start items-center gap-3">
-                    <FontAwesomeIcon
-                        icon={faCircleInfo}
-                        style={{ fontSize: 15 }}
-                        className="w-1/12"
-                    />
-                    {currentOng.description}
+            <div className="flex justify-between items-end p-4 pt-0">
+                <div className="w-3/12 flex items-end gap-5 px-0 ml-5 -translate-y-4">
+                    <Image
+                        src={currentOng.image}
+                        alt="profile picture"
+                        width="150"
+                        height="150"
+                        className="rounded-full w-24 h-24 object-cover border-4 border-white" />
+                    <div className="flex flex-col">
+                        <h1 className="text-center font-bold text-4xl">{currentOng.name}</h1>
+                        <p><Link href="#" className="text-primary text-sm font-bold">{currentOng.following?.length}</Link> conexiones</p>
+                    </div>
                 </div>
             </div>
-            
         </div>
     )
 }
 
-export default ProfileComponent;
+export default CardProfile;
