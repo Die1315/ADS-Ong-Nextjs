@@ -1,13 +1,14 @@
 const Message = require("../models/message.model");
+const Ong = require("../models/ong.model");
 
 module.exports.addMessage = async (req, res, next) => {
     try {
-
-        const { from, to, message="", image="" } = req.body;
+        const { to, message="", image="" } = req.body;        
+        const currentOng = req.ong;
         const data = await Message.create({
             message: { text: message },
-            users: [from, to],
-            sender: from,
+            users: [currentOng.id, to],
+            sender: currentOng.id,
             image
         });
 
@@ -21,13 +22,14 @@ module.exports.addMessage = async (req, res, next) => {
 
 module.exports.getAllMessages = async (req, res, next) => {
     try {
-        const { from, to } = req.body;
-        const messages = await Message.find({ users: { $all: [from, to] } })
+        const { to } = req.body;
+        const currentOng = req.ong;
+        const messages = await Message.find({ users: { $all: [currentOng.id, to] } })
                                       .sort({ updatedAt: 1 });
 
         const usersMessages = messages.map((msg) => {
             return {
-                fromSelf: msg.sender.toString() === from,
+                fromSelf: msg.sender.toString() === currentOng.id,
                 message: msg.message?.text,
                 image: msg.image || ""
             };
@@ -38,4 +40,14 @@ module.exports.getAllMessages = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
+};
+
+module.exports.getFollowedUsers = async (req, res, next) => {
+    const currentUser = req.ong;
+    await Ong.find({ _id: { $in :currentUser.following}})
+            .select(["id", "name", "image", "email"])
+            .then((followings)=>{
+                res.status(200).json(followings)
+            })
+            .catch(next);
 };

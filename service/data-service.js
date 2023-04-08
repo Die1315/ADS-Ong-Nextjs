@@ -76,6 +76,7 @@ export function followUnfollow(id){
               .catch((err)=>err)
 }
 
+// Cloudinary
 export function uploadCloudinary(data) {
   return axios.post(
     "https://api.cloudinary.com/v1_1/disqrp2r2/image/upload",
@@ -93,4 +94,23 @@ export function toggleLike(id){
   return axios.put(`/api/posts/${id}/like`)
               .then((response) => response.data)
               .catch((err)=>err)
+}
+
+// Contact Message
+export function addMessage(to, message, image = "") {
+  return axios.post('/api/addMessage', {to, message, image})
+              .then((response) => response.data)
+              .catch((err)=>err);
+}
+
+export function getMessages(to) {
+  return axios.post('/api/getMessages', {to})
+              .then((response) => response.data)
+              .catch((err)=>err);
+}
+
+export function getFollowedUsers() {
+  return axios.post('/api/getFollowedUsers')
+              .then((response) => response)
+              .catch((err)=>err);
 }
