@@ -1,18 +1,22 @@
 import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { addMessage, getMessages } from "../../service/data-service";
+import { addMessage, getMessages, getCurrentOng } from "../../service/data-service";
 
 import Picker, { Theme } from "emoji-picker-react";
 import { BsEmojiSmileFill } from "react-icons/bs";
 
 import { v4 as uuidv4 } from "uuid";
+import { io } from "socket.io-client";
 
-function ChatContact({contact, currentUser, socket}) {
+function ChatContact({contact, currentUser}) {
 
     const [chat, setChat] = useState(contact);
     const [msg, setMsg] = useState("");
     const [arrivalMessage, setArrivalMessage] = useState();
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+
+    const socket = useRef();
+    const host = (process.env.HOST || 'localhost') + ':' + (process.env.PORT || 3000);
 
     const scrollRef = useRef(null);
 
@@ -25,6 +29,13 @@ function ChatContact({contact, currentUser, socket}) {
         message += emojiObject.emoji;
         setMsg(message);
     };
+
+    useEffect(() => {
+        if ( currentUser ) {
+            socket.current = io(host);
+            socket.current.emit("add-user", currentUser.id);
+        }
+    },[currentUser]);
 
     useEffect(() => {
         const msg = async() => {
@@ -66,6 +77,7 @@ function ChatContact({contact, currentUser, socket}) {
         setChat((msgs) => [...msgs, { fromSelf: true, message: msg, image: "" }]);
         setMsg("");
     }
+
 
     return (
         <>
