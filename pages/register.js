@@ -15,7 +15,7 @@ function addOng() {
         <p className="w-5/6 md:w-4/6 my-5 text-center mx-auto mb-12">
           Registra tu ONG y ponte en contacto con la ayuda
         </p>
-        <div className="w-12/12 md:w-8/12 mx-auto flex flex-col gap-4">
+        <div className="w-full md:w-8/12 px-5 md:px-0 mx-auto flex flex-col gap-4">
           <RegisterForm />
           <Link href="/login" className="btn text-center">Iniciar sesión</Link>
         </div>

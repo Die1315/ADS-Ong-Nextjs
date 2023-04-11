@@ -9,6 +9,7 @@ const app = next({ dev, hostname, port });
 const handle = app.getRequestHandler();
 const routes = require("./config/routes.config")
 const cookieParser = require('cookie-parser');
+const socket = require("socket.io");
 
 app
   .prepare()
@@ -54,10 +55,33 @@ app
     
     })
 
-    server.listen(port, err => {
+    const sr = server.listen(port, err => {
       if (err) throw err;
       console.log(`> Ready on ${port}`);
     });
+
+    const io = socket(sr, {
+      cors: {
+        origin: "*",
+        credentials: true,
+      },
+    });
+
+    
+    global.onlineUsers = new Map();
+    io.on("connection", (socket) => {
+      global.chatSocket = socket;
+      socket.on("add-user", (userId) => {
+        onlineUsers.set(userId, socket.id);
+      });
+      socket.on("send-msg", (data) => {
+        const sendUserSocket = onlineUsers.get(data.to);
+        if (sendUserSocket) {
+          socket.to(sendUserSocket).emit("msg-recieve", data.message);
+        }
+      });
+    });
+
   })
   .catch(ex => {
     console.error(ex.stack);

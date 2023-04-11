@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { getPostsOwner } from "../../service/data-service";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 import CardProfile from "./CardProfile/cardProfile";
 import MenuProfile from "../MenuProfile/menuProfile";
@@ -9,12 +11,13 @@ import InfoProfile from "../InfoProfile/infoProfile"
 import ConnectionsList from "../ConnectionsList/connectionsList";
 import EditCover from "../EditCover/editCover";
 import EditProfile from "../EditProfile/editProfile";
-import Project from "../Project/project";
+import ProjectForm from "../ProjectForm/projectForm";
 import Following from "../ConnectionFollowing/connectionfollowing";
 import Footer from "../Footer/footer";
 
 function ProfileComponent() {
   const [posts, setPosts] = useState([])
+  const [defaultView, setDefaultView] = useState("Proyectos")
 
   useEffect(() => {
     getPostsOwner().then((posts) => {
@@ -26,34 +29,40 @@ function ProfileComponent() {
 
   const [activeItem, setActiveItem] = useState("Proyectos");
 
-  let componentToRender;
-  if (activeItem === 'Proyectos') {
-    componentToRender = <PostsList />;
-  } else if (activeItem === 'contacts') {
-    componentToRender = <ConnectionsList />;
-  } else if (activeItem === 'info') {
-    componentToRender = <Footer />;
-  }
-
   return (
-    <div className="py-5">
+    <div className="py-5 px-5 md:px-0">
       <div className="container mx-auto bg-white rounded-md">
-        <CardProfile />
+        <CardProfile setActiveItem={setActiveItem} />
         <MenuProfile setActiveItem={setActiveItem} />
       </div>
-      <div className="container mx-auto px-2 md:px-0 py-5 flex flex-col items-start md:flex-row gap-5">
+      <div className="container mx-auto px-0 py-5 flex flex-col items-start md:flex-row gap-5">
 
-        <div className="h-content w-12/12 md:w-3/12 p-4 border border-gray-200 rounded-md bg-light">
+        <div className="h-content order-2 md:order-1 w-full md:w-3/12 p-4 border border-gray-200 rounded-md bg-light">
           <ProfileDetails />
         </div>
-        <div className="w-12/12 md:w-6/12">
-          {activeItem === "Proyectos" && <PostsList posts={posts} search={""} isOwner={true} />}
+        <div className="w-full order-1 md:order-2 md:w-6/12">
+          {activeItem === "Crear" &&
+            <div className="relative w-full bg-white rounded-md flex flex-col gap-5 items-stretch px-4 py-5 border border-gray-200">
+
+              <button onClick={() => setActiveItem("Proyectos")} className="absolute text-dark top-6 right-5">
+                <FontAwesomeIcon
+                  icon={faTimes}
+                  style={{ fontSize: 20 }} />
+              </button>
+              <h2 className="text-xl font-bold">Crear proyecto</h2>
+              <ProjectForm />
+              <button onClick={() => setActiveItem("Proyectos")} className="btn-alt bg-dark">
+                Cancelar
+              </button>
+            </div>
+          }
+          {activeItem === "Proyectos" && <PostsList posts={posts} search={""} />}
           {activeItem === "Conexiones" && <ConnectionsList />}
-          {activeItem === "Información" && <InfoProfile/>}
-          {activeItem === "Perfil" && <EditProfile/>}
-          {activeItem === "Portada" && <EditCover/>}
+          {activeItem === "Información" && <InfoProfile />}
+          {activeItem === "Perfil" && <EditProfile />}
+          {activeItem === "Portada" && <EditCover />}
         </div>
-        <div className="w-12/12 md:w-3/12">
+        <div className="w-12/12 order-3 md:order-3 md:w-3/12">
 
           <Following />
           <Footer />

@@ -1,7 +1,7 @@
 //import axios from "../service/client";
 import { faListNumeric } from "@fortawesome/free-solid-svg-icons";
-import axios from "axios";
-import cookie from "js-cookie";
+import axios from "axios"
+
 
 export function login(credentials) {
   return axios
@@ -128,18 +128,16 @@ export function toggleLike(id) {
 }
 
 // Contact Message
-export function addMessage(to, message, image = "") {
-  return axios
-    .post("/api/addMessage", { to, message, image })
-    .then((response) => response.data)
-    .catch((err) => err);
+export function addMessage(from, to, message, image = "") {
+  return axios.post('/api/addMessage', {from, to, message, image})
+              .then((response) => response.data)
+              .catch((err)=>err);
 }
 
-export function getMessages(to) {
-  return axios
-    .post("/api/getMessages", { to })
-    .then((response) => response.data)
-    .catch((err) => err);
+export function getMessages(from, to) {
+  return axios.post('/api/getMessages', {from, to})
+              .then((response) => response.data)
+              .catch((err)=>err);
 }
 
 export function getFollowedUsers() {
