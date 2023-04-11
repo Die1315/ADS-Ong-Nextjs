@@ -26,7 +26,7 @@ function ProfileDetails() {
     const instagram = getCurrentOng.instagram
 
     return (
-        <div className="flex flex-col gap-5">
+        <div className="w-full flex flex-col gap-5">
             <h2 className="font-bold text-xl">Detalles</h2>
             <div className="flex justify-start items-center gap-5">
                 <FontAwesomeIcon

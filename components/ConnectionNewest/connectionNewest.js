@@ -37,7 +37,7 @@ const Newest = () => {
   }, [])
 
   return (
-    <div className="w-full bg-white rounded-md shadow-sm p-4 flex flex-col gap-5">
+    <div className="w-full bg-white rounded-md shadow-sm p-4 hidden md:flex flex-col gap-5">
       <h3 className="font-medium text-gray-900 mb-4">ONGs con proyectos recientes:</h3>
       {trendingConnections.sort((x, y) => y.updatedAt.localeCompare(x.updatedAt)).map((ong) => {
         return (
