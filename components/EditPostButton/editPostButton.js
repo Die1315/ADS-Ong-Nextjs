@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 
-const EditPostButton = () => {
+const EditPostButton = ({idPost}) => {
 
     return (
         <div className="relative">

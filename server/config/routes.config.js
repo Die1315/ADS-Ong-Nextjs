@@ -34,10 +34,10 @@ router.post('/postEdit/:id', secure.auth, posts.postEdit);
 router.delete('/postDelete/:id', secure.auth, posts.postDelete);
 router.get('/posts/followers', secure.auth, posts.postList);
 router.put('/posts/:id/like', secure.auth, posts.likeToggle)
-
+router.get('/posts/:id/comments', secure.auth, posts.getCommentByPost)
 // Comment
-router.post('/createComment/:id', secure.auth, comments.createComment);
-router.delete('/deleteComment/:id', secure.auth, comments.deleteComment);
+router.post('/comment/:id/create', secure.auth, comments.createComment);
+router.delete('/comment/:id/delete', secure.auth, comments.deleteComment);
 
 // Message
 router.post("/addMessage", secure.auth, messages.addMessage);

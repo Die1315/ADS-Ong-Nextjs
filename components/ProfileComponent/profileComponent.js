@@ -47,7 +47,7 @@ function ProfileComponent() {
           <ProfileDetails />
         </div>
         <div className="w-12/12 md:w-6/12">
-          {activeItem === "Proyectos" && <PostsList posts={posts} search={""} />}
+          {activeItem === "Proyectos" && <PostsList posts={posts} search={""} isOwner={true} />}
           {activeItem === "Conexiones" && <ConnectionsList />}
           {activeItem === "Información" && <InfoProfile/>}
           {activeItem === "Perfil" && <EditProfile/>}
