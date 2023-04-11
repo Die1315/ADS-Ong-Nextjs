@@ -12,7 +12,7 @@ function MenuProfile(props) {
     const toggleMenu = () => setIsOpen(!isOpen);
 
     return (
-        <div className="relative flex justify-between items-center w-full px-4 pb-4">
+        <div className="relative flex flex-col-reverse md:flex-row gap-5 md:gap-0 justify-between items-center w-full px-4 pb-4">
 
             <ul className="flex p-0 font-semibold">
                 <li onClick={() => props.setActiveItem("Proyectos")} className={activeItem === "Proyectos" ? "active border-r border-gray-200 px-5 hover:underline focus-within:underline hover:cursor-pointer" : "border-r border-gray-200 px-5 hover:underline focus-within:underline hover:cursor-pointer"}>Proyectos</li>

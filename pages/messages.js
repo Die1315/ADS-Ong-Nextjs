@@ -10,10 +10,10 @@ function Messages() {
 
     const [contacts, setContacts] = useState([]);
     const [contact, setContact] = useState([]);
-    
+
 
     useEffect(() => {
-        const getContacts = async() => {
+        const getContacts = async () => {
             const { data } = await getFollowedUsers();
             setContacts(data);
         };
@@ -23,13 +23,11 @@ function Messages() {
     return (
         <div>
             <Navbar />
-            <div className="container mx-auto">
-                <div className="w-8/12 bg-white mx-auto">
-                    <div className="container">
-                        <div className="h-full border rounded lg:grid lg:grid-cols-3">
-                            <BannerContact contacts={contacts} setContact={setContact}/>
-                            <ChatContact contact={contact}/>
-                        </div>
+            <div className="h-screen w-full flex justify-center py-5 px-5 md:px-0">
+                <div className="container mx-auto">
+                    <div className="h-full bg-white border rounded grid grid-cols-1 md:grid-cols-3">
+                        <BannerContact contacts={contacts} setContact={setContact} />
+                        <ChatContact contact={contact} />
                     </div>
                 </div>
             </div>

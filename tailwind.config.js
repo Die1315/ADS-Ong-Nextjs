@@ -14,6 +14,9 @@ module.exports = {
         'login-hero': "url('https://res.cloudinary.com/de9uql5fm/image/upload/v1677758224/login-hero_txli5s.jpg')",
         'register-hero': "url('https://res.cloudinary.com/de9uql5fm/image/upload/v1677758224/register-hero_xwgyrl.jpg')",
       },
+      maxHeight: {
+        '90': '90vh',
+      },
       zIndex: {
         '100': '9999999',
       },

@@ -2,9 +2,10 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
-const SearchBar = ({ search, onSearch }) => {
+const SearchBar = ({ search, onSearch, displayOnResponsive }) => {
+
     return (
-        <div className="w-full bg-white rounded-md shadow-sm flex items-center p-5">
+        <div id="search" className={displayOnResponsive ? "w-full bg-white rounded-md shadow-sm flex md:hidden items-center p-5" : "w-full bg-white rounded-md shadow-none md:shadow-sm hidden md:flex items-center p-5"}>
             <input
                 className="w-10/12 h-12 bg-gray-100 rounded-l-full py-2 px-4 text-gray-700 leading-tight focus:outline-none text-sm"
                 type="text"

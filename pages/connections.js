@@ -36,7 +36,7 @@ function Conexiones() {
             ) : (
                 <div>
                     <Navbar />
-                    <div className="container mx-auto py-5 flex flex-col-reverse md:flex-row gap-5 p-5">
+                    <div className="container mx-auto py-5 flex flex-col md:flex-row gap-5 p-5">
                         <div className="w-12/12 md:w-9/12 flex flex-col gap-5">
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                                 {trendingConnections.filter((ong) => ong.name.includes(search)).map((ong, i) => (
