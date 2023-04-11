@@ -3,12 +3,13 @@ const Ong = require("../models/ong.model");
 
 module.exports.addMessage = async (req, res, next) => {
     try {
-        const { to, message="", image="" } = req.body;        
-        const currentOng = req.ong;
+        // const { to, message="", image="" } = req.body;        
+        const { from, to, message="", image="" } = req.body;        
+        // const currentOng = req.ong;
         const data = await Message.create({
             message: { text: message },
-            users: [currentOng.id, to],
-            sender: currentOng.id,
+            users: [from, to],
+            sender: from,
             image
         });
 
@@ -22,14 +23,15 @@ module.exports.addMessage = async (req, res, next) => {
 
 module.exports.getAllMessages = async (req, res, next) => {
     try {
-        const { to } = req.body;
-        const currentOng = req.ong;
-        const messages = await Message.find({ users: { $all: [currentOng.id, to] } })
+        // const { to } = req.body;
+        const { from, to } = req.body;
+        // const currentOng = req.ong;
+        const messages = await Message.find({ users: { $all: [from, to] } })
                                       .sort({ updatedAt: 1 });
 
         const usersMessages = messages.map((msg) => {
             return {
-                fromSelf: msg.sender.toString() === currentOng.id,
+                fromSelf: msg.sender.toString() === from,
                 message: msg.message?.text,
                 image: msg.image || ""
             };

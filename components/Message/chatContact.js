@@ -1,15 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { addMessage, getMessages } from "../../service/data-service";
 
 import Picker, { Theme } from "emoji-picker-react";
 import { BsEmojiSmileFill } from "react-icons/bs";
 
-function ChatContact({contact}) {
+import { v4 as uuidv4 } from "uuid";
+
+function ChatContact({contact, currentUser, socket}) {
 
     const [chat, setChat] = useState(contact);
     const [msg, setMsg] = useState("");
+    const [arrivalMessage, setArrivalMessage] = useState();
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+
+    const scrollRef = useRef(null);
 
     const handleEmojiPickerhideShow = () => {
         setShowEmojiPicker(!showEmojiPicker);
@@ -21,24 +26,46 @@ function ChatContact({contact}) {
         setMsg(message);
     };
 
-    const sendChat = async (event) => {
-        event.preventDefault();
-        if (msg.length > 0) {
-            await addMessage(contact.id, msg, "");
-        }
-        setMsg("");
-    }
-
-
     useEffect(() => {
         const msg = async() => {
             if (contact.id){
-                const resp = await getMessages(contact.id);
+                const resp = await getMessages(currentUser.id, contact.id);
                 setChat(resp);
             }
         };
         msg();
-    }, [contact, contact.id]);
+    }, [contact, contact.id, currentUser]);
+
+    useEffect(() => {
+        if (socket.current) {
+            socket.current.on("msg-recieve", (msg) => {
+                setArrivalMessage({ fromSelf: false, message: msg });
+            });
+        }
+    }, [socket]);    
+
+    useEffect(() => {
+        arrivalMessage && setChat((prev) => [...prev, arrivalMessage]);
+    }, [arrivalMessage]);
+
+    useEffect(() => {
+        scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [chat]);
+
+    const sendChat = async (event) => {
+        event.preventDefault();
+        if (currentUser) {
+            await addMessage(currentUser.id, contact.id, msg, "");
+            socket.current.emit("send-msg", {
+                to: contact.id,
+                from: currentUser?.id,
+                message: msg,
+                image: "",
+            });
+        }
+        setChat((msgs) => [...msgs, { fromSelf: true, message: msg, image: "" }]);
+        setMsg("");
+    }
 
     return (
         <>
@@ -49,29 +76,33 @@ function ChatContact({contact}) {
                         <span className="block ml-2 font-bold text-gray-600">{contact?.name}</span>
                     </div>
                     <div className="relative w-full p-6 overflow-y-auto h-[40rem]">
+                    
                         {chat.map((message) => {
                             return (
                                 message?.fromSelf
                                 ?
-                                <ul className={`space-y-2 ${!message ? 'invisible' : ''}`}>
-                                    <li className="flex justify-end">
-                                        <div className="relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow">
-                                            <span className="block">{message?.message}</span>
-                                        </div>
-                                    </li>
-                                </ul>
+                                <div ref={scrollRef} key={uuidv4()}>
+                                    <ul className={`space-y-2 ${!message ? 'invisible' : ''}`}>
+                                        <li className="flex justify-end">
+                                            <div className="relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow">
+                                                <span className="block">{message?.message}</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
                                 :
-                                <ul className={`space-y-2 ${!message ? 'invisible' : ''}`}>
-                                    <li className="flex justify-start">
-                                        <div className="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow">
-                                            <span className="block">{message?.message}</span>
-                                        </div>
-                                    </li>
-                                </ul>
+                                <div ref={scrollRef} key={uuidv4()}>
+                                    <ul className={`space-y-2 ${!message ? 'invisible' : ''}`}>
+                                        <li className="flex justify-start">
+                                            <div className="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow">
+                                                <span className="block">{message?.message}</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
                             )
                         })
                         }
-                        
                     </div>
                     <form onSubmit={(event) => sendChat(event)}>
                         <div className="flex items-center justify-between w-full p-3 border-t border-gray-300">
