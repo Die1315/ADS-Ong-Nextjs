@@ -22,6 +22,7 @@ const ongSchema = new Schema(
     CIF: { type: Number, required: true, unique: true, maxlength: 15 },
     description: { type: String, required: true, maxlength: 400 },
     image: { type: String, required: true },
+    bannerImage: { type: String },
     telephone: {
       type: Number,
       unique: true,

@@ -1,6 +1,6 @@
 import Post from '../Post/post';
 
-const PostsList = ({ posts, search }) => {
+const PostsList = ({ posts, search, isOwner }) => {
     return (
         <div className="w-full flex flex-col gap-2">
             {posts?.filter((post) => post.title.includes(search) || post.owner.name.includes(search))
@@ -18,6 +18,7 @@ const PostsList = ({ posts, search }) => {
                     likes={post.likes}
                     resources={post.resources}
                     id={post.id}
+                    isOwner={isOwner}
                 />
             ))}
         </div>

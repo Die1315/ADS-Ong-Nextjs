@@ -14,7 +14,7 @@ import { formatDate } from '../../utils/dateUtils';
 
 Modal.setAppElement('#__next');
 
-const Post = ({ id, title, description, image, startDate, endDate, userProfilePic, userName, lat, likes, resources }) => {
+const Post = ({ id, title, description, image, startDate, endDate, userProfilePic, userName, lat, likes, resources,  isOwner }) => {
 
     const exampleComments = [
         'Este es un comentario de ejemplo',
@@ -38,7 +38,7 @@ const Post = ({ id, title, description, image, startDate, endDate, userProfilePi
     return (
         <div className="bg-white border border-gray-200 rounded-md overflow-hidden">
             <div className="relative">
-                <EditPostButton />
+                {isOwner && <EditPostButton />}
                 <Image className="w-full object-cover min-h-80 max-h-80" src={image} alt="Post" width={800} height={600} />
                 <div className="absolute bottom-0 left-0 bg-gray-900 bg-opacity-50 w-full">
                     <div className="relative w-full flex justify-between items-stretch pl-4">
@@ -108,7 +108,7 @@ const Post = ({ id, title, description, image, startDate, endDate, userProfilePi
                         <div className='w-full flex justify-start items-center gap-2'>
                             <h3 className='font-bold'>Recursos: </h3><p className='text-sm m-0'> {resources}</p>
                         </div>
-                        <CommentsBox comments={exampleComments} />
+                        <CommentsBox postId={id} />
                     </div>
                 </div>
             </Modal>
