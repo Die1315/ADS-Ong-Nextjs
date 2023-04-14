@@ -1,19 +1,32 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Image from 'next/image';
+import { createComment, getComments } from '../../service/data-service';
 
-function CommentsBox(props) {
+
+function CommentsBox({postId}) {
     const [newComment, setNewComment] = useState('');
-    const [comments, setComments] = useState(props.comments);
+    const [comments, setComments] = useState([]);
+    const [state, setChange] = useState(false);
     const currentDate = new Date();
     const formattedDate = currentDate.toLocaleString();
-
+    useEffect(()=>{
+        getComments(postId).then((comments)=>{
+            setComments(comments)
+        })
+    }, [state])
+   
     // Función para agregar un nuevo comentario
     const handleAddComment = () => {
+        
         if (newComment !== '') {
-            setComments([...comments, newComment]);
-            setNewComment('');
+            createComment(postId,{"text": newComment})
+            .then((res)=> {
+                setChange(!state)
+            })            
+            setNewComment('')
         }
+       
     };
 
     // Función para actualizar el estado del nuevo comentario
@@ -28,14 +41,14 @@ function CommentsBox(props) {
                 {comments.map((comment, index) => (
                     <div key={index} className="border-b border-gray-300 py-2 mb-2 flex gap-3">
                         <Image
-                            src=""
+                            src={comment.ong.image}
                             alt="Post Image"
                             width={200}
                             height={200}
                             className="object-cover w-10 h-10 rounded-full"
                         />
                         <div className='flex flex-col gap-1'>
-                            <p className='text-sm'>{comment}</p>
+                            <p className='text-sm'>{comment.text}</p>
                             <p className='text-xs text-primary'>{formattedDate}</p>
                         </div>
                     </div>
@@ -44,12 +57,13 @@ function CommentsBox(props) {
 
             <div className="mt-4">
                 <textarea
+                    name="text"
                     className="w-full border border-gray-300 p-4 rounded text-sm"
                     placeholder="Escribe tu comentario aquí"
                     value={newComment}
                     onChange={handleCommentChange}
                 />
-                <button className="btn" onClick={handleAddComment}>Agregar comentario</button>
+                <button onClick={handleAddComment} className="btn" >Agregar comentario</button>
             </div>
         </div>
     );

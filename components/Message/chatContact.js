@@ -121,7 +121,7 @@ function ChatContact({currentChat, currentUser, socket}) {
                                 </div>
                             </Container>
                             <input type="text" placeholder="Message"
-                                className="block w-full py-2 pl-4 mx-3 bg-gray-100 rounded-full outline-none focus:text-gray-700"
+                                className="block w-full py-2 pl-4 mx-3 bg-gray-100 rounded-md outline-none focus:text-gray-700"
                                 name="message" required 
                                 onChange={(e) => setMsg(e.target.value)} value={msg} />
                             <button type="submit">

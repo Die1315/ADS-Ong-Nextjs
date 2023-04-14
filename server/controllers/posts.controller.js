@@ -1,3 +1,4 @@
+const Comment = require("../models/comment.model");
 const Post = require("../models/post.model");
 // const Ong = require("../models/ong.model");
 
@@ -98,6 +99,14 @@ module.exports.likeToggle = (req, res, next) => {
     })
     .catch(next);
 };
+
+module.exports.getCommentByPost = (req,res,next)=>{
+  const postId = req.params.id
+  Comment.find({post:postId}).populate("ong", "image")
+         .then((comments)=> res.status(200).json(comments))
+         .catch(next)
+
+}
 // const currentOng = req.ong;
 //     Post.find({ owner : currentOng.id})
 //     .then((posts)=>{

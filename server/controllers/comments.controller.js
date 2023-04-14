@@ -1,10 +1,10 @@
 const Comment = require("../models/comment.model");
-const jwt = require("jsonwebtoken");
+
 module.exports.createComment = (req, res, next) => {
     const data = req.body
     const currentOng = req.ong;
     Comment.create({
-      ...data,
+      ...data.dataComment,
     //   user: req.user.id,
       post: req.params.id,
       ong: currentOng.id
@@ -14,7 +14,16 @@ module.exports.createComment = (req, res, next) => {
   }
   
   module.exports.deleteComment = (req, res, next) => {
-    Comment.findByIdAndDelete(req.params.id)
-      .then(comment => res.status(204).json(comment))
-      .catch(next)
-  }
+    const currentOng = req.ong 
+    const commentId= req.params.id
+    console.log(currentOng.id,commentId)
+    Comment.findOneAndDelete({ong:currentOng.id, _id:commentId})
+            .then((comment) => {
+              if(comment){
+                res.status(200).json(comment)
+              } else {
+                res.status(403).json({message:"This is not your comment"})
+              }})
+            .catch(next)
+    }
+   

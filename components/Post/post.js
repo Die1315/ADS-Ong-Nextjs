@@ -14,7 +14,7 @@ import { formatDate } from '../../utils/dateUtils';
 
 Modal.setAppElement('#__next');
 
-const Post = ({ id, title, description, image, startDate, endDate, userProfilePic, userName, lat, likes, resources }) => {
+const Post = ({ id, title, description, image, startDate, endDate, userProfilePic, userName, lat, likes, resources,  isOwner }) => {
 
     const exampleComments = [
         'Este es un comentario de ejemplo',
@@ -38,11 +38,11 @@ const Post = ({ id, title, description, image, startDate, endDate, userProfilePi
     return (
         <div className="bg-white border border-gray-200 rounded-md overflow-hidden">
             <div className="relative">
-                <EditPostButton />
+                {isOwner && <EditPostButton />}
                 <Image className="w-full object-cover min-h-80 max-h-80" src={image} alt="Post" width={800} height={600} />
                 <div className="absolute bottom-0 left-0 bg-gray-900 bg-opacity-50 w-full">
                     <div className="relative w-full flex justify-between items-stretch pl-4">
-                        <div className="w-10/12 overflow-hidden flex gap-2 py-1">
+                        <div className="w-8/12 md:w-10/12 overflow-hidden flex gap-2 py-1">
                             <Image className="object-cover w-10 h-10 rounded-full" src={userProfilePic} alt="User Profile" width={200} height={200} />
                             <div className="w-12/12">
                                 <p className="text-white font-bold text-lg hover:cursor-pointer" onClick={handleOpenModal}>{userName}</p>
@@ -72,15 +72,15 @@ const Post = ({ id, title, description, image, startDate, endDate, userProfilePi
                 isOpen={modalIsOpen}
                 onRequestClose={handleCloseModal}
                 contentLabel="Post Modal"
-                className="post-modal fixed top-0 left-0 z-50"
+                className="post-modal fixed top-0 left-0 z-50 p-5 md:p-0"
                 data-modal-backdrop="static"
             >
-                <div className='relative container max-h-screen flex justify-between items-stretch bg-light p-5 rounded-md mx-auto'>
-                    <button onClick={handleCloseModal} className='absolute -top-3 -right-2 text-dark bg-light rounded-full w-6 h-6'>
-                        <FontAwesomeIcon className="" icon={faTimes} size={30} />
+                <div className='relative container p-0 md:p-5 max-h-90 md:max-h-screen flex flex-col md:flex-row justify-between items-stretch bg-light rounded-md mx-auto overflow-x-hidden overflow-y-auto md:overflow-y-hidden'>
+                    <button onClick={handleCloseModal} className='absolute -top-3 right-4'>
+                        <FontAwesomeIcon className="fixed text-dark bg-light rounded-full p-2" icon={faTimes} size={30} />
                     </button>
 
-                    <div className="w-12/12 md:w-7/12 p-4 flex flex-col items-start border-r border-gray-200">
+                    <div className="w-12/12 md:w-7/12 p-4 flex flex-col items-start border-0 md:border-r border-gray-200">
                         <Image
                             src={image}
                             alt="Post Image"
@@ -108,7 +108,7 @@ const Post = ({ id, title, description, image, startDate, endDate, userProfilePi
                         <div className='w-full flex justify-start items-center gap-2'>
                             <h3 className='font-bold'>Recursos: </h3><p className='text-sm m-0'> {resources}</p>
                         </div>
-                        <CommentsBox comments={exampleComments} />
+                        <CommentsBox postId={id} />
                     </div>
                 </div>
             </Modal>

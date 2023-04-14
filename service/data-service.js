@@ -8,69 +8,101 @@ export function login(credentials) {
     .post("/api/login", {
       credentials,
     })
-    .then((response) => response.data
-    
-    )
+    .then((response) => response.data)
     .catch((err) => {
-      console.error(err)
-    return err});
-}
-  
-export function register(dataRegister){
-  return axios
-  .post("/api/ongs", {
-    dataRegister,
-  })
-  .then((response) => response.data)
-  .catch((err) => {
-    //console.error(err)
-    return err});
+      console.error(err);
+      return err;
+    });
 }
 
-export function getCurrentOng(owner=false, ongToSearch){
-  if(owner===true){
-    return axios.get(`/api/ongs/profile`
-  ).then((res) =>{ 
-    return res.data})
-    .catch((err)=>console.log(err.message));
+export function register(dataRegister) {
+  return axios
+    .post("/api/ongs", {
+      dataRegister,
+    })
+    .then((response) => response.data)
+    .catch((err) => {
+      //console.error(err)
+      return err;
+    });
+}
+
+export function getCurrentOng(owner = false, ongToSearch) {
+  if (owner === true) {
+    return axios
+      .get(`/api/ongs/profile`)
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => console.log(err.message));
   } else {
-    return axios.get(`/api/ongs/${ongToSearch}/profile`
-    ).then((res) =>{ 
-      return res.data})
-      .catch((err)=>console.log(err.message));
+    return axios
+      .get(`/api/ongs/${ongToSearch}/profile`)
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => console.log(err.message));
   }
 }
 
 export function registerProject(data) {
   let dataRegister = {
-    ...data
-  }
+    ...data,
+  };
   // console.log(dataRegister);
-  return axios.post("/api/posts", {dataRegister})
-              .then((response) => response.data)
-              .catch((err) => { return err });
+  return axios
+    .post("/api/posts", { dataRegister })
+    .then((response) => response.data)
+    .catch((err) => {
+      return err;
+    });
 }
 
-export function getPostsOwner(){
-  return axios.get('/api/postsbyong/')
-              .then((response) => response.data)
-              .catch((err)=>err)
+export function getPostsOwner() {
+  return axios
+    .get("/api/postsbyong/")
+    .then((response) => response.data)
+    .catch((err) => err);
 }
 
-export function getConnections(){
-  return axios.get('/api/ongs/newConnections')
-              .then((response) => response.data)
-              .catch((err)=>err)
+export function getConnections() {
+  return axios
+    .get("/api/ongs/newConnections")
+    .then((response) => response.data)
+    .catch((err) => err);
 }
-export function getGLobalPosts(){
-  return axios.get('/api/postsGlobal')
-              .then((response) => response.data)
-              .catch((err)=>err)
+export function getGLobalPosts() {
+  return axios
+    .get("/api/postsGlobal")
+    .then((response) => response.data)
+    .catch((err) => err);
 }
-export function followUnfollow(id){
-  return axios.put(`/api/ongs/${id}/follow`)
-              .then((response) => response.data)
-              .catch((err)=>err)
+export function followUnfollow(id) {
+  return axios
+    .put(`/api/ongs/${id}/follow`)
+    .then((response) => response.data)
+    .catch((err) => err);
+}
+//Comments
+export function getComments(id) {
+   return axios
+    .get(`/api/posts/${id}/comments`)
+    .then((response) => response.data)
+    .catch((err) => err);
+}
+export function createComment(id, dataComment) {
+  return axios
+    .post(`/api/comment/${id}/create`, {
+      dataComment,
+    })
+    .then((response) => response.data)
+    .catch((err) => err);
+}
+export function deleteComment(id) {
+  return axios
+    .delete(`/api/comment/${id}/delete`)
+    .then((response) => response.data)
+    .catch((err) => err);
 }
 
 // Cloudinary
@@ -81,16 +113,18 @@ export function uploadCloudinary(data) {
   );
 }
 
-export function getPostFollowing(){
-  return axios.get('/api/posts/followers')
-              .then((response) => response.data)
-              .catch((err)=>err)
+export function getPostFollowing() {
+  return axios
+    .get("/api/posts/followers")
+    .then((response) => response.data)
+    .catch((err) => err);
 }
 
-export function toggleLike(id){
-  return axios.put(`/api/posts/${id}/like`)
-              .then((response) => response.data)
-              .catch((err)=>err)
+export function toggleLike(id) {
+  return axios
+    .put(`/api/posts/${id}/like`)
+    .then((response) => response.data)
+    .catch((err) => err);
 }
 
 // Contact Message
@@ -107,7 +141,8 @@ export function getMessages(from, to) {
 }
 
 export function getFollowedUsers() {
-  return axios.post('/api/getFollowedUsers')
-              .then((response) => response)
-              .catch((err)=>err);
+  return axios
+    .post("/api/getFollowedUsers")
+    .then((response) => response)
+    .catch((err) => err);
 }
