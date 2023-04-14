@@ -10,13 +10,8 @@ import { io } from "socket.io-client";
 
 function ChatContact({currentChat, currentUser, socket}) {
 
-    // const [chat, setChat] = useState(contact);
     const [msg, setMsg] = useState("");
-    // const [arrivalMessage, setArrivalMessage] = useState();
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-
-    // const socket = useRef();
-    // const host = (process.env.HOST || 'localhost') + ':' + (process.env.PORT || 3000);
 
     const scrollRef = useRef(null);
 
@@ -29,54 +24,6 @@ function ChatContact({currentChat, currentUser, socket}) {
         message += emojiObject.emoji;
         setMsg(message);
     };
-
-    // useEffect(() => {
-    //     if ( currentUser ) {
-    //         socket.current = io(host);
-    //         socket.current.emit("add-user", currentUser.id);
-    //     }
-    // },[currentUser]);
-
-    // useEffect(() => {
-    //     const msg = async() => {
-    //         if (contact.id){
-    //             const resp = await getMessages(currentUser.id, contact.id);
-    //             setChat(resp);
-    //         }
-    //     };
-    //     msg();
-    // }, [contact, contact.id, currentUser]);
-
-    // useEffect(() => {
-    //     if (socket.current) {
-    //         socket.current.on("msg-recieve", (msg) => {
-    //             setArrivalMessage({ fromSelf: false, message: msg });
-    //         });
-    //     }
-    // }, [socket]);    
-
-    // useEffect(() => {
-    //     arrivalMessage && setChat((prev) => [...prev, arrivalMessage]);
-    // }, [arrivalMessage]);
-
-    // useEffect(() => {
-    //     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-    // }, [chat]);
-
-    // const sendChat = async (event) => {
-    //     event.preventDefault();
-    //     if (currentUser) {
-    //         await addMessage(currentUser.id, contact.id, msg, "");
-    //         socket.current.emit("send-msg", {
-    //             to: contact.id,
-    //             from: currentUser?.id,
-    //             message: msg,
-    //             image: "",
-    //         });
-    //     }
-    //     setChat((msgs) => [...msgs, { fromSelf: true, message: msg, image: "" }]);
-    //     setMsg("");
-    // }
 
     const [messages, setMessages] = useState([]);
     const [arrivalMessage, setArrivalMessage] = useState();
