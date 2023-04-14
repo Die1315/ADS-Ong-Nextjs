@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 
 
-function BannerContact({contacts, setContact}) {
+function BannerContact({contacts, currentUser, changeChat}) {
     
 
     const [isActive, setIsActive] = useState(false);
 
     const handleClick = (contact) => {
         setIsActive(contact);
-        setContact(contact);
+        changeChat(contact);
     };
 
     return (

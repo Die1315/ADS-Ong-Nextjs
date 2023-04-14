@@ -8,15 +8,15 @@ import { BsEmojiSmileFill } from "react-icons/bs";
 import { v4 as uuidv4 } from "uuid";
 import { io } from "socket.io-client";
 
-function ChatContact({contact, currentUser}) {
+function ChatContact({currentChat, currentUser, socket}) {
 
-    const [chat, setChat] = useState(contact);
+    // const [chat, setChat] = useState(contact);
     const [msg, setMsg] = useState("");
-    const [arrivalMessage, setArrivalMessage] = useState();
+    // const [arrivalMessage, setArrivalMessage] = useState();
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
-    const socket = useRef();
-    const host = (process.env.HOST || 'localhost') + ':' + (process.env.PORT || 3000);
+    // const socket = useRef();
+    // const host = (process.env.HOST || 'localhost') + ':' + (process.env.PORT || 3000);
 
     const scrollRef = useRef(null);
 
@@ -30,22 +30,66 @@ function ChatContact({contact, currentUser}) {
         setMsg(message);
     };
 
-    useEffect(() => {
-        if ( currentUser ) {
-            socket.current = io(host);
-            socket.current.emit("add-user", currentUser.id);
-        }
-    },[currentUser]);
+    // useEffect(() => {
+    //     if ( currentUser ) {
+    //         socket.current = io(host);
+    //         socket.current.emit("add-user", currentUser.id);
+    //     }
+    // },[currentUser]);
+
+    // useEffect(() => {
+    //     const msg = async() => {
+    //         if (contact.id){
+    //             const resp = await getMessages(currentUser.id, contact.id);
+    //             setChat(resp);
+    //         }
+    //     };
+    //     msg();
+    // }, [contact, contact.id, currentUser]);
+
+    // useEffect(() => {
+    //     if (socket.current) {
+    //         socket.current.on("msg-recieve", (msg) => {
+    //             setArrivalMessage({ fromSelf: false, message: msg });
+    //         });
+    //     }
+    // }, [socket]);    
+
+    // useEffect(() => {
+    //     arrivalMessage && setChat((prev) => [...prev, arrivalMessage]);
+    // }, [arrivalMessage]);
+
+    // useEffect(() => {
+    //     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+    // }, [chat]);
+
+    // const sendChat = async (event) => {
+    //     event.preventDefault();
+    //     if (currentUser) {
+    //         await addMessage(currentUser.id, contact.id, msg, "");
+    //         socket.current.emit("send-msg", {
+    //             to: contact.id,
+    //             from: currentUser?.id,
+    //             message: msg,
+    //             image: "",
+    //         });
+    //     }
+    //     setChat((msgs) => [...msgs, { fromSelf: true, message: msg, image: "" }]);
+    //     setMsg("");
+    // }
+
+    const [messages, setMessages] = useState([]);
+    const [arrivalMessage, setArrivalMessage] = useState();
 
     useEffect(() => {
-        const msg = async() => {
-            if (contact.id){
-                const resp = await getMessages(currentUser.id, contact.id);
-                setChat(resp);
-            }
+        const getMsg = async () => {
+          if (currentChat && currentUser) {
+            const response = await getMessages(currentUser.id, currentChat.id);
+            setMessages(response);
+          }
         };
-        msg();
-    }, [contact, contact.id, currentUser]);
+        getMsg();
+      }, [currentChat, currentChat.id, currentUser]);
 
     useEffect(() => {
         if (socket.current) {
@@ -53,43 +97,42 @@ function ChatContact({contact, currentUser}) {
                 setArrivalMessage({ fromSelf: false, message: msg });
             });
         }
-    }, [socket]);    
+    }, [socket]);
 
     useEffect(() => {
-        arrivalMessage && setChat((prev) => [...prev, arrivalMessage]);
+        arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
     }, [arrivalMessage]);
 
     useEffect(() => {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, [chat]);
+    }, [messages]);
 
     const sendChat = async (event) => {
         event.preventDefault();
         if (currentUser) {
-            await addMessage(currentUser.id, contact.id, msg, "");
+            await addMessage(currentUser.id, currentChat.id, msg, "");
             socket.current.emit("send-msg", {
-                to: contact.id,
+                to: currentChat.id,
                 from: currentUser?.id,
                 message: msg,
                 image: "",
             });
         }
-        setChat((msgs) => [...msgs, { fromSelf: true, message: msg, image: "" }]);
+        setMessages((msgs) => [...msgs, { fromSelf: true, message: msg, image: "" }]);
         setMsg("");
     }
 
-
     return (
         <>
-            <div className={`hidden lg:col-span-2 lg:block ${contact == '' ? 'invisible' : ''}`}>
+            <div className={`hidden lg:col-span-2 lg:block ${currentChat == '' ? 'invisible' : ''}`}>
                 <div className="w-full">
                     <div className="relative flex items-center p-3 border-b border-gray-300">
-                        <img className="object-cover w-10 h-10 rounded-full" src={contact?.image} alt="username" />
-                        <span className="block ml-2 font-bold text-gray-600">{contact?.name}</span>
+                        <img className="object-cover w-10 h-10 rounded-full" src={currentChat?.image} alt="username" />
+                        <span className="block ml-2 font-bold text-gray-600">{currentChat?.name}</span>
                     </div>
                     <div className="relative w-full p-6 overflow-y-auto h-[40rem]">
                     
-                        {chat.map((message) => {
+                        {messages.map((message) => {
                             return (
                                 message?.fromSelf
                                 ?
