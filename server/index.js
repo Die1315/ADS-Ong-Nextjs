@@ -9,12 +9,12 @@ const app = next({ dev, hostname, port });
 const handle = app.getRequestHandler();
 const routes = require("./config/routes.config")
 const cookieParser = require('cookie-parser');
-const socket = require("socket.io");
 
 app
   .prepare()
   .then(() => {
     require('./config/db.config'); 
+    const socket = require("socket.io");
     const server = express();
     server.use(cookieParser());
     // server.use(express.urlencoded({ extended: true }));
@@ -69,9 +69,11 @@ app
 
     
     global.onlineUsers = new Map();
+
     io.on("connection", (socket) => {
-      global.chatSocket = socket;
-      socket.on("add-user", (userId) => {
+      global.chatSocket = socket;  
+      socket.on("add-user", (userId) => {      
+        console.log(onlineUsers);
         onlineUsers.set(userId, socket.id);
       });
       socket.on("send-msg", (data) => {
@@ -81,7 +83,7 @@ app
         }
       });
     });
-
+    
   })
   .catch(ex => {
     console.error(ex.stack);

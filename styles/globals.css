@@ -14,7 +14,7 @@ body {
 }
 
 body {
-  @apply font-Raleway;
+  @apply font-Raleway bg-pattern bg-fixed bg-cover;
 }
 a {
   @apply text-inherit no-underline;

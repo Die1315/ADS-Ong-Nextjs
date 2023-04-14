@@ -27,7 +27,7 @@ function ProfileDetails() {
 
     return (
         <div className="w-full flex flex-col gap-5">
-            <h2 className="font-bold text-xl">Detalles</h2>
+            <h2 className="font-bold text-xl">Detalles de contacto</h2>
             <div className="flex justify-start items-center gap-5">
                 <FontAwesomeIcon
                     icon={faEnvelope}
