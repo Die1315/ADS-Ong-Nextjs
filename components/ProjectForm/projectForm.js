@@ -57,7 +57,7 @@ const ProjectForm = () => {
     };
     return (
         <form onSubmit={handleSubmit}
-            className="flex flex-col justify-center items-stretch gap-5"
+            className="flex flex-col justify-center items-stretch gap-5 w-full"
         >
             <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3">
                 <input

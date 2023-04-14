@@ -37,10 +37,10 @@ function ProfileComponent() {
       </div>
       <div className="container mx-auto px-0 py-5 flex flex-col items-start md:flex-row gap-5">
 
-        <div className="h-content order-2 md:order-1 w-full md:w-3/12 p-4 border border-gray-200 rounded-md bg-light">
+        <div className={activeItem === "Información" ? "hidden" : "h-content order-2 md:order-1 p-4 border border-gray-200 rounded-md bg-light w-full md:w-3/12"}>
           <ProfileDetails />
         </div>
-        <div className="w-full order-1 md:order-2 md:w-6/12">
+        <div className={activeItem === "Información" ? "w-full order-1 md:order-2 md:w-9/12" : "w-full order-1 md:order-2 md:w-6/12"}>
           {activeItem === "Crear" &&
             <div className="relative w-full bg-white rounded-md flex flex-col gap-5 items-stretch px-4 py-5 border border-gray-200">
 
@@ -56,7 +56,7 @@ function ProfileComponent() {
               </button>
             </div>
           }
-          {activeItem === "Proyectos" && <PostsList posts={posts} search={""} />}
+          {activeItem === "Proyectos" && <PostsList posts={posts} search={""} isOwner={true} />}
           {activeItem === "Conexiones" && <ConnectionsList />}
           {activeItem === "Información" && <InfoProfile />}
           {activeItem === "Perfil" && <EditProfile />}
