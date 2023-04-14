@@ -46,7 +46,7 @@ function CardProfile(props) {
                         <h1 className="text-center font-bold text-4xl">{currentOng.name}</h1>
                         <p><Link href="#" className="text-primary text-sm font-bold">{currentOng.following?.length}</Link> conexiones</p>
                     </div>
-                    <button onClick={() => props.setActiveItem("Crear")}><FontAwesomeIcon icon={faPlusCircle} className={activeItem === "Crear" ? "text-xl text-dark transform rotate-45" : "text-xl text-secondary"} /></button>
+                    <button onClick={() => props.setActiveItem("Crear")} className={activeItem != "Crear" ? "text-xl text-secondary" : "text-xl text-dark transform rotate-45"}><FontAwesomeIcon icon={faPlusCircle} /></button>
                 </div>
             </div>
         </div>
