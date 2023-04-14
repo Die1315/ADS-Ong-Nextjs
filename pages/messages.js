@@ -4,18 +4,16 @@ import BannerContact from "../components/Message/BannerContact";
 import ChatContact from "../components/Message/chatContact";
 import Navbar from "../components/Navbar/navbar";
 import { getCurrentOng, getFollowedUsers } from "../service/data-service";
-
 import { io } from "socket.io-client";
 
 function Messages() {
 
     const [contacts, setContacts] = useState([]);
-    const [contact, setContact] = useState([]);
-    const [currentUser, setCurrentUser] = useState([]);
+    const [currentUser, setCurrentUser] = useState();
+    const [currentChat, setCurrentChat] = useState(undefined);
 
-    const socket = useRef();
     const host = (process.env.HOST || 'localhost') + ':' + (process.env.PORT || 3000);
-    // const host = 'http://' + window.location.host;
+    const socket = useRef();
 
     useEffect(() => {
         const setUser = async () => {
@@ -27,38 +25,57 @@ function Messages() {
 
     useEffect(() => {
         if (currentUser) {
-            socket.current = io(host);
-            socket.current.emit("add-user", currentUser.id);
-            console.log(socket.current);
+          socket.current = io(host);
+          socket.current.emit("add-user", currentUser.id);
         }
-    },[currentUser]);
-
+      }, [currentUser]);
 
     useEffect(() => {
-        const getContacts = async () => {
-            const { data } = await getFollowedUsers();
-            setContacts(data);
+        const getContacts = async() => {
+            if (currentUser) {
+                const { data } = await getFollowedUsers();
+                setContacts(data);
+            }
         };
         getContacts();
-    },[])
+    },[currentUser]);
+
+    const handleChatChange = (chat) => {
+        setCurrentChat(chat);
+    };
 
     return (
         <div>
             <Navbar />
-
-            <div className="h-screen w-full flex justify-center py-5 px-5 md:px-0">
-                <div className="container mx-auto">
-                    <div className="h-full bg-white border rounded grid grid-cols-1 md:grid-cols-3">
-                        <BannerContact contacts={contacts} setContact={setContact} />
-                        <ChatContact contact={contact} currentUser={currentUser} socket={socket} />
-
+            <div className="container mx-auto">
+                <div className="w-10/12 bg-white mx-auto">
+                    <div className="container">
+                        <div className="h-full border rounded lg:grid lg:grid-cols-3">
+                            <BannerContact 
+                                contacts={contacts} 
+                                currentUser={currentUser} 
+                                changeChat={handleChatChange}/>
+                            {
+                                currentChat === undefined ?
+                                (
+                                    <></>
+                                )
+                                :
+                                (
+                                    <ChatContact 
+                                        currentChat={currentChat}
+                                        currentUser={currentUser}
+                                        socket={socket}
+                                        />
+                                )
+                            }                            
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     );
 }
-
 
 
 export default Messages;

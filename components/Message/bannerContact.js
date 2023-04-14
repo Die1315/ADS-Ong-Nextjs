@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import SearchBar from "../SearchBar/searchBar";
 
-function BannerContact({ contacts, setContact }) {
 
+function BannerContact({contacts, currentUser, changeChat}) {
 
     const [isActive, setIsActive] = useState(false);
 
@@ -10,7 +10,7 @@ function BannerContact({ contacts, setContact }) {
 
     const handleClick = (contact) => {
         setIsActive(contact);
-        setContact(contact);
+        changeChat(contact);
     };
 
     return (
