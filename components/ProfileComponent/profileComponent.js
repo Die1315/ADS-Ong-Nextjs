@@ -56,7 +56,7 @@ function ProfileComponent() {
               </button>
             </div>
           }
-          {activeItem === "Proyectos" && <PostsList posts={posts} search={""} />}
+          {activeItem === "Proyectos" && <PostsList posts={posts} search={""}  isOwner={true}/>}
           {activeItem === "Conexiones" && <ConnectionsList />}
           {activeItem === "Información" && <InfoProfile />}
           {activeItem === "Perfil" && <EditProfile />}

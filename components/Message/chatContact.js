@@ -29,8 +29,10 @@ function ChatContact({contact, currentUser, socket}) {
     useEffect(() => {
         const msg = async() => {
             if (contact.id){
-                const resp = await getMessages(currentUser.id, contact.id);
-                setChat(resp);
+                getMessages(currentUser.id, contact.id).then((resp)=>{
+                    setChat(resp);
+                })
+                
             }
         };
         msg();

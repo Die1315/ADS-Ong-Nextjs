@@ -41,7 +41,7 @@ const CardProfile = ({ name, title, imageSrc }) => {
                 <div className="w-2/6 flex flex-col gap-2 text-right text-primary font-semibold">
                     <p className="text-sm">{currentOng.posts?.length}</p>
                     <p className="text-sm">{currentOng.following?.length}</p>
-                    <p className="text-sm">{currentOng.updatedAt}</p>
+                    <p className="text-sm">{currentOng.updatedAt?.toString()}</p>
                 </div>
             </div>
             <button onClick={() => setMostrarPostsList(!mostrarPostsList)} className={mostrarPostsList ? 'w-full bg-dark text-light hover:text-secondary text-center font-bold p-4 rounded-b-md' : 'w-full bg-secondary text-center font-bold p-4 rounded-b-md'}>
