@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-modal';
-import Link from 'next/link';
 
 import ProjectForm from '../ProjectForm/projectForm'
 
@@ -18,13 +17,13 @@ const EditPostButton = ({ idPost }) => {
     return (
         <>
             <div className="relative">
-                <button
+                <button onClick={handleOpenModal}
                     className="absolute top-0 right-0 p-2 bg-light text-dark rounded-bl-md"
                 >
-                    <Link href='#' onClick={handleOpenModal}><FontAwesomeIcon
+                    <FontAwesomeIcon
                         icon={faEdit}
                         style={{ fontSize: 15 }}
-                    /></Link>
+                    />
                 </button>
             </div>
 

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/router"
 import Image from "next/image";
 import Link from "next/link";
+import Modal from 'react-modal';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faHome,
@@ -10,12 +11,31 @@ import {
     faComment,
     faBell,
     faUserCircle,
-    faArrowRightFromBracket
+    faArrowRightFromBracket,
+    faTimes
 } from "@fortawesome/free-solid-svg-icons";
-import Notifications from "../Notifications/notifications";
+
 import CreateProjectButton from "../CreateProjectButton/createProjectButton";
+import NotificationsContainer from "../NotificationsContainer/notificationsContainer";
 
 const logo = require("../../src/images/logo.svg")
+
+Modal.setAppElement('#__next');
+
+const notifications = [
+    {
+        id: 1,
+        title: 'Nueva conexión',
+        message: 'Tienes una nueva conexión en LinkedIn',
+        time: 'Hace 2 horas',
+    },
+    {
+        id: 2,
+        title: 'Mensaje nuevo',
+        message: 'Tienes un mensaje nuevo en LinkedIn',
+        time: 'Hace 5 horas',
+    },
+];
 
 const Navbar = ({ createPost }) => {
 
@@ -30,8 +50,11 @@ const Navbar = ({ createPost }) => {
 
     };
 
-    const [showNotifications, setShowNotifications] = useState(false);
     const [showMenuBurger, setMenuBurger] = useState(false)
+
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+
+    const handleModal = () => setModalIsOpen(!modalIsOpen);
 
     const handleMenu = () => {
         setMenuBurger(true)
@@ -42,17 +65,10 @@ const Navbar = ({ createPost }) => {
         setMenuBurger(false)
     }
 
-    const handleNotificationsClick = () => {
-        setShowNotifications(true);
-    };
-    const closeNotifications = () => {
-        setShowNotifications(false);
-    };
-
     return (
         <>
-            <nav className="bg-white shadow-sm">
-                <div className="container mx-auto">
+            <nav className="bg-white shadow-sm ">
+                <div className="container relative mx-auto">
                     <div className="flex justify-between items-start md:items-center py-2 px-4 md:px-2">
                         <div className="flex justify-start items-center gap-5">
                             <Link href="/dashboard" className="text-gray-800 text-xl font-bold">
@@ -131,7 +147,7 @@ const Navbar = ({ createPost }) => {
                                 />
                                 <span>Conexiones</span>
                             </Link>
-                            <Link href="/messages" className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs">
+                            <Link href="/messages" className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs message-notification">
 
                                 <FontAwesomeIcon
                                     icon={faComment}
@@ -139,14 +155,33 @@ const Navbar = ({ createPost }) => {
                                 />
                                 <span>Mensajes</span>
                             </Link>
-                            <button onClick={handleNotificationsClick} className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs">
+                            <button onClick={handleModal} className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs cursor-pointer">
                                 <FontAwesomeIcon
                                     icon={faBell}
                                     style={{ fontSize: 15 }}
                                 />
                                 <span>Notificaciones</span>
-                                {showNotifications && <Notifications closeNotifications={closeNotifications} />}
                             </button>
+                            <Modal
+                                isOpen={modalIsOpen}
+                                onRequestClose={handleModal}
+                                contentLabel="Notifications"
+                                className="box-content "
+                                preventScroll={false}
+                                data-modal-backdrop="static"
+                                style={
+                                    {
+                                        overlay: { backgroundColor: 'transparent' }
+                                    }
+                                }
+                            >
+                                <div className='absolute top-16 right-48 w-auto p-0 max-h-90 flex flex-col justify-between items-stretch gap-5 bg-light rounded-md mx-auto overflow-hidden;'>
+                                    {/*<button className='absolute -top-3 right-4' onClick={handleCloseModal}>
+                                            <FontAwesomeIcon className="fixed text-dark bg-light rounded-full p-2" icon={faTimes} size={30} />
+                                </button>*/}
+                                    <NotificationsContainer notifications={notifications} />
+                                </div>
+                            </Modal>
 
                             <div className="flex items-center border-l-2 border-gray-300 gap-5 px-5">
                                 <Link href="/profile" className="text-dark hover:text-primary">

@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import SearchBar from "../SearchBar/searchBar";
+import { faL } from "@fortawesome/free-solid-svg-icons";
 
 
-function BannerContact({contacts, currentUser, changeChat}) {
+function BannerContact({ contacts, currentUser, changeChat }) {
 
     const [isActive, setIsActive] = useState(false);
 
@@ -12,6 +13,12 @@ function BannerContact({contacts, currentUser, changeChat}) {
         setIsActive(contact);
         changeChat(contact);
     };
+
+    const [isViewed, setIsViewed] = useState(false)
+
+    const handleView = () => {
+        setIsViewed(!isViewed)
+    }
 
     return (
         <div>
@@ -27,15 +34,15 @@ function BannerContact({contacts, currentUser, changeChat}) {
                     {
                         contacts?.map((contact) => (
                             <li key={contact.id} onClick={() => handleClick(contact)} className={isActive == contact ? 'bg-gray-100' : ''}>
-                                <a
-                                    className={`flex items-center px-3 py-2 text-sm transition duration-150 ease-in-out border-b border-gray-200 cursor-pointer hover:bg-gray-100 focus:outline-none`}>
+                                <a onClick={handleView}
+                                    className={`flex items-center gap-3 px-3 py-2 text-sm transition duration-150 ease-in-out border-b border-gray-200 cursor-pointer hover:bg-gray-100 focus:outline-none ${isViewed ? 'message-notification' : ''}`}>
                                     <img className="object-cover w-10 h-10 rounded-full"
                                         src={contact.image} alt="username" />
                                     <div className="w-full pb-2">
                                         <div className="flex justify-between">
-                                            <span className="block ml-2 font-semibold text-gray-600">{contact.name}</span>
+                                            <span className={isViewed ? "block font-black text-gray-600" : "font-semibold"}>{contact.name}</span>
                                         </div>
-                                        <span className="block ml-2 text-sm text-gray-600">{contact.email}</span>
+                                        <span className="block text-sm text-gray-600">{contact.email}</span>
                                     </div>
                                 </a>
                             </li>
