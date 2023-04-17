@@ -47,8 +47,8 @@ function Messages() {
     return (
         <div>
             <Navbar />
-            <div className="container mx-auto">
-                <div className="w-10/12 bg-white mx-auto">
+            <div className="container mx-auto w-full py-5 flex justify-center items-center">
+                <div className="w-10/12 bg-white rounded-md mx-auto">
                     <div className="container">
                         <div className="h-full border rounded lg:grid lg:grid-cols-3">
                             <BannerContact 

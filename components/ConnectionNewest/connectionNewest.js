@@ -19,7 +19,7 @@ const Contact = ({ ong }) => {
           className="object-cover w-12 h-12 rounded-full"
         />
         <div className='w-full'>
-          <Link href="#"><h4 className="text-sm font-medium text-gray-900">{ong.name}</h4></Link>
+          <Link href={`/ong/${ong.id}`}><h4 className="text-sm font-medium text-gray-900">{ong.name}</h4></Link>
           <p className="text-sm text-gray-500">{ }</p>
         </div>
       </div>

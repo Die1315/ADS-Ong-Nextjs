@@ -1,26 +1,17 @@
+import Link from "next/link";
 import { useState } from "react";
 
-function Notifications() {
-
-    const [showNotifications, setShowNotifications] = useState(false);
-
-    const closeNotifications = () => {
-        setShowNotifications(false);
-    };
-
+function Notifications({ title, message, time }) {
     return (
-        <div className="absolute top-16 right-48 z-50 w-80 max-w-full h-80 overflow-y-auto bg-white">
-            <div className="p-4">
-                <h3 className="text-lg font-medium mb-2">Notificaciones</h3>
-                {/* Aquí va el contenido de la notificación */}
+        <div className="bg-white p-4 border border-gray-200 rounded-md">
+            <div className="flex items-center">
+                <img src="https://randomuser.me/api/portraits/women/3.jpg" className="h-6 w-6 mr-2 rounded-full" alt="Notification Icon" />
+                <Link href={`/dashboard`}><h2 className="text-sm font-medium text-gray-800">{title}</h2></Link>
             </div>
-            <button className="absolute top-0 right-0 m-4 text-gray-400 hover:text-gray-600" onClick={closeNotifications}>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
+            <Link href={`/dashboard`}><div className="text-sm text-gray-600 mt-1">{message}</div></Link>
+            <Link href={`/dashboard`}><div className="text-xs text-gray-400 mt-2">{time}</div></Link>
         </div>
     );
-}
+};
 
 export default Notifications

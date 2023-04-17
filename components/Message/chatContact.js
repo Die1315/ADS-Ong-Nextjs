@@ -7,6 +7,7 @@ import { BsEmojiSmileFill } from "react-icons/bs";
 
 import { v4 as uuidv4 } from "uuid";
 import { io } from "socket.io-client";
+import Link from "next/link";
 
 function ChatContact({currentChat, currentUser, socket}) {
 
@@ -75,9 +76,9 @@ function ChatContact({currentChat, currentUser, socket}) {
                 <div className="w-full">
                     <div className="relative flex items-center p-3 border-b border-gray-300">
                         <img className="object-cover w-10 h-10 rounded-full" src={currentChat?.image} alt="username" />
-                        <span className="block ml-2 font-bold text-gray-600">{currentChat?.name}</span>
+                        <Link href={`/ong/${currentChat.id}`}><h4 className="block ml-2 font-bold text-gray-600 font-bold">{currentChat?.name}</h4></Link>
                     </div>
-                    <div className="relative w-full p-6 overflow-y-auto h-[40rem]">
+                    <div className="relative w-full p-6 overflow-y-auto h-[40rem] scrollbar scrollbar-thin scrollbar-thumb-secondary scrollbar-track-gray-200">
                     
                         {messages.map((message) => {
                             return (
@@ -85,7 +86,7 @@ function ChatContact({currentChat, currentUser, socket}) {
                                 ?
                                 <div ref={scrollRef} key={uuidv4()}>
                                     <ul className={`space-y-2 ${!message ? 'invisible' : ''}`}>
-                                        <li className="flex justify-end">
+                                        <li className="flex justify-end mb-2">
                                             <div className="relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow">
                                                 <span className="block">{message?.message}</span>
                                             </div>
