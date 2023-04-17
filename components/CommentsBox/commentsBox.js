@@ -4,36 +4,34 @@ import Image from 'next/image';
 import { createComment, getComments } from '../../service/data-service';
 
 
-function CommentsBox({postId}) {
+function CommentsBox({ postId }) {
     const [newComment, setNewComment] = useState('');
     const [comments, setComments] = useState([]);
     const [state, setChange] = useState(false);
-    const currentDate = new Date();
-    const formattedDate = currentDate.toLocaleString();
-    useEffect(()=>{
-        getComments(postId).then((comments)=>{
+
+    useEffect(() => {
+        getComments(postId).then((comments) => {
             setComments(comments)
         })
     }, [state])
-   
+
     // Función para agregar un nuevo comentario
     const handleAddComment = () => {
-        
         if (newComment !== '') {
-            createComment(postId,{"text": newComment})
-            .then((res)=> {
-                setChange(!state)
-            })            
+            createComment(postId, { "text": newComment })
+                .then((res) => {
+                    setChange(!state)
+                })
             setNewComment('')
         }
-       
+
     };
 
     // Función para actualizar el estado del nuevo comentario
     const handleCommentChange = (event) => {
         setNewComment(event.target.value);
     };
-
+    
     return (
         <div className="w-full h-full flex flex-col">
             <div className='relative max-h-96 overflow-y-auto scrollbar scrollbar-thin scrollbar-thumb-secondary scrollbar-track-gray-200'>
@@ -49,7 +47,7 @@ function CommentsBox({postId}) {
                         />
                         <div className='flex flex-col gap-1'>
                             <p className='text-sm'>{comment.text}</p>
-                            <p className='text-xs text-primary'>{formattedDate}</p>
+                            <p className='text-xs text-primary'>{comment.createdAt.substring(0,10)}</p>
                         </div>
                     </div>
                 ))}

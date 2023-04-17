@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getPostsOwner } from "../../service/data-service";
+import { getPostsOwner, getCurrentOng } from "../../service/data-service";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
