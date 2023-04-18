@@ -34,14 +34,14 @@ export function getCurrentOng(owner = false, ongToSearch) {
       .then((res) => {
         return res.data;
       })
-      .catch((err) => console.log(err.message));
+      .catch((err) => err);
   } else {
     return axios
       .get(`/api/ongs/${ongToSearch}/profile`)
       .then((res) => {
         return res.data;
       })
-      .catch((err) => console.log(err.message));
+      .catch((err) => err);
   }
 }
 
@@ -58,12 +58,18 @@ export function registerProject(data) {
     });
 }
 
-export function getPostsOwner() {
+export function getPostsOwner(id) {
+  if(id){
+    return axios
+    .get(`/api/postsbyong/${id}`)
+    .then((response) => response.data)
+    .catch((err) => err);
+  } else {
   return axios
     .get("/api/postsbyong/")
     .then((response) => response.data)
     .catch((err) => err);
-}
+}}
 
 export function getConnections() {
   return axios

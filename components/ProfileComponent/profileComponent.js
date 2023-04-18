@@ -15,25 +15,25 @@ import ProjectForm from "../ProjectForm/projectForm";
 import Following from "../ConnectionFollowing/connectionfollowing";
 import Footer from "../Footer/footer";
 
-function ProfileComponent() {
+function ProfileComponent({isOwner, idOng}) {
   const [posts, setPosts] = useState([])
   const [defaultView, setDefaultView] = useState("Proyectos")
 
   useEffect(() => {
-    getPostsOwner().then((posts) => {
+    getPostsOwner(null || idOng).then((posts) => {
       console.log(posts)
       setPosts(posts);
     })
 
-  }, []);
+  }, [idOng]);
 
   const [activeItem, setActiveItem] = useState("Proyectos");
 
   return (
     <div className="py-5 px-5 md:px-0">
       <div className="container mx-auto bg-white rounded-md">
-        <CardProfile setActiveItem={setActiveItem} />
-        <MenuProfile setActiveItem={setActiveItem} />
+        <CardProfile setActiveItem={setActiveItem} isOwner={isOwner} id={idOng}/>
+        <MenuProfile setActiveItem={setActiveItem} isOwner={isOwner}/>
       </div>
       <div className="container mx-auto px-0 py-5 flex flex-col items-start md:flex-row gap-5">
 
@@ -56,11 +56,11 @@ function ProfileComponent() {
               </button>
             </div>
           }
-          {activeItem === "Proyectos" && <PostsList posts={posts} search={""} isOwner={true} />}
+          {activeItem === "Proyectos" && <PostsList posts={posts} search={""} isOwner={isOwner} />}
           {activeItem === "Conexiones" && <ConnectionsList />}
-          {activeItem === "Información" && <InfoProfile />}
-          {activeItem === "Perfil" && <EditProfile />}
-          {activeItem === "Portada" && <EditCover />}
+          {activeItem === "Información" && <InfoProfile /> }
+          {activeItem === "Perfil" && <EditProfile /> && isOwner}
+          {activeItem === "Portada" && <EditCover /> && isOwner}
         </div>
         <div className="w-12/12 order-3 md:order-3 md:w-3/12">
 
