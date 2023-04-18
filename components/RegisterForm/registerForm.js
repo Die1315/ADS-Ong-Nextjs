@@ -27,13 +27,13 @@ function RegisterForm() {
             const formData = new FormData();
             formData.append("file", uploadFile);
             formData.append("upload_preset", "ovclfrex");
-
+            if(uploadFile){
             uploadCloudinary(formData)
                 .then((response) => {
                     register({ ...dataRegister, image: response.data.secure_url })
                         .then((response) => {
                             if (response.code === "ERR_BAD_REQUEST") {
-                                setError(response.response.data.message);
+                                setError(response.response.data.message || response.response.data.error);
                             } else {
                                 router.push("/login");
                             }
@@ -46,7 +46,9 @@ function RegisterForm() {
                 .catch((error) => {
                     console.log(error);
                 });
-
+            } else {
+                setError("Debe agregar una imagen")
+            }
         } else {
             setError("Las contraseñas no coinciden.")
         }

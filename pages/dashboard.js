@@ -9,8 +9,11 @@ import PostsList from "../components/PostsList/postsList";
 import Project from '../components/Project/project';
 import { getGLobalPosts, getPostFollowing } from "../service/data-service";
 import SearchBar from "../components/SearchBar/searchBar";
+import CardTags from "../components/Tags/tags";
 
 const logo = require("../src/images/logo.svg")
+
+const categories = ['Caridad', 'Servicios', 'Participación', 'Empoderamiento'];
 
 export const DashboardContext = createContext();
 
@@ -32,7 +35,7 @@ function Dashboard() {
   const [typePosts, setToggleGlobalPosts] = useState(true);
 
   const handlePosts = (event) => {
-    console.log(event.target.name)
+    //console.log(event.target.name)
     if (event.target.name === 'global') {
       setToggleGlobalPosts(true);
     } else if (event.target.name === 'following') {
@@ -64,12 +67,13 @@ function Dashboard() {
 
           <Navbar createPost={true} />
           <div className="container mx-auto px-2 md:px-0 py-5 flex flex-col md:flex-row gap-5">
-            <div className="w-12/12 md:w-3/12 relative">
+            <div className="w-12/12 md:w-3/12 relative flex flex-col gap-5">
               <CardDashboard
                 name="Nombre ONG"
                 title="Categoría/Descripción"
                 imageSrc={logo}
                 onClick={() => setMostrarPostsList(!mostrarPostsList)} />
+              <CardTags title="Categorías:" categories={categories} />
             </div>
             <div className="w-12/12 md:w-6/12 flex flex-col gap-5">
               {mostrarPostsList ? <div className="flex justify-around items-center gap-1">
@@ -77,13 +81,13 @@ function Dashboard() {
                 <button onClick={handlePosts} name="following" className={`py-2 font-bold text-sm w-3/6 rounded-md ${typePosts ? 'bg-white text-gray-400 hover:text-primary' : 'bg-gray-200 text-dark'}`}>ONGs que sigo</button>
               </div> : <></>}
 
-              {mostrarPostsList ? <SearchBar search={search} onSearch={setSearch} displayOnResponsive={true}/> : ""}
+              {mostrarPostsList ? <SearchBar search={search} onSearch={setSearch} displayOnResponsive={true} /> : ""}
               {mostrarPostsList ? <PostsList posts={posts} search={search} /> : <Project />}
 
 
             </div>
             <div className="w-12/12 md:w-3/12 flex flex-col gap-5">
-              <SearchBar search={search} onSearch={setSearch} displayOnResponsive={false}/>
+              <SearchBar search={search} onSearch={setSearch} displayOnResponsive={false} />
               <Newest />
               <Footer />
             </div>

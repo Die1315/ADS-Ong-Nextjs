@@ -16,12 +16,6 @@ Modal.setAppElement('#__next');
 
 const Post = ({ id, title, description, image, startDate, endDate, userProfilePic, userName, lat, likes, resources,  isOwner }) => {
 
-    const exampleComments = [
-        'Este es un comentario de ejemplo',
-        'Este es otro comentario de ejemplo',
-        'Este es el tercer comentario de ejemplo'
-    ];
-
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
     const handleOpenModal = () => setModalIsOpen(true);
@@ -52,7 +46,7 @@ const Post = ({ id, title, description, image, startDate, endDate, userProfilePi
                         <div className='w-2/12 flex items-stretch justify-end'>
                             <div className="flex">
                                 <CommentButton />
-                                <LikeButton likes={likes} id={id} />
+                                <LikeButton likes={likes} id={id}/>
                             </div>
                         </div>
                     </div>

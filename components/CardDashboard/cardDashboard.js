@@ -2,19 +2,22 @@ import { useEffect, useState, useContext } from 'react';
 import Image from 'next/image';
 
 import { DashboardContext } from '../../pages/dashboard';
-import { getCurrentOng, getPostsOwner } from "../../service/data-service";
-import { formatDate } from '../../utils/dateUtils';
+import { getCurrentOng } from "../../service/data-service";
 
 const CardProfile = ({ name, title, imageSrc }) => {
 
     const { mostrarPostsList, setMostrarPostsList } = useContext(DashboardContext);
     const [currentOng, setDataOng] = useState([]);
 
+
     useEffect(() => {
         getCurrentOng(true).then((ong) => {
             setDataOng(ong);
         });
     }, []);
+
+    const updatedAtDate = new Date(currentOng.updatedAt);
+    const formattedDate = updatedAtDate.toLocaleDateString();
 
     return (
         <div className="bg-white shadow-sm rounded-md overflow-hiddenm flex flex-col items-stretch sticky top-5">
@@ -41,7 +44,7 @@ const CardProfile = ({ name, title, imageSrc }) => {
                 <div className="w-2/6 flex flex-col gap-2 text-right text-primary font-semibold">
                     <p className="text-sm">{currentOng.posts?.length}</p>
                     <p className="text-sm">{currentOng.following?.length}</p>
-                    <p className="text-sm">{currentOng.updatedAt}</p>
+                    <p className="text-sm">{formattedDate}</p>
                 </div>
             </div>
             <button onClick={() => setMostrarPostsList(!mostrarPostsList)} className={mostrarPostsList ? 'w-full bg-dark text-light hover:text-secondary text-center font-bold p-4 rounded-b-md' : 'w-full bg-secondary text-center font-bold p-4 rounded-b-md'}>

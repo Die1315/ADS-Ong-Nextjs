@@ -35,7 +35,7 @@ function LoginPage() {
         event.preventDefault();
         login(credentials).then((res) => {
             if (res.code === "ERR_BAD_REQUEST") {
-                setError(res.response.data.message);
+                setError(res.response.data.message || res.response.data.error);
             } else {
                 router.push("/dashboard")
             }
