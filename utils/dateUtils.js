@@ -1,6 +1,10 @@
-export const formatDate = (date) => {
-  console.log(typeof date, date)
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+export const formatDate = (date, time=false) => {
+  //console.log(typeof date, date)
+    let options = { year: 'numeric', month: 'long', day: 'numeric' };
+    if(time){
+      options.hour='numeric'
+      options.minute= "numeric"
+    }
     return new Intl.DateTimeFormat('es-ES', options).format(new Date(date));
   };
   

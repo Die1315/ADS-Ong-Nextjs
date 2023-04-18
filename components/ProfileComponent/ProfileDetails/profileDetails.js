@@ -8,7 +8,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import Link from "next/link";
-
 import { getCurrentOng } from "../../../service/data-service";
 
 function ProfileDetails() {
@@ -21,11 +20,7 @@ function ProfileDetails() {
 
     }, []);
 
-    const webPage = getCurrentOng.webPage
-    const facebook = getCurrentOng.facebook
-    const instagram = getCurrentOng.instagram
-
-    return (
+      return (
         <div className="w-full flex flex-col gap-5">
             <h2 className="font-bold text-xl">Detalles de contacto</h2>
             <div className="flex justify-start items-center gap-5">

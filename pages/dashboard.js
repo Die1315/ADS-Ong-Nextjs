@@ -35,7 +35,7 @@ function Dashboard() {
   const [typePosts, setToggleGlobalPosts] = useState(true);
 
   const handlePosts = (event) => {
-    console.log(event.target.name)
+    //console.log(event.target.name)
     if (event.target.name === 'global') {
       setToggleGlobalPosts(true);
     } else if (event.target.name === 'following') {

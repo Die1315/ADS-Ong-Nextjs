@@ -23,7 +23,7 @@ function Profile() {
       ) : (
         <div>
           <Navbar createPost={false} />
-          <ProfileComponent />
+          <ProfileComponent isOwner={true} />
         </div>
 
       )}

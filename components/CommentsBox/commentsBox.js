@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Image from 'next/image';
 import { createComment, getComments } from '../../service/data-service';
+import { formatDate } from '../../utils/dateUtils';
 
 
 function CommentsBox({ postId }) {
@@ -36,7 +37,8 @@ function CommentsBox({ postId }) {
         <div className="w-full h-full flex flex-col">
             <div className='relative max-h-96 overflow-y-auto scrollbar scrollbar-thin scrollbar-thumb-secondary scrollbar-track-gray-200'>
                 <h2 className="text-sm font-semibold">Comentarios ({comments.length})</h2>
-                {comments.map((comment, index) => (
+                {comments.sort((x,y)=>  y.createdAt.localeCompare(x.createdAt))
+                .map((comment, index) => (
                     <div key={index} className="border-b border-gray-300 py-2 mb-2 flex gap-3">
                         <Image
                             src={comment.ong.image}
@@ -47,7 +49,7 @@ function CommentsBox({ postId }) {
                         />
                         <div className='flex flex-col gap-1'>
                             <p className='text-sm'>{comment.text}</p>
-                            <p className='text-xs text-primary'>{comment.createdAt.substring(0,10)}</p>
+                            <p className='text-xs text-primary'>{formatDate(comment.createdAt,true)}</p>
                         </div>
                     </div>
                 ))}

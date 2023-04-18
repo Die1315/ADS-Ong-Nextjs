@@ -9,7 +9,7 @@ const LikeButton = ({likes, id}) => {
     const [like, setLikes] = useState(initialState);
 
     const handleLikeClick = () => {
-        console.log(id)
+        //console.log(id)
         toggleLike(id).then((res)=>{
             console.log(res)
             if(res.state===false){
