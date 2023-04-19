@@ -44,7 +44,6 @@ function Dashboard() {
   }
 
   useEffect(() => {
-    console.log(typePosts)
     if (typePosts) {
       getGLobalPosts().then((posts) => {
         setPosts(posts);

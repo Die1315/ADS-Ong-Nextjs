@@ -3,27 +3,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { toggleLike } from '../../service/data-service';
 
-const LikeButton = ({likes, id}) => {
+const LikeButton = ({ likes, id }) => {
     console.log(likes)
     let initialState = likes.length
     const [like, setLikes] = useState(initialState);
 
     const handleLikeClick = () => {
         //console.log(id)
-        toggleLike(id).then((res)=>{
+        toggleLike(id).then((res) => {
             console.log(res)
-            if(res.state===false){
+            if (res.state === false) {
                 setLikes(like - 1);
             } else {
                 setLikes(like + 1);
             }
         })
-        
+
     };
-    
 
     return (
-        <button  onClick={handleLikeClick}  className="bg-transparent hover:bg-secondary text-white flex flex-col justify-center items-center border-l border-gray-400 px-4 py-2 transition duration-200 text-xs">
+        <button onClick={handleLikeClick} className={`bg-transparent flex flex-col justify-center items-center border-l border-gray-400 px-4 py-2 transition duration-200 text-xs text-white`}>
             <FontAwesomeIcon
                 icon={faHeart}
                 style={{ fontSize: 15 }}

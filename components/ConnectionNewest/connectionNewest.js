@@ -10,17 +10,21 @@ const Contact = ({ ong }) => {
 
   return (
     <div className="flex justify-between items-center py-2">
-      <div className='flex gap-3'>
-        <Image
-          src={ong.image}
-          alt={`Profile picture of ${ong.name}`}
-          width={200}
-          height={200}
-          className="object-cover w-12 h-12 rounded-full"
-        />
-        <div className='w-full'>
+      <div className='flex'>
+        <div className="relative w-20 h-12 mr-3">
+          <Link href={`/ong/${ong.id}`}>
+            <Image
+              src={ong.image}
+              alt={`Profile picture of ${ong.name}`}
+              width={200}
+              height={200}
+              className="object-cover w-12 h-12 rounded-full"
+            />
+          </Link>
+        </div>
+        <div className='w-full flex flex-col gap-1'>
           <Link href={`/ong/${ong.id}`}><h4 className="text-sm font-medium text-gray-900">{ong.name}</h4></Link>
-          <p className="text-sm text-gray-500">{ }</p>
+          <p className="text-xs text-gray-500">Categoría</p>
         </div>
       </div>
       <FollowButton ong={ong} />

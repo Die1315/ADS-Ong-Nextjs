@@ -1,21 +1,32 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComment } from '@fortawesome/free-solid-svg-icons';
 
-const CommentButton = () => {
-    const [likes, setLikes] = useState(0);
+import { getComments } from '../../service/data-service';
 
-    const handleLikeClick = () => {
-        setLikes(likes + 1);
-    };
+const CommentButton = ({ postId, modal }) => {
+    const [comments, setComments] = useState([]);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+
+    const handleOpenModal = () => {
+        if (modalIsOpen == modal) {
+            setModalIsOpen(true);
+        }
+    }
+
+    useEffect(() => {
+        getComments(postId).then((comments) => {
+            setComments(comments)
+        })
+    }, [])
 
     return (
-        <button className="flex flex-col justify-center items-center px-4 py-2 bg-transparent border-l border-gray-400 hover:bg-primary text-xs text-white">
+        <button onClick={handleOpenModal} className="flex flex-col justify-center items-center px-4 py-2 bg-transparent border-l border-gray-400 text-xs text-white">
             <FontAwesomeIcon
                 icon={faComment}
                 style={{ fontSize: 15 }}
             />
-            <span>{likes}</span>
+            <span>{comments.length}</span>
         </button>
     );
 };
