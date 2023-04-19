@@ -11,6 +11,7 @@ function Messages() {
     const [contacts, setContacts] = useState([]);
     const [currentUser, setCurrentUser] = useState();
     const [currentChat, setCurrentChat] = useState(undefined);
+    const [search, setSearch] = useState("");
 
     const host = (process.env.HOST || 'localhost') + ':' + (process.env.PORT || 3000);
     const socket = useRef();
@@ -34,6 +35,7 @@ function Messages() {
         const getContacts = async() => {
             if (currentUser) {
                 const { data } = await getFollowedUsers();
+                // console.log(data);
                 setContacts(data);
             }
         };
@@ -54,7 +56,9 @@ function Messages() {
                             <BannerContact 
                                 contacts={contacts} 
                                 currentUser={currentUser} 
-                                changeChat={handleChatChange}/>
+                                changeChat={handleChatChange}
+                                search={search}
+                                setSearch={setSearch}/>
                             {
                                 currentChat === undefined ?
                                 (

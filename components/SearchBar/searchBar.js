@@ -12,7 +12,7 @@ const SearchBar = ({ search, onSearch, displayOnResponsive }) => {
                 placeholder="Buscar..."
                 value={search}
                 onChange={(event) => {
-                    console.log(event.target.value);
+                    // console.log(event.target.value);
                     onSearch(event.target.value);
                 }}
             />

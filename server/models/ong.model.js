@@ -47,6 +47,10 @@ const ongSchema = new Schema(
     followers : [{
       type: Schema.Types.ObjectId,
       ref: 'Ong'
+    }],
+    messages : [{
+      type: Schema.Types.ObjectId,
+      ref: 'Message'
     }]
   },
   {
