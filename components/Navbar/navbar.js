@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router"
 import Image from "next/image";
 import Link from "next/link";
@@ -18,6 +18,7 @@ import {
 import CreateProjectButton from "../CreateProjectButton/createProjectButton";
 import NotificationsContainer from "../NotificationsContainer/notificationsContainer";
 
+import { getMessages } from "../../service/data-service";
 const logo = require("../../src/images/logo.svg")
 
 Modal.setAppElement('#__next');
@@ -39,7 +40,6 @@ const notifications = [
 
 const Navbar = ({ createPost }) => {
 
-
     const router = useRouter()
 
     const logout = () => {
@@ -51,7 +51,7 @@ const Navbar = ({ createPost }) => {
     };
 
     const [showMenuBurger, setMenuBurger] = useState(false)
-
+    const [messageNotification, setMessageNotification] = useState(false)
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
     const handleModal = () => setModalIsOpen(!modalIsOpen);
@@ -60,10 +60,15 @@ const Navbar = ({ createPost }) => {
         setMenuBurger(true)
     }
 
-
     const closeMenu = () => {
         setMenuBurger(false)
     }
+
+    useEffect(() => {
+        getMessages(true).then((messageNotification) => {
+            setMessageNotification(messageNotification);
+        });
+    }, [])
 
     return (
         <>
@@ -147,7 +152,7 @@ const Navbar = ({ createPost }) => {
                                 />
                                 <span>Conexiones</span>
                             </Link>
-                            <Link href="/messages" className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs message-notification">
+                            <Link href="/messages" className={`text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs ${messageNotification && `message-notification`}`}>
 
                                 <FontAwesomeIcon
                                     icon={faComment}

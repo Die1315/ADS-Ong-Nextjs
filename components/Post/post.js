@@ -14,7 +14,7 @@ import { formatDate } from '../../utils/dateUtils';
 
 Modal.setAppElement('#__next');
 
-const Post = ({ id, title, description, image, startDate, endDate, userProfilePic, userName, lat, likes, resources,  isOwner }) => {
+const Post = ({ id, title, description, image, startDate, endDate, userProfilePic, userName, lat, likes, resources, isOwner }) => {
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -45,8 +45,8 @@ const Post = ({ id, title, description, image, startDate, endDate, userProfilePi
                         </div>
                         <div className='w-2/12 flex items-stretch justify-end'>
                             <div className="flex">
-                                <CommentButton />
-                                <LikeButton likes={likes} id={id}/>
+                                <CommentButton postId={id} modal={modalIsOpen} />
+                                <LikeButton likes={likes} id={id} />
                             </div>
                         </div>
                     </div>
@@ -87,15 +87,19 @@ const Post = ({ id, title, description, image, startDate, endDate, userProfilePi
                     </div>
                     <div className='w-12/12 md:w-5/12 flex flex-col justify-start items-start p-4 gap-5'>
                         <div className='flex justify-start items-start gap-3'>
-                            <Image
-                                src={userProfilePic}
-                                alt="Post Image"
-                                width={200}
-                                height={200}
-                                className="object-cover w-12 h-12 rounded-full"
-                            />
+                            <Link href={`/ong/${id}`}>
+                                <Image
+                                    src={userProfilePic}
+                                    alt="Post Image"
+                                    width={200}
+                                    height={200}
+                                    className="object-cover w-12 h-12 rounded-full"
+                                />
+                            </Link>
                             <div className='flex flex-col'>
-                                <p className="text-dark font-bold text-lg hover:cursor-pointer">{userName}</p>
+                                <Link href={`/ong/${id}`}>
+                                    <h4 className="text-dark font-bold text-lg hover:cursor-pointer">{userName}</h4>
+                                </Link>
                                 <p className='text-sm'>Categoría</p>
                             </div>
                         </div>

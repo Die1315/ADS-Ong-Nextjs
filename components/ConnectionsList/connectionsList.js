@@ -3,10 +3,11 @@ import ContactCard from "../CardConexion/cardConexion";
 import { useState, useEffect } from "react";
 import { getConnections } from "../../service/data-service";
 
-function ConnectionsList() {
+function ConnectionsList(props) {
 
     const [trendingConnections, setConnections] = useState([]);
     const [search, setSearch] = useState("")
+    const [typeContacts, setTypeContacts] = useState(true);
 
     useEffect(() => {
         getConnections().then((ongs) => {
@@ -14,12 +15,29 @@ function ConnectionsList() {
         })
     }, [])
 
-    return (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+    const handleContacts = (event) => {
+        //console.log(event.target.name)
+        if (event.target.name === 'mutual') {
+            setTypeContacts(true);
+        } else if (event.target.name === 'discover') {
+            setTypeContacts(false);
+        }
+    }
+
+
+    return (<div className="flex flex-col gap-5">
+        {!props.isOwner &&
+            <div className="w-full flex justify-center items-center gap-5">
+                <button onClick={handleContacts} name="mutual" className={`py-2 font-bold text-sm w-3/6 rounded-md ${!typeContacts ? 'bg-white text-gray-400 hover:text-primary' : ' bg-gray-200 text-dark'}`}>En común</button>
+                <button onClick={handleContacts} name="discover" className={`py-2 font-bold text-sm w-3/6 rounded-md ${typeContacts ? 'bg-white text-gray-400 hover:text-primary' : 'bg-gray-200 text-dark'}`}>Descubrir</button>
+            </div>
+        }
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {trendingConnections.filter((ong) => ong.name.includes(search)).map((ong, i) => (
                 <ContactCard ong={ong} />
             ))}
         </div>
+    </div>
     )
 }
 
