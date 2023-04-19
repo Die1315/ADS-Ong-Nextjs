@@ -13,6 +13,18 @@ module.exports.addMessage = async (req, res, next) => {
             image
         });
 
+        await Ong.findById(from).then((ong) => {
+            ong.messages.push(data._id);
+            ong.save();
+            // console.log(ong);
+        });
+
+        await Ong.findById(to).then((ong) => {
+            ong.messages.push(data._id);
+            ong.save();
+            // console.log(ong);
+        });
+
         if (data) return res.json({ msg: "Message added successfully"})
         return res.json({ msg: "Failed to add message to the database" });
 
@@ -46,8 +58,8 @@ module.exports.getAllMessages = async (req, res, next) => {
 
 module.exports.getFollowedUsers = async (req, res, next) => {
     const currentUser = req.ong;
-    await Ong.find({ _id: { $in :currentUser.following}})
-            .select(["id", "name", "image", "email"])
+    await Ong.find({ _id: { $in :currentUser.following}}).populate("messages","createdAt")
+            // .select(["id", "name", "image", "email"])
             .then((followings)=>{
                 res.status(200).json(followings)
             })
