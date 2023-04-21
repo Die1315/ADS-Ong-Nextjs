@@ -1,22 +1,26 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { editPost, registerProject, uploadCloudinary } from "../../service/data-service";
+
 import MapView from "../map-box/map";
 
-const ProjectForm = ({ postToUpdate,setPostUpdate, closeModal }) => {
+import { editPost, registerProject, uploadCloudinary } from "../../service/data-service";
+
+const ProjectForm = ({ postToUpdate, setPostUpdate, closeModal }) => {
     const [error, setError] = useState();
     const router = useRouter();
     const [dataRegister, setDataRegister] = useState();
     const [userLngLat, setUserLngLat] = useState(null);
-    const location =  {lat : postToUpdate?.lat || 0,
-                lng: postToUpdate?.lon || 0}
+    const location = {
+        lat: postToUpdate?.lat || 0,
+        lng: postToUpdate?.lon || 0
+    }
     // Cloudinary
     const [uploadFile, setUploadFile] = useState("");
     const [preview, setPreview] = useState(postToUpdate?.image || null);
-    useEffect(()=>{
-        if(postToUpdate){
-           setPreview(postToUpdate.image)
-         }
+    useEffect(() => {
+        if (postToUpdate) {
+            setPreview(postToUpdate.image)
+        }
     }, [postToUpdate]);
     const setLngLat = (lngLat) => {
         setUserLngLat(lngLat);
@@ -28,7 +32,7 @@ const ProjectForm = ({ postToUpdate,setPostUpdate, closeModal }) => {
     }
 
     const handleChange = (event) => {
-         setDataRegister({
+        setDataRegister({
             ...dataRegister,
             [event.target.name]: event.target.value
         });
@@ -40,54 +44,55 @@ const ProjectForm = ({ postToUpdate,setPostUpdate, closeModal }) => {
         const formData = new FormData();
         formData.append("file", uploadFile);
         formData.append("upload_preset", "ovclfrex");
-        if(postToUpdate){
-            if(uploadFile){
-                uploadCloudinary(formData).then((response)=>{
-                    editPost(postToUpdate.id, 
-                        {...dataRegister, image:response.data.secure_url})
-                        .then((response)=> {
-                           //console.log(response)
-                           setPostUpdate(response) 
-                })})
-            } else{
-                editPost(postToUpdate.id,{...dataRegister})
-                .then((response)=> {
-                    //console.log(response)
-                    setPostUpdate(response)
-            })
-            }         
-            closeModal() 
-        }else{
-        uploadCloudinary(formData)
-            .then((response) => {
-                registerProject({ ...dataRegister, image: response.data.secure_url })
+        if (postToUpdate) {
+            if (uploadFile) {
+                uploadCloudinary(formData).then((response) => {
+                    editPost(postToUpdate.id,
+                        { ...dataRegister, image: response.data.secure_url })
+                        .then((response) => {
+                            //console.log(response)
+                            setPostUpdate(response)
+                        })
+                })
+            } else {
+                editPost(postToUpdate.id, { ...dataRegister })
                     .then((response) => {
-                        
-                        if (response.code === "ERR_BAD_REQUEST") {
-                            setError(response.response.data.message || response.response.data.error);
-                        } else {
-                            router.push("/dashboard");
-                        }
+                        //console.log(response)
+                        setPostUpdate(response)
                     })
-                    .catch((err) => {
-                        console.log(err.message);
-                    });
-            })
-            .catch((error) => {
-                if (error.code === "ERR_BAD_REQUEST") {
-                    setError(error.response.data.error.message || error.response.data.error.error);
-                }
-                
-            });
+            }
+            closeModal()
+        } else {
+            uploadCloudinary(formData)
+                .then((response) => {
+                    registerProject({ ...dataRegister, image: response.data.secure_url })
+                        .then((response) => {
+
+                            if (response.code === "ERR_BAD_REQUEST") {
+                                setError(response.response.data.message || response.response.data.error);
+                            } else {
+                                router.push("/dashboard");
+                            }
+                        })
+                        .catch((err) => {
+                            console.log(err.message);
+                        });
+                })
+                .catch((error) => {
+                    if (error.code === "ERR_BAD_REQUEST") {
+                        setError(error.response.data.error.message || error.response.data.error.error);
+                    }
+
+                });
         }
     };
     let formattedstartDate = ""
     let formattedendDate = ""
-    if(postToUpdate){
-    const startDate = new Date(postToUpdate?.startdate);
-    const endDate = new Date(postToUpdate?.enddate);
-    formattedstartDate = startDate?.toISOString().split("T")[0];
-    formattedendDate = endDate?.toISOString().split("T")[0];
+    if (postToUpdate) {
+        const startDate = new Date(postToUpdate?.startdate);
+        const endDate = new Date(postToUpdate?.enddate);
+        formattedstartDate = startDate?.toISOString().split("T")[0];
+        formattedendDate = endDate?.toISOString().split("T")[0];
     }
     return (
         <form onSubmit={handleSubmit}
@@ -98,7 +103,7 @@ const ProjectForm = ({ postToUpdate,setPostUpdate, closeModal }) => {
                     onChange={handleChange}
                     name="title"
                     type="text"
-                    placeholder={ "Título de Proyecto" }
+                    placeholder={"Título de Proyecto"}
                     defaultValue={postToUpdate?.title || ""}
                     required
                     className="w-full"
@@ -117,7 +122,7 @@ const ProjectForm = ({ postToUpdate,setPostUpdate, closeModal }) => {
                 />
             </div>
             <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3 h-64">
-                <MapView setLngLat={setLngLat} initialViewState={location} locationToUpdate={location}/>
+                <MapView setLngLat={setLngLat} initialViewState={location} locationToUpdate={location} />
             </div>
             <div className="input-group flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
                 <label>Fecha Inicio: </label>
@@ -199,7 +204,7 @@ const ProjectForm = ({ postToUpdate,setPostUpdate, closeModal }) => {
             </div>
             {error && <div className="alert alert-danger">{error}</div>}
             <button type="submit" className="btn mt-5">
-                {postToUpdate? "Editar Proyecto" :  "Crear Proyecto"  }
+                {postToUpdate ? "Editar Proyecto" : "Crear Proyecto"}
             </button>
         </form>
     )

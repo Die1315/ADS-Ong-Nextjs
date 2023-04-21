@@ -59,8 +59,8 @@ function ProfileComponent({ isOwner, idOng }) {
           {activeItem === "Proyectos" && <PostsList posts={posts} search={""} isOwner={isOwner} />}
           {activeItem === "Conexiones" && <ConnectionsList isOwner={isOwner} />}
           {activeItem === "Información" && <InfoProfile isOwner={isOwner} id={idOng} />}
-          {activeItem === "Perfil" && <EditProfile /> && isOwner}
-          {activeItem === "Portada" && <EditCover /> && isOwner}
+          {isOwner ? activeItem === "Perfil" && <EditProfile /> : null}
+          {isOwner ? activeItem === "Portada" && <EditCover /> : null }
         </div>
         <div className="w-12/12 order-3 md:order-3 md:w-3/12">
 
