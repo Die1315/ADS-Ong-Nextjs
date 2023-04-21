@@ -27,10 +27,11 @@ router.get('/ongs/newConnections', secure.auth, ongs.Connections)
 
 // Post
 router.post('/posts', secure.auth, posts.create);
+router.get('/posts/:id', secure.auth, posts.getPost);
 router.get('/postsbyong/:id', secure.auth, posts.postByOng);
 router.get('/postsbyong', secure.auth, posts.postByOng);
 router.get('/postsGlobal', secure.auth, posts.postsGlobal);
-router.post('/postEdit/:id', secure.auth, posts.postEdit);
+router.put('/posts/:id/edit', secure.auth, posts.postEdit);
 router.delete('/postDelete/:id', secure.auth, posts.postDelete);
 router.get('/posts/followers', secure.auth, posts.postList);
 router.put('/posts/:id/like', secure.auth, posts.likeToggle)

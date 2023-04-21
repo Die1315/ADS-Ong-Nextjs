@@ -57,6 +57,12 @@ export function registerProject(data) {
       return err;
     });
 }
+export function editPost(id,dataUpdate){
+  console.log(dataUpdate)
+  return axios.put(`/api/posts/${id}/edit`, dataUpdate)
+              .then((response) => response.data)
+              .catch((err) => err)
+}
 
 export function getPostsOwner(id) {
   if(id){
@@ -70,6 +76,13 @@ export function getPostsOwner(id) {
     .then((response) => response.data)
     .catch((err) => err);
 }}
+
+export function getPost(id){
+  return axios
+    .get(`/api/posts/${id}`)
+    .then((response) => response.data)
+    .catch((err) => err);
+}
 
 export function getConnections() {
   return axios

@@ -1,18 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { registerProject, uploadCloudinary } from "../../service/data-service";
+import { editPost, registerProject, uploadCloudinary } from "../../service/data-service";
 import MapView from "../map-box/map";
 
-const ProjectForm = () => {
+const ProjectForm = ({ postToUpdate,setPostUpdate, closeModal }) => {
     const [error, setError] = useState();
     const router = useRouter();
     const [dataRegister, setDataRegister] = useState();
     const [userLngLat, setUserLngLat] = useState(null);
-
+    const location =  {lat : postToUpdate?.lat || 0,
+                lng: postToUpdate?.lon || 0}
     // Cloudinary
     const [uploadFile, setUploadFile] = useState("");
-    const [preview, setPreview] = useState(null);
-
+    const [preview, setPreview] = useState(postToUpdate?.image || null);
+    useEffect(()=>{
+        if(postToUpdate){
+           setPreview(postToUpdate.image)
+         }
+    }, [postToUpdate]);
     const setLngLat = (lngLat) => {
         setUserLngLat(lngLat);
         setDataRegister({
@@ -23,7 +28,7 @@ const ProjectForm = () => {
     }
 
     const handleChange = (event) => {
-        setDataRegister({
+         setDataRegister({
             ...dataRegister,
             [event.target.name]: event.target.value
         });
@@ -35,14 +40,31 @@ const ProjectForm = () => {
         const formData = new FormData();
         formData.append("file", uploadFile);
         formData.append("upload_preset", "ovclfrex");
-
+        if(postToUpdate){
+            if(uploadFile){
+                uploadCloudinary(formData).then((response)=>{
+                    editPost(postToUpdate.id, 
+                        {...dataRegister, image:response.data.secure_url})
+                        .then((response)=> {
+                           //console.log(response)
+                           setPostUpdate(response) 
+                })})
+            } else{
+                editPost(postToUpdate.id,{...dataRegister})
+                .then((response)=> {
+                    //console.log(response)
+                    setPostUpdate(response)
+            })
+            }         
+            closeModal() 
+        }else{
         uploadCloudinary(formData)
             .then((response) => {
                 registerProject({ ...dataRegister, image: response.data.secure_url })
                     .then((response) => {
-                        console.log(response);
+                        
                         if (response.code === "ERR_BAD_REQUEST") {
-                            setError(response.response.data.message);
+                            setError(response.response.data.message || response.response.data.error);
                         } else {
                             router.push("/dashboard");
                         }
@@ -52,9 +74,21 @@ const ProjectForm = () => {
                     });
             })
             .catch((error) => {
-                console.log(error);
+                if (error.code === "ERR_BAD_REQUEST") {
+                    setError(error.response.data.error.message || error.response.data.error.error);
+                }
+                
             });
+        }
     };
+    let formattedstartDate = ""
+    let formattedendDate = ""
+    if(postToUpdate){
+    const startDate = new Date(postToUpdate?.startdate);
+    const endDate = new Date(postToUpdate?.enddate);
+    formattedstartDate = startDate?.toISOString().split("T")[0];
+    formattedendDate = endDate?.toISOString().split("T")[0];
+    }
     return (
         <form onSubmit={handleSubmit}
             className="flex flex-col justify-center items-stretch gap-5 w-full"
@@ -64,7 +98,8 @@ const ProjectForm = () => {
                     onChange={handleChange}
                     name="title"
                     type="text"
-                    placeholder="Título de Proyecto"
+                    placeholder={ "Título de Proyecto" }
+                    defaultValue={postToUpdate?.title || ""}
                     required
                     className="w-full"
                 />
@@ -74,14 +109,15 @@ const ProjectForm = () => {
                     onChange={handleChange}
                     name="description"
                     type="text"
-                    placeholder="Descripción del Proyecto"
+                    placeholder={"Descripción del Proyecto"}
+                    defaultValue={postToUpdate?.description || ""}
                     required
                     className="w-full"
                     rows="3"
                 />
             </div>
             <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3 h-64">
-                <MapView setLngLat={setLngLat} />
+                <MapView setLngLat={setLngLat} initialViewState={location} locationToUpdate={location}/>
             </div>
             <div className="input-group flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
                 <label>Fecha Inicio: </label>
@@ -89,7 +125,8 @@ const ProjectForm = () => {
                     onChange={handleChange}
                     name="startdate"
                     type="date"
-                    required
+                    defaultValue={formattedstartDate || ""}
+                    required={!postToUpdate && true}
                     className="w-full md:w-5/6"
                 />
             </div>
@@ -99,6 +136,8 @@ const ProjectForm = () => {
                     onChange={handleChange}
                     name="enddate"
                     type="date"
+                    defaultValue={formattedendDate || ""}
+
                     className="w-full md:w-5/6"
                 />
             </div>
@@ -107,7 +146,9 @@ const ProjectForm = () => {
                     onChange={handleChange}
                     name="resources"
                     type="text"
-                    placeholder="Recursos 'Separados por comas ( , )'"
+                    required
+                    placeholder={"Recursos 'Separados por comas ( , )'"}
+                    defaultValue={postToUpdate?.resources || ""}
                     className="w-full"
                 />
             </div>
@@ -156,8 +197,9 @@ const ProjectForm = () => {
                     </div>
                 </div>
             </div>
+            {error && <div className="alert alert-danger">{error}</div>}
             <button type="submit" className="btn mt-5">
-                Crear Proyecto
+                {postToUpdate? "Editar Proyecto" :  "Crear Proyecto"  }
             </button>
         </form>
     )

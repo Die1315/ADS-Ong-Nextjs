@@ -8,17 +8,8 @@ const PostsList = ({ posts, search, isOwner }) => {
             .map((post, i) => (
                 <Post
                     key={i}
-                    title={post.title}
-                    description={post.description}
-                    image={post.image}
-                    startDate={post.startdate}
-                    endDate={post.enddate}
-                    userName={post.owner.name}
-                    userProfilePic={post.owner.image}
-                    likes={post.likes}
-                    resources={post.resources}
-                    id={post.id}
                     isOwner={isOwner}
+                    post={post}
                 />
             ))}
         </div>

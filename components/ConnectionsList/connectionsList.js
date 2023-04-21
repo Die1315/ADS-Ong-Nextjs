@@ -34,7 +34,7 @@ function ConnectionsList(props) {
         }
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {trendingConnections.filter((ong) => ong.name.includes(search)).map((ong, i) => (
-                <ContactCard ong={ong} />
+                <ContactCard ong={ong} key={i} />
             ))}
         </div>
     </div>

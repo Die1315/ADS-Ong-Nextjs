@@ -16,17 +16,9 @@ function CardProfile(props) {
       getCurrentOng(false, props.id).then((ong) => {
         setDataOng(ong);
       });
-      getPostsOwner(props.id).then((posts) => {
-        console.log(posts);
-        setPosts(posts);
-      });
     } else {
       getCurrentOng(true).then((ong) => {
         setDataOng(ong);
-      });
-      getPostsOwner().then((posts) => {
-        console.log(posts);
-        setPosts(posts);
       });
     }
   }, [props.id]);

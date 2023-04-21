@@ -30,7 +30,7 @@ module.exports.postsGlobal = async (req, res, next) => {
   let postsAll = await Post.find({ owner: { $ne: currentOng.id } })
     .populate("owner", "name image")
     .then((posts) => {
-      console.log(posts);
+      //console.log(posts);
       res.status(200).json(posts);
     })
     .catch(next);
@@ -38,10 +38,8 @@ module.exports.postsGlobal = async (req, res, next) => {
 
 module.exports.postEdit = async (req, res, next) => {
   const data = req.body;
-
-  Object.assign(req.body, data);
-
-  Post.findByIdAndUpdate(req.params.id, req.body)
+    console.log(req.params.id, data)
+    Post.findByIdAndUpdate(req.params.id, data, {new : true}).populate("owner", "name image")
     .then((post) => {
       if (post) {
         res.status(200).json(post);
@@ -53,9 +51,11 @@ module.exports.postEdit = async (req, res, next) => {
 };
 
 module.exports.postDelete = (req, res, next) => {
-  Post.findByIdAndDelete(req.params.id)
+  const currentOng = req.ong
+   Post.findAndDelete(req.params.id)
     .then((post) => {
       if (post) {
+
         res.status(204).json(post);
       } else {
         next(createError(404, "post not found"));
@@ -106,6 +106,12 @@ module.exports.getCommentByPost = (req,res,next)=>{
          .then((comments)=> res.status(200).json(comments))
          .catch(next)
 
+}
+
+module.exports.getPost = (req,res,next)=>{
+  const id= req.params.id
+  Post.findById(id).then((post)=> res.status(200).json(post))
+  .catch(next)
 }
 // const currentOng = req.ong;
 //     Post.find({ owner : currentOng.id})
