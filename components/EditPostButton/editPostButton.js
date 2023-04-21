@@ -4,15 +4,20 @@ import { faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-modal';
 
 import ProjectForm from '../ProjectForm/projectForm'
+import { getPost } from '../../service/data-service';
 
 Modal.setAppElement('#__next');
 
-const EditPostButton = ({ idPost }) => {
+const EditPostButton = ({ post, setPostUpdated  }) => {
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
-
-    const handleOpenModal = () => setModalIsOpen(true);
+    
+    const handleOpenModal = () => {
+            setModalIsOpen(true);
+          };        
+        
     const handleCloseModal = () => setModalIsOpen(false);
+    
 
     return (
         <>
@@ -39,7 +44,7 @@ const EditPostButton = ({ idPost }) => {
                         <FontAwesomeIcon className="fixed text-dark bg-light rounded-full p-2" icon={faTimes} size={30} />
                     </button>
                     <h2 className='text-xl font-bold'>Editar proyecto</h2>
-                    <ProjectForm />
+                    <ProjectForm postToUpdate={post} setPostUpdate={setPostUpdated} closeModal={handleCloseModal}/>
                 </div>
             </Modal>
         </>

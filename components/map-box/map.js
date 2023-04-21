@@ -9,7 +9,7 @@ import Map, {
 } from "react-map-gl";
 import configData from "./map.config.json";
 
-function MapView({ data, setLngLat, initialViewState }) {
+function MapView({ data, setLngLat, initialViewState, locationToUpdate }) {
   // map viewstate
   const [viewState, setViewState] = useState(
     initialViewState || {
@@ -24,6 +24,7 @@ function MapView({ data, setLngLat, initialViewState }) {
   // map selected post popup
   const [selectedPost, setSelectedPost] = useState(null);
   useEffect(() => {
+    if(locationToUpdate) setSelectedLngLat(locationToUpdate);
     const listener = (e) => {
       if (e.key === "Escape") {
         setSelectedPost(null);
@@ -57,6 +58,7 @@ function MapView({ data, setLngLat, initialViewState }) {
       onClick={(e) => {
         setLngLat && setLngLat(e.lngLat);
         setSelectedLngLat(e.lngLat);
+        console.log(e.lngLat)
       }}
     >
       <NavigationControl position="top-right" />
