@@ -51,7 +51,7 @@ export function registerProject(data) {
   };
   // console.log(dataRegister);
   return axios
-    .post("/api/posts", { dataRegister })
+    .post("/api/post", { dataRegister })
     .then((response) => response.data)
     .catch((err) => {
       return err;
@@ -59,7 +59,7 @@ export function registerProject(data) {
 }
 export function editPost(id,dataUpdate){
   console.log(dataUpdate)
-  return axios.put(`/api/posts/${id}/edit`, dataUpdate)
+  return axios.put(`/api/post/${id}/edit`, dataUpdate)
               .then((response) => response.data)
               .catch((err) => err)
 }
@@ -67,19 +67,19 @@ export function editPost(id,dataUpdate){
 export function getPostsOwner(id) {
   if(id){
     return axios
-    .get(`/api/postsbyong/${id}`)
+    .get(`/api/posts/${id}/ong`)
     .then((response) => response.data)
     .catch((err) => err);
   } else {
   return axios
-    .get("/api/postsbyong/")
+    .get("/api/posts/ong/")
     .then((response) => response.data)
     .catch((err) => err);
 }}
 
 export function getPost(id){
   return axios
-    .get(`/api/posts/${id}`)
+    .get(`/api/post/${id}`)
     .then((response) => response.data)
     .catch((err) => err);
 }
@@ -92,7 +92,13 @@ export function getConnections() {
 }
 export function getGLobalPosts() {
   return axios
-    .get("/api/postsGlobal")
+    .get("/api/posts/Global")
+    .then((response) => response.data)
+    .catch((err) => err);
+}
+export function getPostFollowing() {
+  return axios
+    .get("/api/posts/followers")
     .then((response) => response.data)
     .catch((err) => err);
 }
@@ -105,7 +111,7 @@ export function followUnfollow(id) {
 //Comments
 export function getComments(id) {
    return axios
-    .get(`/api/posts/${id}/comments`)
+    .get(`/api/post/${id}/comments`)
     .then((response) => response.data)
     .catch((err) => err);
 }
@@ -132,16 +138,9 @@ export function uploadCloudinary(data) {
   );
 }
 
-export function getPostFollowing() {
-  return axios
-    .get("/api/posts/followers")
-    .then((response) => response.data)
-    .catch((err) => err);
-}
-
 export function toggleLike(id) {
   return axios
-    .put(`/api/posts/${id}/like`)
+    .put(`/api/post/${id}/like`)
     .then((response) => response.data)
     .catch((err) => err);
 }

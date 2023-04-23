@@ -51,6 +51,7 @@ function Dashboard() {
     } else {
       getPostFollowing().then((posts) => {
         setPosts(posts);
+        console.log(posts)
       });
 
     }

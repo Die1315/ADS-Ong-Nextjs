@@ -16,7 +16,7 @@ router.post("/logout", ongs.logout )
 
 
 //Ongs
-router.post('/ongs', ongs.create);
+router.post('/ong', ongs.create);
 //router.get('/ongs', secure.auth, ongs.list);
 router.get('/ongwithpostlist', secure.auth, ongs.ongWithPost);
 router.get('/ongs/:id/profile', secure.auth, ongs.profile);
@@ -26,16 +26,16 @@ router.put('/ongs/:id/follow', secure.auth, ongs.follow)
 router.get('/ongs/newConnections', secure.auth, ongs.Connections)
 
 // Post
-router.post('/posts', secure.auth, posts.create);
-router.get('/posts/:id', secure.auth, posts.getPost);
-router.get('/postsbyong/:id', secure.auth, posts.postByOng);
-router.get('/postsbyong', secure.auth, posts.postByOng);
-router.get('/postsGlobal', secure.auth, posts.postsGlobal);
-router.put('/posts/:id/edit', secure.auth, posts.postEdit);
-router.delete('/postDelete/:id', secure.auth, posts.postDelete);
+router.post('/post', secure.auth, posts.create);
+router.get('/post/:id', secure.auth, posts.getPost);
+router.get('/posts/:id/ong', secure.auth, posts.postByOng);
+router.get('/posts/ong', secure.auth, posts.postByOng);
+router.get('/posts/Global', secure.auth, posts.postsGlobal);
+router.put('/post/:id/edit', secure.auth, posts.postEdit);
 router.get('/posts/followers', secure.auth, posts.postList);
-router.put('/posts/:id/like', secure.auth, posts.likeToggle)
-router.get('/posts/:id/comments', secure.auth, posts.getCommentByPost)
+router.delete('/post/:id/delete', secure.auth, posts.postDelete);
+router.put('/post/:id/like', secure.auth, posts.likeToggle);
+router.get('/post/:id/comments', secure.auth, posts.getCommentByPost);
 // Comment
 router.post('/comment/:id/create', secure.auth, comments.createComment);
 router.delete('/comment/:id/delete', secure.auth, comments.deleteComment);
