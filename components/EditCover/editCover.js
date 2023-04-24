@@ -1,33 +1,25 @@
 import { useState } from "react";
+import { updateProfile, uploadCloudinary } from "../../service/data-service";
 
-function EditCover() {// Cloudinary
+function EditCover({setCoverPicture, setActiveItem}) {// Cloudinary
     const [uploadFile, setUploadFile] = useState("");
     const [preview, setPreview] = useState(null);
-
+    const [error, setError] = useState(null)
     const handleSubmit = (event) => {
         event.preventDefault();
         const formData = new FormData();
         formData.append("file", uploadFile);
         formData.append("upload_preset", "ovclfrex");
-
-        uploadCloudinary(formData)
-            .then((response) => {
-                register({ ...dataRegister, image: response.data.secure_url })
-                    .then((response) => {
-                        if (response.code === "ERR_BAD_REQUEST") {
-                            setError(response.response.data.message);
-                        } else {
-                            router.push("/login");
-                        }
-                        console.log(response);
-                    })
-                    .catch((err) => {
-                        console.log(err.message);
-                    });
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        uploadCloudinary(formData).then((response) => {
+            if (response.code === "ERR_BAD_REQUEST") {
+               
+                setError(response.response.data.message || response.response.data.error.message);
+            } else {
+            updateProfile({ coverPicture: response.data.secure_url })
+                .then((response) => {
+                     setCoverPicture(response.coverPicture)
+                     setActiveItem("Proyectos")
+        })}})                
     };
 
     return (
@@ -74,6 +66,7 @@ function EditCover() {// Cloudinary
                         </p>
                     </div>
                 </div>
+                {error && <div className="alert alert-danger">{error}</div>}
                 <button type="submit" className="btn mt-5">
                     Actualizar Portada
                 </button>

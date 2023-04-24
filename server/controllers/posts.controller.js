@@ -66,10 +66,10 @@ module.exports.postDelete = (req, res, next) => {
 
 module.exports.postList = (req, res, next) => {
   const currentOng = req.ong;
-  Post.find({ owner: { $in: currentOng.following } })
+   Post.find({ owner: { $in: currentOng.following } })
     .populate("owner","name image")
     .then((posts) => {
-        console.log(posts)
+      console.log(posts)
       res.status(200).json(posts);
     })
     .catch(next);
@@ -106,8 +106,7 @@ module.exports.getCommentByPost = (req,res,next)=>{
          .then((comments)=> res.status(200).json(comments))
          .catch(next)
 
-}
-
+};
 module.exports.getPost = (req,res,next)=>{
   const id= req.params.id
   Post.findById(id).then((post)=> res.status(200).json(post))

@@ -1,33 +1,35 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { getCurrentOng, getPostsOwner } from "../../../service/data-service";
+import { getCurrentOng} from "../../../service/data-service";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 function CardProfile(props) {
   const [currentOng, setDataOng] = useState([]);
-  const [posts, setPosts] = useState([]);
   const [activeItem, setActiveItem] = useState("Proyectos");
 
   useEffect(() => {
-    console.log(props)
+    //console.log(props)    
     if (!props.isOwner) {
       getCurrentOng(false, props.id).then((ong) => {
-        setDataOng(ong);
+         setDataOng(ong);
+        props.setCoverPicture(ong.coverPicture);
       });
     } else {
       getCurrentOng(true).then((ong) => {
         setDataOng(ong);
+        props.setCoverPicture(ong.coverPicture);
       });
     }
+    
   }, [props.id]);
 
   return (
     <div className="relative flex flex-col w-full">
       <div className="w-full h-32 md:h-48 flex flex-col justify-center items-center relative">
         <Image
-          src="https://res.cloudinary.com/de9uql5fm/image/upload/v1680642284/cover_dark_jwwhgs.jpg"
+          src={props.coverPicture}
           alt="cover picture"
           fill={true}
           layout="fill"
