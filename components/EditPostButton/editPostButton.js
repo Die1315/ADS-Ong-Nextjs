@@ -23,7 +23,7 @@ const EditPostButton = ({ post, setPostUpdated  }) => {
         <>
             <div className="relative">
                 <button onClick={handleOpenModal}
-                    className="absolute top-0 right-0 p-2 bg-light text-dark rounded-bl-md"
+                    className="absolute top-0 right-0 p-2 bg-light text-dark hover:bg-dark hover:text-primary border border-gray-200"
                 >
                     <FontAwesomeIcon
                         icon={faEdit}
