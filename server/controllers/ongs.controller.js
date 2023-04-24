@@ -130,6 +130,7 @@ module.exports.profile = (req, res, next) => {
 module.exports.editProfile = ( req, res, next)=>{
   const currentOng = req.ong;
   const data = req.body;
+  //console.log(data)
   Ong.findByIdAndUpdate(currentOng.id, data, {new:true})
      .then((ong)=>{
       res.status(200).json(ong)

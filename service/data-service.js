@@ -1,7 +1,5 @@
-//import axios from "../service/client";
-import { faListNumeric } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios"
-import { report } from "../server/config/routes.config";
+
 
 
 export function login(credentials) {
@@ -45,7 +43,7 @@ export function getCurrentOng(owner = false, ongToSearch) {
       .catch((err) => err);
   }
 }
-export function editProfile(dataUpdated){
+export function updateProfile(dataUpdated){
   return axios
     .put('/api/ongs/edit', dataUpdated)
     .then((response)=> response.data)
@@ -143,8 +141,8 @@ export function uploadCloudinary(data) {
   return axios.post(
     "https://api.cloudinary.com/v1_1/disqrp2r2/image/upload",
     data
-  );
-}
+  ).catch((err)=>err)
+};
 
 export function toggleLike(id) {
   return axios

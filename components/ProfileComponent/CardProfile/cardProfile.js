@@ -10,24 +10,26 @@ function CardProfile(props) {
   const [activeItem, setActiveItem] = useState("Proyectos");
 
   useEffect(() => {
-    //console.log(props)
-    //props.setCoverPictur(currentOng.coverPicture)
+    //console.log(props)    
     if (!props.isOwner) {
       getCurrentOng(false, props.id).then((ong) => {
-        setDataOng(ong);
+         setDataOng(ong);
+        props.setCoverPicture(ong.coverPicture);
       });
     } else {
       getCurrentOng(true).then((ong) => {
         setDataOng(ong);
+        props.setCoverPicture(ong.coverPicture);
       });
     }
+    
   }, [props.id]);
 
   return (
     <div className="relative flex flex-col w-full">
       <div className="w-full h-32 md:h-48 flex flex-col justify-center items-center relative">
         <Image
-          src={currentOng.coverPicture}
+          src={props.coverPicture}
           alt="cover picture"
           fill={true}
           layout="fill"

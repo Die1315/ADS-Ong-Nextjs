@@ -40,7 +40,7 @@ function Conexiones() {
                         <div className="w-12/12 md:w-9/12 flex flex-col gap-5">
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                                 {trendingConnections.filter((ong) => ong.name.includes(search)).map((ong, i) => (
-                                    <CardConexion ong={ong} />
+                                    <CardConexion ong={ong} key={i}/>
                                 ))}
                             </div>
                         </div>
