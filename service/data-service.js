@@ -1,6 +1,7 @@
 //import axios from "../service/client";
 import { faListNumeric } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios"
+import { report } from "../server/config/routes.config";
 
 
 export function login(credentials) {
@@ -44,6 +45,13 @@ export function getCurrentOng(owner = false, ongToSearch) {
       .catch((err) => err);
   }
 }
+export function editProfile(dataUpdated){
+  return axios
+    .put('/api/ongs/edit', dataUpdated)
+    .then((response)=> response.data)
+    .catch((err) => err)
+
+}
 
 export function registerProject(data) {
   let dataRegister = {
@@ -58,7 +66,7 @@ export function registerProject(data) {
     });
 }
 export function editPost(id,dataUpdate){
-  console.log(dataUpdate)
+  //console.log(dataUpdate)
   return axios.put(`/api/post/${id}/edit`, dataUpdate)
               .then((response) => response.data)
               .catch((err) => err)

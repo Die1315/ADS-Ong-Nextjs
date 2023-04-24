@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { editProfile } from "../../service/data-service";
 
-function EditCover() {// Cloudinary
+function EditCover({setCoverPicture}) {// Cloudinary
     const [uploadFile, setUploadFile] = useState("");
     const [preview, setPreview] = useState(null);
 
@@ -9,25 +10,13 @@ function EditCover() {// Cloudinary
         const formData = new FormData();
         formData.append("file", uploadFile);
         formData.append("upload_preset", "ovclfrex");
-
-        uploadCloudinary(formData)
-            .then((response) => {
-                register({ ...dataRegister, image: response.data.secure_url })
-                    .then((response) => {
-                        if (response.code === "ERR_BAD_REQUEST") {
-                            setError(response.response.data.message);
-                        } else {
-                            router.push("/login");
-                        }
-                        console.log(response);
-                    })
-                    .catch((err) => {
-                        console.log(err.message);
-                    });
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        uploadCloudinary(formData).then((response) => {
+            editProfile({ image: response.data.secure_url })
+                .then((response) => {
+                    console.log(response)
+                    setCoverPicture(response.coverPicture)
+                })
+        })
     };
 
     return (

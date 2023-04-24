@@ -17,11 +17,11 @@ import Footer from "../Footer/footer";
 
 function ProfileComponent({ isOwner, idOng }) {
   const [posts, setPosts] = useState([])
-  const [defaultView, setDefaultView] = useState("Proyectos")
+  //const [coverPiture, setCoverPicture] = useState("")
 
   useEffect(() => {
     getPostsOwner(null || idOng).then((posts) => {
-      console.log(posts)
+      //console.log(posts)
       setPosts(posts);
     })
 
@@ -32,7 +32,7 @@ function ProfileComponent({ isOwner, idOng }) {
   return (
     <div className="py-5 px-5 md:px-0">
       <div className="container mx-auto bg-white rounded-md">
-        <CardProfile setActiveItem={setActiveItem} isOwner={isOwner} id={idOng} />
+        <CardProfile setActiveItem={setActiveItem} isOwner={isOwner} id={idOng} coverPicture={coverPiture} setCoverPicture={setCoverPicture}/>
         <MenuProfile setActiveItem={setActiveItem} isOwner={isOwner} />
       </div>
       <div className="container mx-auto px-0 py-5 flex flex-col items-start md:flex-row gap-5">

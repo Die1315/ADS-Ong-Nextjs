@@ -22,7 +22,7 @@ const ongSchema = new Schema(
     CIF: { type: Number, required: true, unique: true, maxlength: 15 },
     description: { type: String, required: true, maxlength: 400 },
     image: { type: String, required: true },
-    bannerImage: { type: String },
+    coverPicture: { type: String, default:"https://res.cloudinary.com/de9uql5fm/image/upload/v1680642284/cover_dark_jwwhgs.jpg" },
     telephone: {
       type: Number,
       unique: true,
@@ -100,5 +100,5 @@ ongSchema.methods.checkPassword = function (passwordToCheck) {
   return bcrypt.compare(passwordToCheck, this.password);
 };
 
-const Ong = mongoose.model("Ong", ongSchema);
+const Ong = mongoose.models.Ong || mongoose.model('Ong', ongSchema)
 module.exports = Ong;

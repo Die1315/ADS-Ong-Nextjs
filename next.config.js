@@ -7,7 +7,8 @@ const nextConfig = {
     domains: ['res.cloudinary.com', 'randomuser.me','temporary.png', 'www.linkedin.com','media.licdn.com']
 
   },
-  //useFileSystemPublicRoutes: false,
+    //useFileSystemPublicRoutes: false,
 }
 
 module.exports = nextConfig
+
