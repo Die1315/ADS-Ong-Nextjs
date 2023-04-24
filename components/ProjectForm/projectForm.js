@@ -89,10 +89,13 @@ const ProjectForm = ({ postToUpdate, setPostUpdate, closeModal }) => {
     let formattedstartDate = ""
     let formattedendDate = ""
     if (postToUpdate) {
-        const startDate = new Date(postToUpdate?.startdate);
-        const endDate = new Date(postToUpdate?.enddate);
-        formattedstartDate = startDate?.toISOString().split("T")[0];
-        formattedendDate = endDate?.toISOString().split("T")[0];
+        if(postToUpdate?.startdate) {
+            const startDate = new Date(postToUpdate?.startdate);
+            formattedstartDate = startDate?.toISOString().split("T")[0];}
+        if(postToUpdate?.enddate){
+            const endDate = new Date(postToUpdate?.enddate);        
+            formattedendDate = endDate?.toISOString().split("T")[0];
+        }
     }
     return (
         <form onSubmit={handleSubmit}

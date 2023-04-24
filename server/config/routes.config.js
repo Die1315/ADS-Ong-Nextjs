@@ -16,7 +16,7 @@ router.post("/logout", ongs.logout )
 
 
 //Ongs
-router.post('/ong', ongs.create);
+router.post('/ongs', ongs.create);
 //router.get('/ongs', secure.auth, ongs.list);
 router.get('/ongwithpostlist', secure.auth, ongs.ongWithPost);
 router.get('/ongs/:id/profile', secure.auth, ongs.profile);
