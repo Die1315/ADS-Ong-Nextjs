@@ -1,6 +1,6 @@
 
 import { useState, useEffect, useRef } from "react";
-import BannerContact from "../components/Message/BannerContact";
+import BannerContact from "../components/Message/bannerContact";
 import ChatContact from "../components/Message/chatContact";
 import Navbar from "../components/Navbar/navbar";
 import { getCurrentOng, getFollowedUsers } from "../service/data-service";
