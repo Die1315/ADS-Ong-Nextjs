@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faInfoCircle, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-modal';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -12,6 +12,7 @@ import CommentsBox from '../CommentsBox/commentsBox';
 
 import { formatDate } from '../../utils/dateUtils';
 import MapView from '../map-box/map';
+import DeletePostButton from '../DeletePostButton/deletePostButton';
 
 Modal.setAppElement('#__next');
 
@@ -59,7 +60,7 @@ const Post = ({ isOwner, post }) => {
     return (
         <div className="bg-white border border-gray-200 rounded-md overflow-hidden">
             <div className="relative">
-                {isOwner && <EditPostButton post={postData} setPostUpdated={setPostUpdated} />}
+                {isOwner && <><EditPostButton post={postData} setPostUpdated={setPostUpdated} /> <DeletePostButton post={postData} setPostUpdated={setPostUpdated} /></>}
                 <Image className="w-full object-cover min-h-50 max-h-50" src={postData.image} alt="Post" width={800} height={600} />
                 <div className="absolute bottom-0 left-0 bg-gray-900 bg-opacity-50 w-full">
                     <div className="relative w-full flex justify-between items-stretch pl-4">
@@ -96,15 +97,23 @@ const Post = ({ isOwner, post }) => {
                 className="post-modal fixed top-0 left-0 z-50 p-5 md:p-0"
                 data-modal-backdrop="static"
             >
-                <div className='relative container p-0 md:p-5 min-h-90 md:min-h-90 flex flex-col md:flex-row justify-between items-stretch bg-light rounded-md mx-auto overflow-x-hidden overflow-y-auto md:overflow-y-hidden'>
+                <div className='relative container p-0 md:p-5 min-h-90 md:min-h-90 lg:min-h-80 max-h-90 md:max-h-90 lg:max-h-80 flex flex-col md:flex-row gap-0 justify-between items-stretch bg-light rounded-md mx-auto overflow-x-hidden overflow-y-auto md:overflow-y-hidden'>
                     <button onClick={handleCloseModal} className='absolute -top-3 right-4'>
                         <FontAwesomeIcon className="fixed text-dark bg-light rounded-full p-2" icon={faTimes} size={30} />
                     </button>
 
                     <div className="w-12/12 md:w-7/12 p-4 flex flex-col items-start border-0 md:border-r border-gray-200 gap-5">
-                        <div className="w-full flex justify-center items-center gap-5">
-                            <button onClick={handleMap} name="info" className={`py-2 font-bold text-sm w-3/6 rounded-md ${!mapPost ? 'bg-white text-gray-400 hover:text-primary' : ' bg-gray-200 text-dark'}`}>Info</button>
-                            <button onClick={handleMap} name="map" className={`py-2 font-bold text-sm w-3/6 rounded-md ${mapPost ? 'bg-white text-gray-400 hover:text-primary' : 'bg-gray-200 text-dark'}`}>Mapa</button>
+                        <div className="w-full flex justify-start items-center gap-1">
+                            <button onClick={handleMap} name="info" className={`py-2 px-6 font-bold text-sm rounded-md ${!mapPost ? 'bg-white text-gray-400 border border-gray-200' : ' bg-gray-200 text-dark border border-gray-200'}`}>
+                                <FontAwesomeIcon
+                                    icon={faInfoCircle}
+                                    size={20} />
+                            </button>
+                            <button onClick={handleMap} name="map" className={`py-2 px-6 font-bold text-sm rounded-md ${mapPost ? 'bg-white text-gray-400 border border-gray-200' : ' bg-gray-200 text-dark border border-gray-200'}`}>
+                                <FontAwesomeIcon
+                                    icon={faLocationDot}
+                                    size={20} />
+                            </button>
                         </div>
                         {mapPost ? <>
                             <Image
@@ -112,6 +121,7 @@ const Post = ({ isOwner, post }) => {
                                 alt="Post Image"
                                 width={800}
                                 height={500}
+                                className='max-h-70% object-cover'
                             />
                             <h2 className="text-2xl font-bold">{postData.title}</h2>
                             <p className="text-dark text-sm -mt-5">De <span className="text-primary font-bold hover:text-dark hover:cursor-pointer" onClick={handleOpenModal}>{`${formatDate(postData.startdate.toString())}`}</span> a <span className="text-primary font-bold hover:text-dark hover:cursor-pointer" onClick={handleOpenModal}>{postData.enddate && `${formatDate(postData.enddate.toString())}`}</span></p>
