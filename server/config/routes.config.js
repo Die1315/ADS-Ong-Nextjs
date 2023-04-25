@@ -24,6 +24,7 @@ router.get('/ongs/profile', secure.auth, ongs.profile); //owner profile
 router.get('/ongs/:id/activate', ongs.activate);
 router.put('/ongs/:id/follow', secure.auth, ongs.follow)
 router.get('/ongs/newConnections', secure.auth, ongs.Connections)
+router.get('/ongs/following', secure.auth, ongs.followingOng)
 router.put('/ongs/edit', secure.auth, ongs.editProfile)
 
 // Post

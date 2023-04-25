@@ -1,7 +1,7 @@
 
 import ContactCard from "../CardConexion/cardConexion";
 import { useState, useEffect } from "react";
-import { getConnections } from "../../service/data-service";
+import { getConnections, getFollowing } from "../../service/data-service";
 
 function ConnectionsList(props) {
 
@@ -10,7 +10,7 @@ function ConnectionsList(props) {
     const [typeContacts, setTypeContacts] = useState(true);
 
     useEffect(() => {
-        getConnections().then((ongs) => {
+        getFollowing().then((ongs) => {
             setConnections(ongs)
         })
     }, [])

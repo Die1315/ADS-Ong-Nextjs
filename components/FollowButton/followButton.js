@@ -4,8 +4,8 @@ import { faPlusCircle, faMinusCircle } from '@fortawesome/free-solid-svg-icons';
 import { followUnfollow } from '../../service/data-service';
 
 
-const FollowButton = ({ ong }) => {
-    const [buttomState, toggleButton] = useState(false)
+const FollowButton = ({ ong, initialState }) => {
+    const [buttomState, toggleButton] = useState(initialState)
     const handleFollow = () => {
         toggleButton(!buttomState)
         followUnfollow(ong.id)

@@ -26,7 +26,7 @@ module.exports.postByOng = async (req, res, next) => {
 
 module.exports.postsGlobal = async (req, res, next) => {
   const currentOng = req.ong;
-  console.log(currentOng.id);
+  //console.log(currentOng.id);
   let postsAll = await Post.find({ owner: { $ne: currentOng.id } })
     .populate("owner", "name image")
     .then((posts) => {
@@ -36,9 +36,10 @@ module.exports.postsGlobal = async (req, res, next) => {
     .catch(next);
 };
 
+
 module.exports.postEdit = async (req, res, next) => {
   const data = req.body;
-    console.log(req.params.id, data)
+   // console.log(req.params.id, data)
     Post.findByIdAndUpdate(req.params.id, data, {new : true}).populate("owner", "name image")
     .then((post) => {
       if (post) {

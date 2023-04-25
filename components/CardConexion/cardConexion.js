@@ -20,7 +20,7 @@ const CardConexion = ({ ong }) => {
           <Link href={`/ong/${ong.id}`}><h2 className="font-bold text-xl mb-2">{ong.name}</h2></Link>
           <p className="text-gray-700 text-base">{ong.description}</p>
         </div>
-        <FollowButton ong={ong} />
+        <FollowButton ong={ong}/>
       </div>
     </div>
   );
