@@ -1,11 +1,19 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle, faMinusCircle } from '@fortawesome/free-solid-svg-icons';
 import { followUnfollow } from '../../service/data-service';
-
+import OngContext from '../../context/ongContext';
 
 const FollowButton = ({ ong }) => {
     const [buttomState, toggleButton] = useState(false)
+    
+    const currentOng = useContext(OngContext)
+    useEffect(()=>{
+       if(ong.followers.includes(currentOng.state)){
+        toggleButton(true)
+       }
+
+    })
     const handleFollow = () => {
         toggleButton(!buttomState)
         followUnfollow(ong.id)
@@ -21,6 +29,5 @@ const FollowButton = ({ ong }) => {
         </button>
     );
 };
-
 
 export default FollowButton

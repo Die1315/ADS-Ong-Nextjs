@@ -90,9 +90,22 @@ export function getPost(id){
     .catch((err) => err);
 }
 
-export function getConnections() {
+export function getConnections(size) {
+  if(size){
+    return axios
+    .get(`/api/ongs/newConnections?size=${size}`)
+    .then((response) => response.data)
+    .catch((err) => err);
+  } else {
   return axios
     .get("/api/ongs/newConnections")
+    .then((response) => response.data)
+    .catch((err) => err);
+  }
+}
+export function getFollowing(){
+  return axios
+    .get(`/api/ongs/following`)
     .then((response) => response.data)
     .catch((err) => err);
 }

@@ -19,8 +19,8 @@ module.exports.create = async (req, res, next) => {
       email_receiver = ong.email;
       // console.log(ong.email);
       const mail = {
-        from: '"Helpgo 👻" <info@helpgo.com>', // sender address
         to: email_receiver, // list of receivers
+        from: `"Helpgo 👻" <${process.env.USER_MAIL}>`, // sender address
         subject: "Link para activar su cienta ✔", // Subject line
         text: "helpgo te da la bienvenida.", // plain text body
         html: `<b>Por favor active su cuenta </b>
@@ -176,10 +176,12 @@ module.exports.follow = (req, res, next) => {
 
 module.exports.Connections =  (req,res,next) => {
 const currentOng = req.ong;
+const { size } = req.query;
+//console.log(size)
 let following = currentOng.following
 following.push(currentOng.id)
-console.log(currentOng.following)
-Ong.find({ _id : { $nin : following}}).then((ongs)=>{
+//console.log(currentOng.following)
+Ong.find({ _id : { $nin : following}}).limit(parseInt(size) || null).then((ongs)=>{
   //console.log(posts)
   res.status(200).json(ongs)
 })
@@ -190,6 +192,15 @@ module.exports.list = (req, res, next) => {
     .then((ongs) => res.json(ongs))
     .catch(next);
 };
+module.exports.followingOng = async (req, res, next) =>{
+  const currentOng = req.ong;
+  Ong.find({_id : { $in : currentOng.following}})
+    // Devuelve HTTP 200 OK con el listado JSON de ongs almacenados en la Base de Datos en memoria
+    .then((ongs) => res.json(ongs))
+    .catch(next);
+  
+
+}
 
 module.exports.ongWithPost = (req, res, next) => {
   Ong.aggregate([

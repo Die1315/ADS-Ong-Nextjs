@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import FollowButton from "../FollowButton/followButton"
 
-const CardConexion = ({ ong }) => {
+const CardConexion = ({ ong}) => {
   return (
     <div className="relative bg-white max-w-sm max-h-max flex flex-col justify-start rounded overflow-hidden shadow-sm">
       <Link href={`/ong/${ong.id}`}>

@@ -35,7 +35,7 @@ const Contact = ({ ong }) => {
 const Newest = () => {
   const [trendingConnections, setConnections] = useState([]);
   useEffect(() => {
-    getConnections().then((ongs) => {
+    getConnections(5).then((ongs) => {
       setConnections(ongs)
     })
   }, [])

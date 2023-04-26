@@ -5,31 +5,12 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
-function CardProfile(props) {
-  const [currentOng, setDataOng] = useState([]);
-  const [activeItem, setActiveItem] = useState("Proyectos");
-
-  useEffect(() => {
-    //console.log(props)    
-    if (!props.isOwner) {
-      getCurrentOng(false, props.id).then((ong) => {
-         setDataOng(ong);
-        props.setCoverPicture(ong.coverPicture);
-      });
-    } else {
-      getCurrentOng(true).then((ong) => {
-        setDataOng(ong);
-        props.setCoverPicture(ong.coverPicture);
-      });
-    }
-    
-  }, [props.id]);
-
+function CardProfile({setActiveItem, activeItem,currentOng, isOwner,coverPicture}) {
   return (
     <div className="relative flex flex-col w-full">
       <div className="w-full h-32 md:h-48 flex flex-col justify-center items-center relative">
         <Image
-          src={props.coverPicture}
+          src={coverPicture}
           alt="cover picture"
           fill={true}
           layout="fill"
@@ -60,9 +41,9 @@ function CardProfile(props) {
               conexiones
             </p>
           </div>
-          { props.isOwner &&
+          { isOwner &&
           <button
-            onClick={() => props.setActiveItem("Crear")}
+            onClick={() => setActiveItem("Crear")}
             className={
               activeItem != "Crear"
                 ? "text-xl text-secondary"

@@ -1,20 +1,21 @@
 import { useEffect, useState, useContext } from 'react';
 import Image from 'next/image';
-
 import { DashboardContext } from '../../pages/dashboard';
 import { getCurrentOng } from "../../service/data-service";
+import OngContext from '../../context/ongContext';
 
-const CardProfile = ({ name, title, imageSrc }) => {
+const CardProfile = ({  title}) => {
 
     const { mostrarPostsList, setMostrarPostsList } = useContext(DashboardContext);
     const [currentOng, setDataOng] = useState([]);
-
+    const currentOngID = useContext(OngContext)
 
     useEffect(() => {
         getCurrentOng(true).then((ong) => {
             setDataOng(ong);
+            currentOngID.setState(currentOng.id)
         });
-    }, []);
+    }, [currentOng]);
 
     const updatedAtDate = new Date(currentOng.updatedAt);
     const formattedDate = updatedAtDate.toLocaleDateString();
