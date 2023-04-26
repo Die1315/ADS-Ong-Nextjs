@@ -27,7 +27,7 @@ const Contact = ({ ong }) => {
           <p className="text-xs text-gray-500">Categoría</p>
         </div>
       </div>
-      <FollowButton ong={ong} initialState={true} />
+      <FollowButton ong={ong} />
     </div>
   );
 };

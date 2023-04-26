@@ -1,22 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { register, uploadCloudinary } from "../../service/data-service";
 
-function RegisterForm() {
+function RegisterForm({setUpdateProfile, ongToUpdate}) {
     const [error, setError] = useState();
     const router = useRouter();
     const [dataRegister, setDataRegister] = useState();
-
-    // Cloudinary
     const [uploadFile, setUploadFile] = useState("");
     const [preview, setPreview] = useState(null);
 
-    const handleChange = (event) => {
+    useEffect(()=>{
 
+    })
+
+    const handleChange = (event) => {
+        if(ongToUpdate){
+            setPreview(ongToUpdate.image)        
+        } else {
         setDataRegister({
             ...dataRegister,
             [event.target.name]: event.target.value,
         });
+    }
     };
 
     const handleSubmit = (event) => {
@@ -57,6 +62,7 @@ function RegisterForm() {
     return (
         <div>
             <form
+                autocomplete="off"
                 onSubmit={handleSubmit}
                 className="w-full flex flex-col justify-center items-stretch gap-5"
             >
@@ -75,10 +81,14 @@ function RegisterForm() {
                         type="email"
                         placeholder="Email ONG*"
                         required
+                        defaultValue={ongToUpdate?.email || "" }
                         className="w-full md:w-3/6"
                     />
                 </div>
-                <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3">
+                {!ongToUpdate && 
+                
+                 (
+                 <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3">
                     <input
                         onChange={handleChange}
                         name="password"
@@ -94,8 +104,11 @@ function RegisterForm() {
                         placeholder="Confirmar contraseña*"
                         required
                         className="w-full md:w-3/6"
-                    />
+                    /> 
+                    
                 </div>
+                 )
+                     }
                 <input
                     onChange={handleChange}
                     name="CIF"

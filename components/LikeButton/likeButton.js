@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { toggleLike } from '../../service/data-service';
+import OngContext from '../../context/ongContext';
 
-const LikeButton = ({ likes, id, idOwner, post, setPostUpdated }) => {
-    console.log(likes)
+const LikeButton = ({ likes, id, post, setPostUpdated }) => {
+    const currentOngId = useContext(OngContext)
     let initialState = post.likes.length
     const [like, setLikes] = useState(initialState);
     const [likeColor, setLikeColor] = useState(false)
@@ -12,26 +13,25 @@ const LikeButton = ({ likes, id, idOwner, post, setPostUpdated }) => {
     const handleLikeClick = () => {
         //console.log(id)
         toggleLike(id).then((res) => {
-            console.log(res)
+            //console.log(res)
+            let updatedLikes = post.likes 
             if (res.state === false) {
-                setLikes(like - 1);
-                setLikeColor(false)
+                updatedLikes = post.likes.filter((ids) => ids!=currentOngId.state)
             } else {
-                setLikes(like + 1);
-                setLikeColor(true)
+                updatedLikes = post.likes.concat([currentOngId.state])
             }
+            setPostUpdated({...post, likes:updatedLikes})            
         })
     };
 
     useEffect(() => {
-        console.log(post.likes, post.owner.id)
-        if (post.likes.includes(post.owner.id)) {
-            console.log(likes)
+        //console.log(post, currentOngId)
+        if (post.likes.includes(currentOngId.state)) {
             setLikeColor(true)
         } else {
             setLikeColor(false)
         }
-    }, [like])
+    }, [post, currentOngId])
 
     return (
         <button onClick={handleLikeClick} className={`bg-transparent flex flex-col justify-center items-center border-l border-gray-400 px-4 py-2 transition duration-200 text-xs text-white`}>
@@ -40,7 +40,7 @@ const LikeButton = ({ likes, id, idOwner, post, setPostUpdated }) => {
                 style={{ fontSize: 15 }}
                 className={likeColor ? "text-secondary" : "text-inherit"}
             />
-            <span>{like}</span>
+            <span>{post.likes.length}</span>
         </button>
     );
 };

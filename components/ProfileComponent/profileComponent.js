@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { getPostsOwner, getCurrentOng } from "../../service/data-service";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
@@ -14,27 +14,36 @@ import EditProfile from "../EditProfile/editProfile";
 import ProjectForm from "../ProjectForm/projectForm";
 import Following from "../ConnectionFollowing/connectionfollowing";
 import Footer from "../Footer/footer";
+import OngContext from "../../context/ongContext";
 
 function ProfileComponent({ isOwner, idOng }) {
   const [posts, setPosts] = useState([]);
   const [coverPicture, setCoverPicture] = useState("");
+  const [currentOng, setDataOng] = useState([]);
+  const [activeItem, setActiveItem] = useState("Proyectos");
+  const currentOngID = useContext(OngContext)
 
   useEffect(() => {
     getPostsOwner(null || idOng).then((posts) => {
       //console.log(posts)
       setPosts(posts);
     });
-  }, [idOng]);
-
-  const [activeItem, setActiveItem] = useState("Proyectos");
+         getCurrentOng(isOwner, null || idOng).then((ong) => {
+         setDataOng(ong);
+         currentOngID.setState(ong.id)
+         setCoverPicture(ong.coverPicture);
+      });
+      
+  }, [idOng, currentOng]); 
 
   return (
     <div className="py-5 px-5 md:px-0">
       <div className="container mx-auto bg-white rounded-md">
         <CardProfile
           setActiveItem={setActiveItem}
+          activeItme={activeItem}
           isOwner={isOwner}
-          id={idOng}
+          currentOng={currentOng}
           coverPicture={coverPicture}
           setCoverPicture={setCoverPicture}
         />
@@ -78,11 +87,11 @@ function ProfileComponent({ isOwner, idOng }) {
           {activeItem === "Proyectos" && (
             <PostsList posts={posts} search={""} isOwner={isOwner} />
           )}
-          {activeItem === "Conexiones" && <ConnectionsList isOwner={isOwner} />}
+          {activeItem === "Conexiones" && <ConnectionsList isOwner={isOwner} currentOng={currentOng}/>}
           {activeItem === "Información" && (
             <InfoProfile isOwner={isOwner} id={idOng} />
           )}
-          {isOwner ? activeItem === "Perfil" && <EditProfile /> : null}
+          {isOwner ? activeItem === "Perfil" && <EditProfile setUpdateProfile={setDataOng} ongToUpdate={currentOng}/> : null}
           {isOwner
             ? activeItem === "Portada" && (
                 <EditCover setCoverPicture={setCoverPicture} setActiveItem={setActiveItem} />

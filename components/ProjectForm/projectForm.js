@@ -10,13 +10,14 @@ const ProjectForm = ({ postToUpdate, setPostUpdate, closeModal }) => {
     const router = useRouter();
     const [dataRegister, setDataRegister] = useState();
     const [userLngLat, setUserLngLat] = useState(null);
+    const [uploadFile, setUploadFile] = useState("");
+    const [preview, setPreview] = useState(postToUpdate?.image || null);
+
     const location = {
         lat: postToUpdate?.lat || 0,
         lng: postToUpdate?.lon || 0
     }
-    // Cloudinary
-    const [uploadFile, setUploadFile] = useState("");
-    const [preview, setPreview] = useState(postToUpdate?.image || null);
+       
     useEffect(() => {
         if (postToUpdate) {
             setPreview(postToUpdate.image)
