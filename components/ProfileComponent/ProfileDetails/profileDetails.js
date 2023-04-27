@@ -52,7 +52,7 @@ function ProfileDetails(props) {
                     icon={faCircleInfo}
                     style={{ fontSize: 15 }}
                 />
-                {currentOng.description}
+                {currentOng.category}
             </div>
             <div className="flex justify-start items-center gap-5">
 

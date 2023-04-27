@@ -13,7 +13,8 @@ module.exports = {
       backgroundImage: {
         'login-hero': "url('https://res.cloudinary.com/de9uql5fm/image/upload/v1677758224/login-hero_txli5s.jpg')",
         'register-hero': "url('https://res.cloudinary.com/de9uql5fm/image/upload/v1677758224/register-hero_xwgyrl.jpg')",
-        'pattern': "url('https://res.cloudinary.com/de9uql5fm/image/upload/v1681394890/background_o8csro.svg')"
+        'pattern': "url('https://res.cloudinary.com/de9uql5fm/image/upload/v1681394890/background_o8csro.svg')",
+        'recover': "url(https://res.cloudinary.com/de9uql5fm/image/upload/v1682526747/pexels-rodnae-productions-6646890_q1b40f.jpg)"
       },
       maxHeight: {
         '50': '50vh',

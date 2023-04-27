@@ -137,7 +137,7 @@ const Post = ({ isOwner, post }) => {
         </p>
         {postData.description.length > 120 && (
           <button
-            className=" bg-secondary text-dark rounded-md px-6 py-2 text-xs font-medium"
+            className="bg-secondary text-dark rounded-md px-6 py-2 text-xs font-medium"
             onClick={toggleDescription}
           >
             {showFullDescription ? "Leer menos" : "Leer más"}
@@ -196,7 +196,7 @@ const Post = ({ isOwner, post }) => {
                   alt="Post Image"
                   width={800}
                   height={500}
-                  className="max-h-70% object-cover"
+                  className="max-h-50% object-cover"
                 />
                 <h2 className="text-2xl font-bold">{postData.title}</h2>
                 <p className="text-dark text-sm -mt-5">
@@ -241,7 +241,7 @@ const Post = ({ isOwner, post }) => {
                     {postData.owner.name}
                   </h4>
                 </Link>
-                <p className="text-sm">Categoría</p>
+                <p className="text-sm">{postData.owner.category}</p>
               </div>
             </div>
             <div className="w-full flex justify-start items-center gap-2">

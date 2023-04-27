@@ -38,11 +38,11 @@ function OngFind() {
   return (
     <div>
       <Navbar />
-      <div className="container mx-auto py-5 flex gap-5">
-        <div className="w-6/12 flex flex-col gap-5">
+      <div className="container mx-auto p-5 flex flex-col-reverse md:flex-row items-center md:items-stretch gap-5">
+        <div className="w-full md:w-6/12 flex flex-col gap-5">
           <OngList data={ongList} />
         </div>
-        <div className="w-6/12 flex flex-col gap-5">
+        <div className="w-full md:w-6/12 flex flex-col gap-5 pt-0 md:pt-20">
           <MapView data={postList}/>
         </div>
       </div>
