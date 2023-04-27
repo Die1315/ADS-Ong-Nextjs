@@ -64,7 +64,7 @@ function LoginPage() {
                                 onChange={handleChange} />
                             <input name="password" type="password" required placeholder="password"
                                 onChange={handleChange} />
-                            <Link href="#" className="text-sm text-primary w-full text-center md:text-right">¿Has olvidad la constraseña?</Link>
+                            <Link href="/recover" className="text-sm text-primary w-full text-center md:text-right">¿Has olvidado la constraseña?</Link>
                             <button type="submit" className="btn">Login</button>
                             <Link href="/register" className="w-full flex justify-center items-center bg-dark hover:bg-primary font-Ubuntu text-white font-bold uppercase rounded-md py-2 mx-auto">Registrar ONG</Link>
                         </form>

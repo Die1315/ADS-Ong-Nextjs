@@ -23,7 +23,7 @@ const Contact = ({ ong }) => {
         </div>
         <div className='w-full flex flex-col gap-1'>
           <Link href={`/ong/${ong.id}`}><h4 className="text-sm font-medium text-gray-900">{ong.name}</h4></Link>
-          <p className="text-xs text-gray-500">Categoría</p>
+          <p className="text-xs text-gray-500">{ong.category}</p>
         </div>
       </div>
       <FollowButton ong={ong} />

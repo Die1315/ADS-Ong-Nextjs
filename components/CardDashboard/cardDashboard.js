@@ -4,7 +4,7 @@ import { DashboardContext } from '../../pages/dashboard';
 import { getCurrentOng } from "../../service/data-service";
 import OngContext from '../../context/ongContext';
 
-const CardProfile = ({  title}) => {
+const CardProfile = () => {
 
     const { mostrarPostsList, setMostrarPostsList } = useContext(DashboardContext);
     const [currentOng, setDataOng] = useState([]);
@@ -33,7 +33,7 @@ const CardProfile = ({  title}) => {
             </div>
             <div className="px-6 py-4 text-center ">
                 <h3 className="text-3xl font-bold text-gray-900">{currentOng.name}</h3>
-                <p className="text-sm text-gray-600">{title}</p>
+                <p className="text-sm text-gray-600">{currentOng.category}</p>
             </div>
             <hr />
             <div className="p-6 hidden md:flex  justify-between">

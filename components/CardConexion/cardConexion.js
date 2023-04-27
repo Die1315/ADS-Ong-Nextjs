@@ -15,10 +15,10 @@ const CardConexion = ({ ong}) => {
           height={150}
           className="w-full h-24 object-cover" />
       </Link>
-      <div className="bg-white flex justify-between items-center p-2 md:p-4">
+      <div className="bg-white flex justify-between items-start p-2 md:p-4">
         <div className="flex flex-col">
           <Link href={`/ong/${ong.id}`}><h2 className="font-bold text-xl mb-2">{ong.name}</h2></Link>
-          <p className="text-gray-700 text-base">{ong.description}</p>
+          <p className="text-gray-700 text-base">{ong.category}</p>
         </div>
         <FollowButton ong={ong} />
       </div>
