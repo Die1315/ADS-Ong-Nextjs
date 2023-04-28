@@ -30,7 +30,7 @@ const ongSchema = new Schema(
       minlength: 9,
       required: true,
     },
-    category: { type: String, enum: ['Caridad', 'Servicios', 'Participación', 'Empoderamiento'], required: true },
+    category: { type: String, enum: ['Caridad', 'Servicios', 'Participación', 'Empoderamiento'], required: true, default:'Servicios' },
     active: { type: Boolean, default: false },
     admin: { type: Boolean, default: false },
     aprovalState: { type: Boolean, default: false },

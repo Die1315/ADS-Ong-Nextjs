@@ -131,11 +131,12 @@ function RegisterForm({setUpdateProfile, ongToUpdate, setActiveItem}) {
                     type="number"
                     placeholder="CIF ONG*"
                     required
-                />
+                /> ) }
+                
                 <select
                     onChange={handleChange}
                     name="category"
-                    required
+                    defaultValue={ongToUpdate?.category || "Servicios"}
                 >
                     <option value="" hidden>
                         Categoría
@@ -237,7 +238,7 @@ function RegisterForm({setUpdateProfile, ongToUpdate, setActiveItem}) {
                     </div>
                 </div>
                 <button type="submit" className="btn mt-5">
-                    Registrar ONG
+                    {ongToUpdate ? "Actualizar Información" : "Registrar ONG"}
                 </button>
             </form>
             {error && <div className="alert alert-danger">{error}</div>}
