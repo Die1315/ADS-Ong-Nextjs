@@ -6,6 +6,7 @@ const cookie = require("cookie");
 // const dev = process.env.NODE_ENV !== "production";
 const hostname = process.env.HOST || "localhost:";
 const port = process.env.PORT || "3000";
+const domain = process.env.DOMAIN ||  `http://${hostname}${port}`
 // const next = require("next");
 // const app = next({ dev });
 
@@ -15,13 +16,13 @@ module.exports.create = async (req, res, next) => {
     active: false,
   })
     .then((ong) => {
-      url_activate = `${hostname}${port}/api/ongs/${ong._id}/activate`;
+      url_activate = `${domain}/api/ongs/${ong._id}/activate`;
       email_receiver = ong.email;
       // console.log(ong.email);
       const mail = {
         to: email_receiver, // list of receivers
         from: `"Helpgo 👻" <${process.env.USER_MAIL}>`, // sender address
-        subject: "Link para activar su cienta ✔", // Subject line
+        subject: "Link para activar su cuenta ✔", // Subject line
         text: "helpgo te da la bienvenida.", // plain text body
         html: `<b>Por favor active su cuenta </b>
         <a>${url_activate}<a/>`, // html body
