@@ -13,10 +13,12 @@ const FollowButton = ({ ong }) => {
         toggleButton(true)
        }
 
-    })
+    },[])
     const handleFollow = () => {
-        toggleButton(!buttomState)
-        followUnfollow(ong.id)
+        
+        followUnfollow(ong.id).then((res)=>{
+             toggleButton(res.follow)
+        })
     }
 
     return (

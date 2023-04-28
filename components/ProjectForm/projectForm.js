@@ -1,18 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-
 import MapView from "../map-box/map";
-
 import { editPost, registerProject, uploadCloudinary } from "../../service/data-service";
 
-const ProjectForm = ({ postToUpdate, setPostUpdate, closeModal }) => {
+
+const ProjectForm = ({ postToUpdate, setPostUpdate, closeModal, posts, setPosts, setMostrarPostsList,mostrarPostsList, }) => {
     const [error, setError] = useState();
-    const router = useRouter();
     const [dataRegister, setDataRegister] = useState();
     const [userLngLat, setUserLngLat] = useState(null);
     const [uploadFile, setUploadFile] = useState("");
     const [preview, setPreview] = useState(postToUpdate?.image || null);
-
     const location = {
         lat: postToUpdate?.lat || 0,
         lng: postToUpdate?.lon || 0
@@ -41,7 +38,7 @@ const ProjectForm = ({ postToUpdate, setPostUpdate, closeModal }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
+        
         const formData = new FormData();
         formData.append("file", uploadFile);
         formData.append("upload_preset", "ovclfrex");
@@ -50,19 +47,22 @@ const ProjectForm = ({ postToUpdate, setPostUpdate, closeModal }) => {
                 uploadCloudinary(formData).then((response) => {
                     editPost(postToUpdate.id,
                         { ...dataRegister, image: response.data.secure_url })
-                        .then((response) => {
+                        .then((post) => {
                             //console.log(response)
-                            setPostUpdate(response)
+                            setPostUpdate(post)
+                            
                         })
                 })
             } else {
                 editPost(postToUpdate.id, { ...dataRegister })
-                    .then((response) => {
+                    .then((post) => {
                         //console.log(response)
-                        setPostUpdate(response)
+                        setPostUpdate(post)
+                        
                     })
             }
-            closeModal()
+            closeModal()           
+            
         } else {
             uploadCloudinary(formData)
                 .then((response) => {
@@ -72,7 +72,16 @@ const ProjectForm = ({ postToUpdate, setPostUpdate, closeModal }) => {
                             if (response.code === "ERR_BAD_REQUEST") {
                                 setError(response.response.data.message || response.response.data.error);
                             } else {
-                                router.push("/dashboard");
+                                console.log(response)
+                                setPosts(posts.concat([response]))
+                                let  closeParameter 
+                                if(mostrarPostsList){ 
+                                    closeParameter= false
+                                } else{
+                                    closeParameter = "Proyectos"
+                                } 
+                                setMostrarPostsList(closeParameter)
+                                
                             }
                         })
                         .catch((err) => {

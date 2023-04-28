@@ -91,8 +91,13 @@ ongSchema.path("email").validate(function (email) {
 }, "Please check your email address.");
 
 var validateUrl = function (webPage) {
-  return urlRegex.test(webPage);
-};
+  //console.log(webPage)
+  if(webPage){
+   return urlRegex.test(webPage);
+  }else{
+   return true
+  }
+  };
 ongSchema.path("webPage").validate(validateUrl, "Invalid url.");
 ongSchema.path("facebook").validate(validateUrl, "Invalid url.");
 ongSchema.path("instagram").validate(validateUrl, "Invalid url.");
@@ -100,5 +105,5 @@ ongSchema.methods.checkPassword = function (passwordToCheck) {
   return bcrypt.compare(passwordToCheck, this.password);
 };
 
-const Ong = mongoose.models.Ong || mongoose.model('Ong', ongSchema)
+const Ong = mongoose.model('Ong', ongSchema)
 module.exports = Ong;

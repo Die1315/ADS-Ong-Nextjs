@@ -188,17 +188,22 @@ Ong.find({ _id : { $nin : following}}).limit(parseInt(size) || null).then((ongs)
 }
 module.exports.list = (req, res, next) => {
   Ong.find({})
-    // Devuelve HTTP 200 OK con el listado JSON de ongs almacenados en la Base de Datos en memoria
     .then((ongs) => res.json(ongs))
     .catch(next);
 };
 module.exports.followingOng = async (req, res, next) =>{
   const currentOng = req.ong;
+  const {id} =  req.params
+  if(id){
+    const ong = await Ong.findById(id)
+    Ong.find({_id : { $in : ong.following}})
+    .then((ongs) => res.json(ongs))
+    .catch(next);  
+  } else {
   Ong.find({_id : { $in : currentOng.following}})
-    // Devuelve HTTP 200 OK con el listado JSON de ongs almacenados en la Base de Datos en memoria
     .then((ongs) => res.json(ongs))
     .catch(next);
-  
+  }
 
 }
 

@@ -10,7 +10,7 @@ function ConnectionsList({isOwner, currentOng}) {
     const [typeContacts, setTypeContacts] = useState(true);
 
     useEffect(() => {
-        getFollowing().then((ongs) => {
+        getFollowing(isOwner? null : currentOng.id).then((ongs) => {
             setConnections(ongs)
         })
     }, [])

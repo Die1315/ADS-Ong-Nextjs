@@ -2,12 +2,11 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-modal';
-
-import { getPost } from '../../service/data-service';
+import { deletePost } from '../../service/data-service';
 
 Modal.setAppElement('#__next');
 
-const DeletePostButton = ({ post, setPostUpdated }) => {
+const DeletePostButton = ({ post, setDeleted, deletedPost}) => {
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -16,7 +15,13 @@ const DeletePostButton = ({ post, setPostUpdated }) => {
     };
 
     const handleCloseModal = () => setModalIsOpen(false);
-
+    const handleDelete = () => {
+        deletePost(post.id).then((post)=>{
+            setDeleted(false)
+            setModalIsOpen(false)
+        })
+        
+    }
 
     return (
         <>
@@ -51,6 +56,7 @@ const DeletePostButton = ({ post, setPostUpdated }) => {
                             Cancelar
                         </button>
                         <button
+                        onClick={handleDelete}
                             className="bg-primary hover:bg-dark text-white font-bold py-2 px-4 rounded"
                         >
                             Eliminar

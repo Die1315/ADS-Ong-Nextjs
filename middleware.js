@@ -4,7 +4,6 @@ import { jwtVerify } from "jose"; // No funciona jwbtoken no soporta la red edge
 
 export async function middleware(request) {
   const jwt = request.cookies.get("myTokenName");
-    
   if (!jwt) return NextResponse.redirect(new URL("/login", request.url));
 
   try {

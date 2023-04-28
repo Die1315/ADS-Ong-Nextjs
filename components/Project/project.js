@@ -5,7 +5,7 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 import ProjectForm from "../ProjectForm/projectForm";
 
-const Project = () => {
+const Project = ({posts, setPosts}) => {
 
     const { mostrarPostsList, setMostrarPostsList } = useContext(DashboardContext);
 
@@ -17,7 +17,7 @@ const Project = () => {
                     style={{ fontSize: 20 }} />
             </button>
             <h1 className="w-full mb-3 text-3xl font-semibold display-1 text-dark mx-auto">Crear Proyecto</h1>
-            <ProjectForm />
+            <ProjectForm posts={posts} setPosts={setPosts} setMostrarPostsList={setMostrarPostsList} mostrarPostsList={mostrarPostsList}/>
 
             <button onClick={() => setMostrarPostsList(!mostrarPostsList)} className="btn-alt bg-dark">
                 Cancelar

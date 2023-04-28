@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { register, uploadCloudinary } from "../../service/data-service";
+import { register, updateProfile, uploadCloudinary } from "../../service/data-service";
 
-function RegisterForm({setUpdateProfile, ongToUpdate}) {
+function RegisterForm({setUpdateProfile, ongToUpdate, setActiveItem}) {
     const [error, setError] = useState();
     const router = useRouter();
     const [dataRegister, setDataRegister] = useState();
@@ -10,63 +10,78 @@ function RegisterForm({setUpdateProfile, ongToUpdate}) {
     const [preview, setPreview] = useState(null);
 
     useEffect(()=>{
-
-    })
-
-    const handleChange = (event) => {
         if(ongToUpdate){
             setPreview(ongToUpdate.image)        
-        } else {
+        }
+    }, [ongToUpdate])
+
+    const handleChange = (event) => {
+       
         setDataRegister({
             ...dataRegister,
             [event.target.name]: event.target.value,
         });
-    }
-    };
+    }    
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (dataRegister.password === dataRegister.passwordConfirmation) {
-
-
-            const formData = new FormData();
+        const formData = new FormData();
             formData.append("file", uploadFile);
             formData.append("upload_preset", "ovclfrex");
+        if(ongToUpdate){
             if(uploadFile){
-            uploadCloudinary(formData)
-                .then((response) => {
-                    register({ ...dataRegister, image: response.data.secure_url })
-                        .then((response) => {
-                            if (response.code === "ERR_BAD_REQUEST") {
-                                setError(response.response.data.message || response.response.data.error);
-                            } else {
-                                router.push("/login");
-                            }
-                            console.log(response);
-                        })
-                        .catch((err) => {
-                            console.log(err.message);
-                        });
+                uploadCloudinary(formData).then((response) => {
+                    updateProfile({...dataRegister, image: response.data.secure_url})
+                    .then((ong) =>{
+                        setUpdateProfile(ong)
+                    })
                 })
-                .catch((error) => {
-                    console.log(error);
-                });
             } else {
-                setError("Debe agregar una imagen")
+                updateProfile({...dataRegister})
+                    .then((ong) =>{
+                        setUpdateProfile(ong)
+                    })
             }
+            setActiveItem("Proyectos")
         } else {
-            setError("Las contraseñas no coinciden.")
+            if (dataRegister.password === dataRegister.passwordConfirmation) {
+                if(uploadFile){
+                uploadCloudinary(formData)
+                    .then((response) => {
+                        register({ ...dataRegister, image: response.data.secure_url })
+                            .then((response) => {
+                                if (response.code === "ERR_BAD_REQUEST") {
+                                    setError(response.response.data.message || response.response.data.error);
+                                } else {
+                                    router.push("/login");
+                                }
+                                console.log(response);
+                            })
+                            .catch((err) => {
+                                console.log(err.message);
+                            });
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+                } else {
+                    setError("Debe agregar una imagen")
+                }
+            } else {
+                setError("Las contraseñas no coinciden.")
+            }
         }
     };
 
     return (
         <div>
             <form
-                autocomplete="off"
+                autoComplete="off"
                 onSubmit={handleSubmit}
                 className="w-full flex flex-col justify-center items-stretch gap-5"
             >
-                <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3">
+                 {!ongToUpdate && 
+                    (     <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3">
                     <input
                         onChange={handleChange}
                         name="name"
@@ -74,17 +89,17 @@ function RegisterForm({setUpdateProfile, ongToUpdate}) {
                         placeholder="Nombre ONG*"
                         required
                         className="w-full md:w-3/6"
-                    />
+                    /> 
                     <input
                         onChange={handleChange}
                         name="email"
                         type="email"
                         placeholder="Email ONG*"
                         required
-                        defaultValue={ongToUpdate?.email || "" }
                         className="w-full md:w-3/6"
-                    />
+                    /> 
                 </div>
+                )}
                 {!ongToUpdate && 
                 
                  (
@@ -109,25 +124,28 @@ function RegisterForm({setUpdateProfile, ongToUpdate}) {
                 </div>
                  )
                      }
-                <input
+                {!ongToUpdate && 
+                ( <input
                     onChange={handleChange}
                     name="CIF"
                     type="number"
                     placeholder="CIF ONG*"
                     required
-                />
+                /> )}
                 <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3">
                     <input
                         onChange={handleChange}
                         name="facebook"
                         type="url"
                         placeholder="URL Facebook"
+                        defaultValue={ ongToUpdate?.facebook || ""}
                         className="w-full md:w-3/6"
                     />
                     <input
                         onChange={handleChange}
                         name="instagram"
                         type="url"
+                        defaultValue={ ongToUpdate?.instagram || ""}
                         placeholder="URL Instagram"
                         className="w-full md:w-3/6"
                     />
@@ -135,8 +153,9 @@ function RegisterForm({setUpdateProfile, ongToUpdate}) {
                 <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3">
                     <input
                         onChange={handleChange}
-                        name="website"
+                        name="webPage"
                         type="url"
+                        defaultValue={ ongToUpdate?.webPage || ""}
                         placeholder="Sitio Web"
                         className="w-full md:w-3/6"
                     />
@@ -145,7 +164,8 @@ function RegisterForm({setUpdateProfile, ongToUpdate}) {
                         name="telephone"
                         type="tel"
                         placeholder="Teléfono*"
-                        required
+                        defaultValue={ ongToUpdate?.telephone || ""}
+                        required={ true && !ongToUpdate}
                         className="w-full md:w-3/6"
                     />
                 </div>
@@ -153,7 +173,8 @@ function RegisterForm({setUpdateProfile, ongToUpdate}) {
                     onChange={handleChange}
                     name="description"
                     rows="3"
-                    required
+                    defaultValue={ ongToUpdate?.description || ""}
+                    required={ true && !ongToUpdate}
                     placeholder="Breve descripción*"
                 />
                 <div>
@@ -185,6 +206,7 @@ function RegisterForm({setUpdateProfile, ongToUpdate}) {
                                         type="file"
                                         accept="image/*"
                                         className="sr-only"
+                                        required={ true && !ongToUpdate}
                                         onChange={(event) => {
                                             const file = event.target.files[0];
                                             const imgPreview = URL.createObjectURL(file);

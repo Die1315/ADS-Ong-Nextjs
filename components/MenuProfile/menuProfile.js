@@ -62,13 +62,15 @@ function MenuProfile(props) {
           <div className="absolute bottom-2 right-0 transform -translate-y-10 w-48 rounded-md bg-light border border-gray-200 divide-y divide-gray-200 focus:outline-none">
             <ul>
               <li
-                onClick={() => props.setActiveItem("Portada")}
+                onClick={() => {props.setActiveItem("Portada")
+              toggleMenu()}}
                 className="block px-4 py-3 text-sm rounded-t-md text-dark hover:underline hover:cursor-pointer"
               >
                 Editar portada
               </li>
               <li
-                onClick={() => props.setActiveItem("Perfil")}
+                onClick={() => {props.setActiveItem("Perfil")
+               toggleMenu()}}
                 className="block px-4 py-3 text-sm rounded-b-md text-dark hover:underline hover:cursor-pointer"
               >
                 Editar perfil
