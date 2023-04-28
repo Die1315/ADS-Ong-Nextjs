@@ -6,15 +6,17 @@ import Image from "next/image";
 
 import Loading from "../components/Loading/loading";
 import Footer from "../components/loginFooter/loginFooter";
-
 const logo = require("../src/images/logo.svg")
 import { login } from "../service/data-service"
+import RecoveryForm from "../components/recoveryComponent/recoveryComponent";
+import { set } from "mongoose";
 
 function LoginPage() {
     const [isLoading, setIsLoading] = useState(true);
 
     const [credentials, setCredentials] = useState({ email: '', password: '' })
     const [error, setError] = useState();
+    const [stateForm, setForm] = useState(true);
     const router = useRouter()
     const handleChange = (event) => {
         setCredentials({
@@ -29,7 +31,7 @@ function LoginPage() {
         }, 500);
 
         return () => clearTimeout(timeoutId);
-    }, []);
+    }, [stateForm]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -40,15 +42,20 @@ function LoginPage() {
                 router.push("/dashboard")
             }
 
-        })
-            .catch((err) => console.log(err.message));
+        })            
 
+    }
+    const toggleForm = ()=>{
+        setIsLoading(true)
+        setForm(!stateForm)
     }
     return (
         <>
             {isLoading ? (
                 <Loading />
-            ) : (
+            ) : stateForm ?
+            
+            (
                 <div className="relative h-screen flex flex-col md:flex-row justify-center items-stretch columns-1 md:columns-2  bg-login-hero bg-cover bg-center md:bg-white">
                     <div className="bg-login-hero bg-cover bg-no-repeat bg-center lg:bg-top-lg xl:bg-top-xl relative w-full md:w-3/6 flex justify-center items-center bg-accent">
                     </div>
@@ -64,7 +71,7 @@ function LoginPage() {
                                 onChange={handleChange} />
                             <input name="password" type="password" required placeholder="password"
                                 onChange={handleChange} />
-                            <Link href="/recover" className="text-sm text-primary w-full text-center md:text-right">¿Has olvidado la constraseña?</Link>
+                            <button onClick={toggleForm} className="text-sm text-primary w-full text-center md:text-right">¿Has olvidado la constraseña?</button>
                             <button type="submit" className="btn">Login</button>
                             <Link href="/register" className="w-full flex justify-center items-center bg-dark hover:bg-primary font-Ubuntu text-white font-bold uppercase rounded-md py-2 mx-auto">Registrar ONG</Link>
                         </form>
@@ -72,7 +79,7 @@ function LoginPage() {
                         <Footer />
                     </div>
                 </div>
-            )}
+            ) : <RecoveryForm toggleForm ={toggleForm }/>}
         </>
     );
 }
