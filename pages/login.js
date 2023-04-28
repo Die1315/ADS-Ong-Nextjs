@@ -70,7 +70,7 @@ function LoginPage() {
                                 <input name="password" type="password" required placeholder="password"
                                     onChange={handleChange} />
                                 <button onClick={toggleForm} className="text-sm text-primary w-full text-center md:text-right">¿Has olvidado la constraseña?</button>
-                                <button type="submit" className="btn">Login</button>
+                                <button type="submit" className="btn">Iniciar Sesión</button>
                                 <Link href="/register" className="w-full flex justify-center items-center bg-dark hover:bg-primary font-Ubuntu text-white font-bold uppercase rounded-md py-2 mx-auto">Registrar ONG</Link>
                             </form>
 

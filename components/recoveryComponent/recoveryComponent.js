@@ -40,7 +40,7 @@ export default function RecoveryForm({ toggleForm }) {
                         ></input>}
                         <button type='submit' className='w-full mx-auto uppercase bg-primary rounded-md px-6 py-2 font-bold text-white hover:bg-dark'>Enviar</button>
                     </form>
-                    <button onClick={toggleForm} className="btn-alt">Login</button>
+                    <button onClick={toggleForm} className="btn-alt">Iniciar Sesión</button>
                 </div>
             </div>
 

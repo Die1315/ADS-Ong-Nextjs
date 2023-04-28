@@ -4,7 +4,7 @@ import Loading from "../components/Loading/loading";
 import Navbar from "../components/Navbar/navbar";
 import Footer from "../components/Footer/footer";
 import CardDashboard from "../components/CardDashboard/cardDashboard";
-import Newest from "../components/ConnectionNewest/connectionNewest";
+import Connections from "../components/Connections/connections";
 import PostsList from "../components/PostsList/postsList";
 import Project from '../components/Project/project';
 import { getGLobalPosts, getPostFollowing } from "../service/data-service";
@@ -51,7 +51,7 @@ function Dashboard() {
     } else {
       getPostFollowing().then((posts) => {
         setPosts(posts);
-    });
+      });
 
     }
   }, [typePosts]);
@@ -79,14 +79,14 @@ function Dashboard() {
                 <button onClick={handlePosts} name="following" className={`py-2 font-bold text-sm w-3/6 rounded-md ${typePosts ? 'bg-white text-gray-400 hover:text-primary' : 'bg-gray-200 text-dark'}`}>ONGs que sigo</button>
               </div> : <></>}
 
-              {mostrarPostsList ? <SearchBar search={search} onSearch={setSearch} displayOnResponsive={true}/> : ""}
-              {mostrarPostsList ? <PostsList posts={posts} search={search} /> : <Project posts={posts} setPosts={setPosts}/>}
+              {mostrarPostsList ? <SearchBar search={search} onSearch={setSearch} displayOnResponsive={true} /> : ""}
+              {mostrarPostsList ? <PostsList posts={posts} search={search} /> : <Project posts={posts} setPosts={setPosts} />}
 
 
             </div>
             <div className="w-12/12 md:w-3/12 flex flex-col gap-5">
               <SearchBar search={search} onSearch={setSearch} displayOnResponsive={false} />
-              <Newest />
+              <Connections filter="latest"/>
               <Footer />
             </div>
           </div>
