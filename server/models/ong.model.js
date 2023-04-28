@@ -20,7 +20,7 @@ const ongSchema = new Schema(
       match: [PASSWORD_PATTERN, "the password is invalid"],
     },
     CIF: { type: Number, required: true, unique: true, maxlength: 15 },
-    description: { type: String, required: true, minlength: 240},
+    description: { type: String, required: true, minlength: 240 },
     image: { type: String, required: true },
     coverPicture: { type: String, default: "https://res.cloudinary.com/de9uql5fm/image/upload/v1680642284/cover_dark_jwwhgs.jpg" },
     telephone: {
@@ -30,7 +30,7 @@ const ongSchema = new Schema(
       minlength: 9,
       required: true,
     },
-    category: { type: String, enum: ['Caridad', 'Servicios', 'Participación', 'Empoderamiento'], required: true, default:'Servicios' },
+    category: { type: String, required: true, maxlength: 25, default: "Comunidad" },
     active: { type: Boolean, default: false },
     admin: { type: Boolean, default: false },
     aprovalState: { type: Boolean, default: false },
@@ -93,12 +93,12 @@ ongSchema.path("email").validate(function (email) {
 
 var validateUrl = function (webPage) {
   //console.log(webPage)
-  if(webPage){
-   return urlRegex.test(webPage);
-  }else{
-   return true
+  if (webPage) {
+    return urlRegex.test(webPage);
+  } else {
+    return true
   }
-  };
+};
 ongSchema.path("webPage").validate(validateUrl, "Invalid url.");
 ongSchema.path("facebook").validate(validateUrl, "Invalid url.");
 ongSchema.path("instagram").validate(validateUrl, "Invalid url.");

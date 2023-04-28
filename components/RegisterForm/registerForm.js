@@ -2,68 +2,68 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { register, updateProfile, uploadCloudinary } from "../../service/data-service";
 
-function RegisterForm({setUpdateProfile, ongToUpdate, setActiveItem}) {
+function RegisterForm({ setUpdateProfile, ongToUpdate, setActiveItem }) {
     const [error, setError] = useState();
     const router = useRouter();
     const [dataRegister, setDataRegister] = useState();
     const [uploadFile, setUploadFile] = useState("");
     const [preview, setPreview] = useState(null);
 
-    useEffect(()=>{
-        if(ongToUpdate){
-            setPreview(ongToUpdate.image)        
+    useEffect(() => {
+        if (ongToUpdate) {
+            setPreview(ongToUpdate.image)
         }
     }, [ongToUpdate])
 
     const handleChange = (event) => {
-       
+
         setDataRegister({
             ...dataRegister,
             [event.target.name]: event.target.value,
         });
-    }    
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const formData = new FormData();
-            formData.append("file", uploadFile);
-            formData.append("upload_preset", "ovclfrex");
-        if(ongToUpdate){
-            if(uploadFile){
+        formData.append("file", uploadFile);
+        formData.append("upload_preset", "ovclfrex");
+        if (ongToUpdate) {
+            if (uploadFile) {
                 uploadCloudinary(formData).then((response) => {
-                    updateProfile({...dataRegister, image: response.data.secure_url})
-                    .then((ong) =>{
-                        setUpdateProfile(ong)
-                    })
+                    updateProfile({ ...dataRegister, image: response.data.secure_url })
+                        .then((ong) => {
+                            setUpdateProfile(ong)
+                        })
                 })
             } else {
-                updateProfile({...dataRegister})
-                    .then((ong) =>{
+                updateProfile({ ...dataRegister })
+                    .then((ong) => {
                         setUpdateProfile(ong)
                     })
             }
             setActiveItem("Proyectos")
         } else {
             if (dataRegister.password === dataRegister.passwordConfirmation) {
-                if(uploadFile){
-                uploadCloudinary(formData)
-                    .then((response) => {
-                        register({ ...dataRegister, image: response.data.secure_url })
-                            .then((response) => {
-                                if (response.code === "ERR_BAD_REQUEST") {
-                                    setError(response.response.data.message || response.response.data.error);
-                                } else {
-                                    router.push("/login");
-                                }
-                                console.log(response);
-                            })
-                            .catch((err) => {
-                                console.log(err.message);
-                            });
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
+                if (uploadFile) {
+                    uploadCloudinary(formData)
+                        .then((response) => {
+                            register({ ...dataRegister, image: response.data.secure_url })
+                                .then((response) => {
+                                    if (response.code === "ERR_BAD_REQUEST") {
+                                        setError(response.response.data.message || response.response.data.error);
+                                    } else {
+                                        router.push("/login");
+                                    }
+                                    console.log(response);
+                                })
+                                .catch((err) => {
+                                    console.log(err.message);
+                                });
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
                 } else {
                     setError("Debe agregar una imagen")
                 }
@@ -80,86 +80,79 @@ function RegisterForm({setUpdateProfile, ongToUpdate, setActiveItem}) {
                 onSubmit={handleSubmit}
                 className="w-full flex flex-col justify-center items-stretch gap-5"
             >
-                 {!ongToUpdate && 
-                    (     <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3">
-                    <input
+                {!ongToUpdate &&
+                    (<div className="input-group flex flex-col md:flex-row justify-between items-center gap-3">
+                        <input
+                            onChange={handleChange}
+                            name="name"
+                            type="text"
+                            placeholder="Nombre ONG*"
+                            required
+                            className="w-full md:w-3/6"
+                        />
+                        <input
+                            onChange={handleChange}
+                            name="email"
+                            type="email"
+                            placeholder="Email ONG*"
+                            required
+                            className="w-full md:w-3/6"
+                        />
+                    </div>
+                    )}
+                {!ongToUpdate &&
+
+                    (
+                        <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3">
+                            <input
+                                onChange={handleChange}
+                                name="password"
+                                type="password"
+                                placeholder="Contraseña*"
+                                required
+                                className="w-full md:w-3/6"
+                            />
+                            <input
+                                onChange={handleChange}
+                                name="passwordConfirmation"
+                                type="password"
+                                placeholder="Confirmar contraseña*"
+                                required
+                                className="w-full md:w-3/6"
+                            />
+
+                        </div>
+                    )
+                }
+                {!ongToUpdate &&
+                    (<input
                         onChange={handleChange}
-                        name="name"
-                        type="text"
-                        placeholder="Nombre ONG*"
+                        name="CIF"
+                        type="number"
+                        placeholder="CIF ONG*"
                         required
-                        className="w-full md:w-3/6"
-                    /> 
-                    <input
-                        onChange={handleChange}
-                        name="email"
-                        type="email"
-                        placeholder="Email ONG*"
-                        required
-                        className="w-full md:w-3/6"
-                    /> 
-                </div>
-                )}
-                {!ongToUpdate && 
-                
-                 (
-                 <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3">
-                    <input
-                        onChange={handleChange}
-                        name="password"
-                        type="password"
-                        placeholder="Contraseña*"
-                        required
-                        className="w-full md:w-3/6"
-                    />
-                    <input
-                        onChange={handleChange}
-                        name="passwordConfirmation"
-                        type="password"
-                        placeholder="Confirmar contraseña*"
-                        required
-                        className="w-full md:w-3/6"
-                    /> 
-                    
-                </div>
-                 )
-                     }
-                {!ongToUpdate && 
-                ( <input
-                    onChange={handleChange}
-                    name="CIF"
-                    type="number"
-                    placeholder="CIF ONG*"
-                    required
-                /> ) }
-                
-                <select
+                    />)}
+
+                <input
                     onChange={handleChange}
                     name="category"
-                    defaultValue={ongToUpdate?.category || "Servicios"}
-                >
-                    <option value="" hidden>
-                        Categoría
-                    </option>
-                    <option value="Caridad">Caridad</option>
-                    <option value="Servicios">Servicios</option>
-                    <option value="Participación">Participación</option>
-                    <option value="Empoderamiento">Empoderamiento</option>
-                </select>
+                    placeholder="#Categoría"
+                    maxlength="25"
+                />
                 <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3">
                     <input
                         onChange={handleChange}
                         name="facebook"
                         type="url"
                         placeholder="URL Facebook"
-                        defaultValue={ ongToUpdate?.facebook || ""}
+                        defaultValue={ongToUpdate?.facebook || ""}
                         className="w-full md:w-3/6"
                     />
                     <input
                         onChange={handleChange}
                         name="instagram"
                         type="url"
-                        defaultValue={ ongToUpdate?.instagram || ""}
+                        defaultValue={ongToUpdate?.instagram || ""}
                         placeholder="URL Instagram"
                         className="w-full md:w-3/6"
                     />
@@ -169,7 +162,7 @@ function RegisterForm({setUpdateProfile, ongToUpdate, setActiveItem}) {
                         onChange={handleChange}
                         name="webPage"
                         type="url"
-                        defaultValue={ ongToUpdate?.webPage || ""}
+                        defaultValue={ongToUpdate?.webPage || ""}
                         placeholder="Sitio Web"
                         className="w-full md:w-3/6"
                     />
@@ -178,8 +171,8 @@ function RegisterForm({setUpdateProfile, ongToUpdate, setActiveItem}) {
                         name="telephone"
                         type="tel"
                         placeholder="Teléfono*"
-                        defaultValue={ ongToUpdate?.telephone || ""}
-                        required={ true && !ongToUpdate}
+                        defaultValue={ongToUpdate?.telephone || ""}
+                        required={true && !ongToUpdate}
                         className="w-full md:w-3/6"
                     />
                 </div>
@@ -187,8 +180,8 @@ function RegisterForm({setUpdateProfile, ongToUpdate, setActiveItem}) {
                     onChange={handleChange}
                     name="description"
                     rows="3"
-                    defaultValue={ ongToUpdate?.description || ""}
-                    required={ true && !ongToUpdate}
+                    defaultValue={ongToUpdate?.description || ""}
+                    required={true && !ongToUpdate}
                     placeholder="Breve descripción*"
                 />
                 <div>
@@ -220,7 +213,7 @@ function RegisterForm({setUpdateProfile, ongToUpdate, setActiveItem}) {
                                         type="file"
                                         accept="image/*"
                                         className="sr-only"
-                                        required={ true && !ongToUpdate}
+                                        required={true && !ongToUpdate}
                                         onChange={(event) => {
                                             const file = event.target.files[0];
                                             const imgPreview = URL.createObjectURL(file);
