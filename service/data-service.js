@@ -90,6 +90,12 @@ export function getPost(id){
     .catch((err) => err);
 }
 
+export function deletePost(id){
+  return axios
+    .delete(`/api/post/${id}`)
+    .then((response) => response.data)
+    .catch((err) => err);
+}
 export function getConnections(size) {
   if(size){
     return axios
@@ -103,11 +109,18 @@ export function getConnections(size) {
     .catch((err) => err);
   }
 }
-export function getFollowing(){
-  return axios
-    .get(`/api/ongs/following`)
-    .then((response) => response.data)
-    .catch((err) => err);
+export function getFollowing(id){
+  if(id){
+    return axios
+      .get(`/api/ongs/${id}/following`)
+      .then((response) => response.data)
+      .catch((err) => err);
+    } else {
+    return axios
+      .get(`/api/ongs/following`)
+      .then((response) => response.data)
+      .catch((err) => err);
+  }
 }
 export function getGLobalPosts() {
   return axios

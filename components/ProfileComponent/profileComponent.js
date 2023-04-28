@@ -22,7 +22,7 @@ function ProfileComponent({ isOwner, idOng }) {
   const [currentOng, setDataOng] = useState([]);
   const [activeItem, setActiveItem] = useState("Proyectos");
   const currentOngID = useContext(OngContext)
-
+  const [deletedPost, setDeleted] = useState("")
   useEffect(() => {
     getPostsOwner(null || idOng).then((posts) => {
       //console.log(posts)
@@ -34,14 +34,14 @@ function ProfileComponent({ isOwner, idOng }) {
          setCoverPicture(ong.coverPicture);
       });
       
-  }, [idOng, currentOng]); 
+  }, [idOng]); 
 
   return (
     <div className="py-5 px-5 md:px-0">
       <div className="container mx-auto bg-white rounded-md">
         <CardProfile
           setActiveItem={setActiveItem}
-          activeItme={activeItem}
+          activeItem={activeItem}
           isOwner={isOwner}
           currentOng={currentOng}
           coverPicture={coverPicture}
@@ -57,7 +57,7 @@ function ProfileComponent({ isOwner, idOng }) {
               : "h-content order-2 md:order-1 p-4 border border-gray-200 rounded-md bg-light w-full md:w-3/12"
           }
         >
-          <ProfileDetails isOwner={isOwner} id={idOng} />
+          <ProfileDetails isOwner={isOwner} ong={currentOng} />
         </div>
         <div
           className={
@@ -75,7 +75,7 @@ function ProfileComponent({ isOwner, idOng }) {
                 <FontAwesomeIcon icon={faTimes} style={{ fontSize: 20 }} />
               </button>
               <h2 className="text-xl font-bold">Crear proyecto</h2>
-              <ProjectForm />
+              <ProjectForm posts={posts} setPosts={setPosts} setMostrarPostsList={setActiveItem} />
               <button
                 onClick={() => setActiveItem("Proyectos")}
                 className="btn-alt bg-dark"
@@ -85,13 +85,13 @@ function ProfileComponent({ isOwner, idOng }) {
             </div>
           )}
           {activeItem === "Proyectos" && (
-            <PostsList posts={posts} search={""} isOwner={isOwner} />
+            <PostsList posts={posts} search={""} isOwner={isOwner} updatePost={setPosts}/>
           )}
           {activeItem === "Conexiones" && <ConnectionsList isOwner={isOwner} currentOng={currentOng}/>}
           {activeItem === "Información" && (
-            <InfoProfile isOwner={isOwner} id={idOng} />
+            <InfoProfile isOwner={isOwner} ong={currentOng} />
           )}
-          {isOwner ? activeItem === "Perfil" && <EditProfile setUpdateProfile={setDataOng} ongToUpdate={currentOng}/> : null}
+          {isOwner ? activeItem === "Perfil" && <EditProfile setUpdateProfile={setDataOng} ongToUpdate={currentOng} setActiveItem={setActiveItem}/> : null}
           {isOwner
             ? activeItem === "Portada" && (
                 <EditCover setCoverPicture={setCoverPicture} setActiveItem={setActiveItem} />

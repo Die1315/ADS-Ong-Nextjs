@@ -20,7 +20,7 @@ import DeletePostButton from "../DeletePostButton/deletePostButton";
 
 Modal.setAppElement("#__next");
 
-const Post = ({ isOwner, post }) => {
+const Post = ({ isOwner, post}) => {
   const location = {
     lat: post?.lat || 0,
     lng: post?.lon || 0,
@@ -38,12 +38,10 @@ const Post = ({ isOwner, post }) => {
   const [postData, setPostUpdated] = useState(post);
   const handleOpenModal = () => setModalIsOpen(true);
   const handleCloseModal = () => setModalIsOpen(false);
-  const [view, setView] = useState([]);
   const [mapPost, setMapPost] = useState(true);
-
   const [showFullDescription, setShowFullDescription] = useState(false);
-  const shortDescription = postData.description.slice(0, 120);
-
+  const shortDescription = postData?.description.slice(0, 120);
+  const [deletedPost,setDeleted] = useState(true)
   const toggleDescription = () => {
     setShowFullDescription(!showFullDescription);
   };
@@ -57,13 +55,13 @@ const Post = ({ isOwner, post }) => {
     }
   };
 
-  return (
+  return deletedPost && postData && (
     <div className="bg-white border border-gray-200 rounded-md overflow-hidden">
       <div className="relative">
         {isOwner && (
           <>
             <EditPostButton post={postData} setPostUpdated={setPostUpdated} />{" "}
-            <DeletePostButton post={postData} setPostUpdated={setPostUpdated} />
+            <DeletePostButton post={postData} setDeleted={setDeleted} deletedPost={deletedPost} />
           </>
         )}
         <Image

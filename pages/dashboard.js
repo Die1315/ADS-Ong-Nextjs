@@ -64,7 +64,7 @@ function Dashboard() {
       ) : (
         <DashboardContext.Provider value={{ mostrarPostsList, setMostrarPostsList }}>
 
-          <Navbar createPost={true} />
+          <Navbar createPost={true} posts={posts} setPosts={setPosts} />
           <div className="container mx-auto px-2 md:px-0 py-5 flex flex-col md:flex-row gap-5">
             <div className="w-12/12 md:w-3/12 relative flex flex-col gap-5">
               <CardDashboard
@@ -79,8 +79,8 @@ function Dashboard() {
                 <button onClick={handlePosts} name="following" className={`py-2 font-bold text-sm w-3/6 rounded-md ${typePosts ? 'bg-white text-gray-400 hover:text-primary' : 'bg-gray-200 text-dark'}`}>ONGs que sigo</button>
               </div> : <></>}
 
-              {mostrarPostsList ? <SearchBar search={search} onSearch={setSearch} displayOnResponsive={true} /> : ""}
-              {mostrarPostsList ? <PostsList posts={posts} search={search} /> : <Project />}
+              {mostrarPostsList ? <SearchBar search={search} onSearch={setSearch} displayOnResponsive={true}/> : ""}
+              {mostrarPostsList ? <PostsList posts={posts} search={search} /> : <Project posts={posts} setPosts={setPosts}/>}
 
 
             </div>

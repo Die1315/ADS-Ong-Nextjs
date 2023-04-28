@@ -5,7 +5,6 @@ import Navbar from "../components/Navbar/navbar";
 import ProfileComponent from "../components/ProfileComponent/profileComponent";
 
 function Profile() {
-
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

@@ -25,6 +25,7 @@ router.get('/ongs/:id/activate', ongs.activate);
 router.put('/ongs/:id/follow', secure.auth, ongs.follow)
 router.get('/ongs/newConnections', secure.auth, ongs.Connections)
 router.get('/ongs/following', secure.auth, ongs.followingOng)
+router.get('/ongs/:id/following', secure.auth, ongs.followingOng)
 router.put('/ongs/edit', secure.auth, ongs.editProfile)
 
 // Post
@@ -35,7 +36,7 @@ router.get('/posts/ong', secure.auth, posts.postByOng);
 router.get('/posts/Global', secure.auth, posts.postsGlobal);
 router.put('/post/:id/edit', secure.auth, posts.postEdit);
 router.get('/posts/followers', secure.auth, posts.postList);
-router.delete('/post/:id/delete', secure.auth, posts.postDelete);
+router.delete('/post/:id', secure.auth, posts.postDelete);
 router.put('/post/:id/like', secure.auth, posts.likeToggle);
 router.get('/post/:id/comments', secure.auth, posts.getCommentByPost);
 // Comment

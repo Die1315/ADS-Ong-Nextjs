@@ -2,7 +2,7 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
-const SearchBar = ({ search, onSearch, displayOnResponsive }) => {
+const SearchBar = ({ search, onSearch, displayOnResponsive}) => {
 
     return (
         <div id="search" className={displayOnResponsive ? "w-full bg-white rounded-md shadow-sm flex md:hidden items-center p-5" : "w-full bg-white rounded-md shadow-none md:shadow-sm hidden md:flex items-center p-5"}>

@@ -1,5 +1,6 @@
 const Comment = require("../models/comment.model");
 const Post = require("../models/post.model");
+const createError = require("http-errors");
 // const Ong = require("../models/ong.model");
 
 module.exports.create = async (req, res, next) => {
@@ -7,10 +8,11 @@ module.exports.create = async (req, res, next) => {
   const currentOng = req.ong;
 
   await Post.create({ ...req.body.dataRegister, owner: currentOng.id })
-    .then((post) => {
+   .then((post) => {
       currentOng.posts.push(post);
       currentOng.save();
-      res.status(201).json(post);
+      post.populate("owner", "name image").execPopulate()
+      .then(()=>res.status(201).json(post))      
     })
     .catch((error) => next(error));
 };
@@ -53,11 +55,12 @@ module.exports.postEdit = async (req, res, next) => {
 
 module.exports.postDelete = (req, res, next) => {
   const currentOng = req.ong
-   Post.findAndDelete(req.params.id)
+  const {id} = req.params
+  Post.findOneAndDelete({_id: id, owner:currentOng.id})
     .then((post) => {
       if (post) {
-
-        res.status(204).json(post);
+        //console.log(post)
+        res.status(200).json(post);
       } else {
         next(createError(404, "post not found"));
       }
@@ -118,3 +121,6 @@ module.exports.getPost = (req,res,next)=>{
 //     .then((posts)=>{
 //         res.status(200).json(posts)
 //     }).catch(next)
+
+
+
