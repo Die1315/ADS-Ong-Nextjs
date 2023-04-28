@@ -20,7 +20,7 @@ import DeletePostButton from "../DeletePostButton/deletePostButton";
 
 Modal.setAppElement("#__next");
 
-const Post = ({ isOwner, post}) => {
+const Post = ({ isOwner, post }) => {
   const location = {
     lat: post?.lat || 0,
     lng: post?.lon || 0,
@@ -41,7 +41,7 @@ const Post = ({ isOwner, post}) => {
   const [mapPost, setMapPost] = useState(true);
   const [showFullDescription, setShowFullDescription] = useState(false);
   const shortDescription = postData?.description.slice(0, 120);
-  const [deletedPost,setDeleted] = useState(true)
+  const [deletedPost, setDeleted] = useState(true)
   const toggleDescription = () => {
     setShowFullDescription(!showFullDescription);
   };
@@ -167,22 +167,20 @@ const Post = ({ isOwner, post}) => {
               <button
                 onClick={handleMap}
                 name="info"
-                className={`py-2 px-6 font-bold text-sm rounded-md ${
-                  !mapPost
-                    ? "bg-white text-gray-400 border border-gray-200"
-                    : " bg-gray-200 text-dark border border-gray-200"
-                }`}
+                className={`py-2 px-6 font-bold text-sm rounded-md ${!mapPost
+                  ? "bg-white text-gray-400 border border-gray-200"
+                  : " bg-gray-200 text-dark border border-gray-200"
+                  }`}
               >
                 <FontAwesomeIcon icon={faInfoCircle} size={20} />
               </button>
               <button
                 onClick={handleMap}
                 name="map"
-                className={`py-2 px-6 font-bold text-sm rounded-md ${
-                  mapPost
-                    ? "bg-white text-gray-400 border border-gray-200"
-                    : " bg-gray-200 text-dark border border-gray-200"
-                }`}
+                className={`py-2 px-6 font-bold text-sm rounded-md ${mapPost
+                  ? "bg-white text-gray-400 border border-gray-200"
+                  : " bg-gray-200 text-dark border border-gray-200"
+                  }`}
               >
                 <FontAwesomeIcon icon={faLocationDot} size={20} />
               </button>
@@ -212,7 +210,8 @@ const Post = ({ isOwner, post}) => {
                       `${formatDate(postData.enddate.toString())}`}
                   </span>
                 </p>
-                <p className="text-gray-600">{postData.description}</p>
+                <p className="text-gray-600 overflow-visible scrollbar scrollbar-thin scrollbar-thumb-secondary scrollbar-track-gray-200">{postData.description}</p>
+
               </>
             ) : (
               <MapView

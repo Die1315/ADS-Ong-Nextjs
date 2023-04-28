@@ -1,11 +1,11 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { getCurrentOng} from "../../../service/data-service";
+import { getCurrentOng } from "../../../service/data-service";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
-function CardProfile({setActiveItem, activeItem,currentOng, isOwner,coverPicture}) {
+function CardProfile({ setActiveItem, activeItem, currentOng, isOwner, coverPicture }) {
   return (
     <div className="relative flex flex-col w-full">
       <div className="w-full h-32 md:h-48 flex flex-col justify-center items-center relative">
@@ -33,7 +33,7 @@ function CardProfile({setActiveItem, activeItem,currentOng, isOwner,coverPicture
             </h1>
             <p>
               <a
-                onClick={() => props.setActiveItem("Conexiones")}
+                onClick={() => setActiveItem("Conexiones")}
                 className="text-primary text-sm font-bold cursor-pointer"
               >
                 {currentOng.following?.length}
@@ -41,17 +41,17 @@ function CardProfile({setActiveItem, activeItem,currentOng, isOwner,coverPicture
               conexiones
             </p>
           </div>
-          { isOwner &&
-          <button
-            onClick={() => setActiveItem("Crear")}
-            className={
-              activeItem != "Crear"
-                ? "text-xl text-secondary"
-                : "text-xl text-dark transform rotate-45"
-            }
-          >
-            <FontAwesomeIcon icon={faPlusCircle} />
-          </button>
+          {isOwner &&
+            <button
+              onClick={() => setActiveItem("Crear")}
+              className={
+                activeItem != "Crear"
+                  ? "text-xl text-secondary"
+                  : "text-xl text-dark transform rotate-45"
+              }
+            >
+              <FontAwesomeIcon icon={faPlusCircle} />
+            </button>
           }
         </div>
       </div>
