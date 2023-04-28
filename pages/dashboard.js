@@ -69,7 +69,6 @@ function Dashboard() {
             <div className="w-12/12 md:w-3/12 relative flex flex-col gap-5">
               <CardDashboard
                 name="Nombre ONG"
-                title="Categoría/Descripción"
                 imageSrc={logo}
                 onClick={() => setMostrarPostsList(!mostrarPostsList)} />
               <CardTags title="Categorías:" categories={categories} />

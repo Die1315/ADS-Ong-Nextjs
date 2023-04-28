@@ -24,7 +24,7 @@ function MapView({ data, setLngLat, initialViewState, locationToUpdate }) {
   // map selected post popup
   const [selectedPost, setSelectedPost] = useState(null);
   useEffect(() => {
-    if(locationToUpdate) setSelectedLngLat(locationToUpdate);
+    if (locationToUpdate) setSelectedLngLat(locationToUpdate);
     const listener = (e) => {
       if (e.key === "Escape") {
         setSelectedPost(null);
@@ -44,16 +44,15 @@ function MapView({ data, setLngLat, initialViewState, locationToUpdate }) {
       return imgMap[projectType];
     } else return "charity.svg";
   }
-
   return (
     <Map
       {...viewState}
-      // style={{width: "100%"}}
+      style={{ minHeight: "300px", minWidth: "100%" }}
       // trackResize={true}
       // projection="globe"
       renderWorldCopies={false}
       mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
-      mapStyle="mapbox://styles/mapbox/outdoors-v11"
+      mapStyle="mapbox://styles/mapbox/streets-v12"
       onMove={(evt) => setViewState(evt.viewState)}
       onClick={(e) => {
         setLngLat && setLngLat(e.lngLat);
@@ -89,25 +88,25 @@ function MapView({ data, setLngLat, initialViewState, locationToUpdate }) {
       {
         // General loop for adding markers as per provided data
         data &&
-          data.map((post) =>
-            Math.abs(post.lat) < 90 && Math.abs(post.lon) < 180 ? ( // lat lon validation
-              <Marker key={post.id} latitude={post.lat} longitude={post.lon}>
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setSelectedPost(post);
-                  }}
-                >
-                  <Image
-                    src={markerImgSrc(post.projecttype)}
-                    alt="ONG"
-                    height={30}
-                    width={30}
-                  />
-                </button>
-              </Marker>
-            ) : null
-          )
+        data.map((post) =>
+          Math.abs(post.lat) < 90 && Math.abs(post.lon) < 180 ? ( // lat lon validation
+            <Marker key={post.id} latitude={post.lat} longitude={post.lon}>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setSelectedPost(post);
+                }}
+              >
+                <Image
+                  src={markerImgSrc(post.projecttype)}
+                  alt="ONG"
+                  height={30}
+                  width={30}
+                />
+              </button>
+            </Marker>
+          ) : null
+        )
       }
 
       {
@@ -123,9 +122,8 @@ function MapView({ data, setLngLat, initialViewState, locationToUpdate }) {
           >
             <div>
               <h1 className="text-lg">{selectedPost.title}</h1>
-              <p>{`${selectedPost.description.slice(0, 100)}${
-                selectedPost.description.length >= 100 ? "..." : ""
-              }`}</p>
+              <p>{`${selectedPost.description.slice(0, 100)}${selectedPost.description.length >= 100 ? "..." : ""
+                }`}</p>
             </div>
           </Popup>
         )

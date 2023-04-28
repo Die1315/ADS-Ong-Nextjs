@@ -43,7 +43,7 @@ const DeletePostButton = ({ post, setDeleted, deletedPost}) => {
                 className="post-modal fixed top-0 left-0 z-50 p-5 md:p-0"
                 data-modal-backdrop="static"
             >
-                <div className='relative w-3/12 p-0 md:p-5 max-h-48 flex flex-col justify-between items-stretch gap-5 bg-light rounded-md mx-auto overflow-x-hidden overflow-y-auto scrollbar scrollbar-thin scrollbar-thumb-secondary scrollbar-track-gray-200;'>
+                <div className='relative w-11/12 md:w-3/12 p-5 max-h-48 flex flex-col justify-between items-stretch gap-5 bg-light rounded-md mx-auto overflow-x-hidden overflow-y-auto scrollbar scrollbar-thin scrollbar-thumb-secondary scrollbar-track-gray-200;'>
                     <button onClick={handleCloseModal} className='absolute -top-3 right-4'>
                         <FontAwesomeIcon className="fixed text-dark bg-light rounded-full p-2" icon={faTimes} size={30} />
                     </button>

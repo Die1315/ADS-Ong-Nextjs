@@ -51,10 +51,10 @@ button.btn-alt {
 }
 
 form input,
-form textarea {
+form textarea,
+form select {
   @apply border-b-2 border-primary focus:border-secondary p-2 text-sm;
 }
-
 .post-modal {
   @apply w-screen h-full bg-dark bg-opacity-70 flex justify-center items-center fixed left-0 z-20;
 }

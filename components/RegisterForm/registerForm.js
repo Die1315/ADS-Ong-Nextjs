@@ -131,7 +131,20 @@ function RegisterForm({setUpdateProfile, ongToUpdate, setActiveItem}) {
                     type="number"
                     placeholder="CIF ONG*"
                     required
-                /> )}
+                />
+                <select
+                    onChange={handleChange}
+                    name="category"
+                    required
+                >
+                    <option value="" hidden>
+                        Categoría
+                    </option>
+                    <option value="Caridad">Caridad</option>
+                    <option value="Servicios">Servicios</option>
+                    <option value="Participación">Participación</option>
+                    <option value="Empoderamiento">Empoderamiento</option>
+                </select>
                 <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3">
                     <input
                         onChange={handleChange}

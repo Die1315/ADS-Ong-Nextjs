@@ -14,7 +14,7 @@ const ProjectForm = ({ postToUpdate, setPostUpdate, closeModal, posts, setPosts,
         lat: postToUpdate?.lat || 0,
         lng: postToUpdate?.lon || 0
     }
-       
+
     useEffect(() => {
         if (postToUpdate) {
             setPreview(postToUpdate.image)
@@ -99,11 +99,12 @@ const ProjectForm = ({ postToUpdate, setPostUpdate, closeModal, posts, setPosts,
     let formattedstartDate = ""
     let formattedendDate = ""
     if (postToUpdate) {
-        if(postToUpdate?.startdate) {
+        if (postToUpdate?.startdate) {
             const startDate = new Date(postToUpdate?.startdate);
-            formattedstartDate = startDate?.toISOString().split("T")[0];}
-        if(postToUpdate?.enddate){
-            const endDate = new Date(postToUpdate?.enddate);        
+            formattedstartDate = startDate?.toISOString().split("T")[0];
+        }
+        if (postToUpdate?.enddate) {
+            const endDate = new Date(postToUpdate?.enddate);
             formattedendDate = endDate?.toISOString().split("T")[0];
         }
     }
@@ -134,7 +135,7 @@ const ProjectForm = ({ postToUpdate, setPostUpdate, closeModal, posts, setPosts,
                     rows="3"
                 />
             </div>
-            <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3 h-64">
+            <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3 my-1">
                 <MapView setLngLat={setLngLat} initialViewState={location} locationToUpdate={location} />
             </div>
             <div className="input-group flex flex-col md:flex-row justify-between items-start md:items-center gap-3">

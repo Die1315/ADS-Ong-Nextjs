@@ -40,6 +40,7 @@ function ProfileDetails({ong}) {
                     style={{ fontSize: 15 }}
                 />
                 {ong.description}
+                {ong.category}
             </div>
             <div className="flex justify-start items-center gap-5">
 

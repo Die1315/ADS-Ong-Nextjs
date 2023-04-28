@@ -12,7 +12,7 @@ import {
     faBell,
     faUserCircle,
     faArrowRightFromBracket,
-    faTimes
+    faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 
 import CreateProjectButton from "../CreateProjectButton/createProjectButton";
@@ -122,6 +122,9 @@ const Navbar = ({ createPost }) => {
                                                 <Link href="/messages" className="block p-4 text-sm font-bold text-dark hover:text-primary">Mensajes</Link>
                                             </li>
                                             <li className="mb-1">
+                                                <Link href="/ongfind" className="block p-4 text-sm font-bold text-dark hover:text-primary">Descubrir</Link>
+                                            </li>
+                                            <li className="mb-1">
                                                 <Link href="/profile" className="block p-4 text-sm font-bold text-dark hover:text-primary">Perfil</Link>
                                             </li>
                                         </ul>
@@ -159,6 +162,14 @@ const Navbar = ({ createPost }) => {
                                     style={{ fontSize: 15 }}
                                 />
                                 <span>Mensajes</span>
+                            </Link>
+                            <Link href="/ongfind" className={`text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs`}>
+
+                                <FontAwesomeIcon
+                                    icon={faLocationDot}
+                                    style={{ fontSize: 15 }}
+                                />
+                                <span>Descubrir</span>
                             </Link>
                             <button onClick={handleModal} className="text-gray-700 mx-4 hover:text-gray-400 flex flex-col justify-center items-center gap-1 text-xs cursor-pointer">
                                 <FontAwesomeIcon
