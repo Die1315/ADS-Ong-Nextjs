@@ -24,7 +24,9 @@ function ProfileDetails({ ong }) {
                     style={{ fontSize: 15 }}
                     className="w-6 text-left"
                 />
-                {ong.email}
+                <Link href={`mailto:${ong.email}`}>
+                    {ong.email}
+                </Link>
             </div>
             <div className="flex justify-start items-center gap-5">
                 <FontAwesomeIcon
