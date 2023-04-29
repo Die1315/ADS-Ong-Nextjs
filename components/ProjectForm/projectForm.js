@@ -216,9 +216,9 @@ const ProjectForm = ({ postToUpdate, setPostUpdate, closeModal, posts, setPosts,
                     </div>
                 </div>
             </div>
-            {error && <div className="alert alert-danger">{error}</div>}
+            {error && <div className="alert alert-danger w-full bg-dark text-secondary text-lg text-center">{error}</div>}
             <button type="submit" className="btn mt-5">
-                {postToUpdate ? "Editar Proyecto" : "Crear Proyecto"}
+                {postToUpdate ? "Actualizar Proyecto" : "Crear Proyecto"}
             </button>
         </form>
     )

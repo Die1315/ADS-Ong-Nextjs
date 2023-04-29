@@ -136,7 +136,7 @@ function RegisterForm({ setUpdateProfile, ongToUpdate, setActiveItem }) {
                 <input
                     onChange={handleChange}
                     name="category"
-                    placeholder="#Categoría"
+                    placeholder="Categoría"
                     maxlength="25"
                 />
                 <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3">
@@ -234,7 +234,7 @@ function RegisterForm({ setUpdateProfile, ongToUpdate, setActiveItem }) {
                     {ongToUpdate ? "Actualizar Información" : "Registrar ONG"}
                 </button>
             </form>
-            {error && <div className="alert alert-danger">{error}</div>}
+            {error && <div className="alert alert-danger w-full bg-dark text-secondary text-lg text-center">{error}</div>}
         </div>
     )
 }

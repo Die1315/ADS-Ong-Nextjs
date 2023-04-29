@@ -14,6 +14,8 @@ import {
     faArrowRightFromBracket,
     faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
+import Tooltip from 'react-modern-tooltip'
+import 'react-modern-tooltip/dist/tooltip.css'
 
 import CreateProjectButton from "../CreateProjectButton/createProjectButton";
 import NotificationsContainer from "../NotificationsContainer/notificationsContainer";
@@ -27,13 +29,13 @@ const notifications = [
     {
         id: 1,
         title: 'Nueva conexión',
-        message: 'Tienes una nueva conexión en LinkedIn',
+        message: 'Tienes una nueva conexión en HelpGo',
         time: 'Hace 2 horas',
     },
     {
         id: 2,
         title: 'Mensaje nuevo',
-        message: 'Tienes un mensaje nuevo en LinkedIn',
+        message: 'Tienes un mensaje nuevo de NGO',
         time: 'Hace 5 horas',
     },
 ];
@@ -200,18 +202,32 @@ const Navbar = ({ createPost }) => {
                             </Modal>
 
                             <div className="flex items-center border-l-2 border-gray-300 gap-5 px-5">
-                                <Link href="/profile" className="text-dark hover:text-primary">
-                                    <FontAwesomeIcon
-                                        icon={faUserCircle}
-                                        style={{ fontSize: 20 }}
-                                    />
-                                </Link>
-                                <button onClick={logout} className="text-dark hover:text-secondary">
-                                    <FontAwesomeIcon
-                                        icon={faArrowRightFromBracket}
-                                        style={{ fontSize: 20 }}
-                                    />
-                                </button>
+                                <Tooltip
+                                    placement='bottom'
+                                    color='gray'
+                                    content='Ver perfil'
+                                    rounded={false}
+                                >
+                                    <Link href="/profile" className="text-dark hover:text-primary">
+                                        <FontAwesomeIcon
+                                            icon={faUserCircle}
+                                            style={{ fontSize: 20 }}
+                                        />
+                                    </Link>
+                                </Tooltip>
+                                <Tooltip
+                                    placement='bottom'
+                                    color='gray'
+                                    content='Cerrar sesión'
+                                    rounded={false}
+                                >
+                                    <button onClick={logout} className="text-dark hover:text-secondary">
+                                        <FontAwesomeIcon
+                                            icon={faArrowRightFromBracket}
+                                            style={{ fontSize: 20 }}
+                                        />
+                                    </button>
+                                </Tooltip>
                             </div>
                         </div>
                     </div>

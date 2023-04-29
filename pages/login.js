@@ -72,9 +72,9 @@ function LoginPage() {
                                 <button onClick={toggleForm} className="text-sm text-primary w-full text-center md:text-right">¿Has olvidado la constraseña?</button>
                                 <button type="submit" className="btn">Iniciar Sesión</button>
                                 <Link href="/register" className="w-full flex justify-center items-center bg-dark hover:bg-primary font-Ubuntu text-white font-bold uppercase rounded-md py-2 mx-auto">Registrar ONG</Link>
+                                {error && <div className="alert alert-danger w-full bg-dark text-secondary text-lg text-center">{error}</div>}
                             </form>
 
-                            {error && <div className="alert alert-danger">{error}</div>}
                             <Footer />
                         </div>
                     ) : <RecoveryForm toggleForm={toggleForm} />}

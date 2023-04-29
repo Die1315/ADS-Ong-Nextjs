@@ -66,7 +66,7 @@ function EditCover({setCoverPicture, setActiveItem}) {// Cloudinary
                         </p>
                     </div>
                 </div>
-                {error && <div className="alert alert-danger">{error}</div>}
+                {error && <div className="alert alert-danger w-full bg-dark text-secondary text-lg text-center">{error}</div>}
                 <button type="submit" className="btn mt-5">
                     Actualizar Portada
                 </button>

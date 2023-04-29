@@ -8,6 +8,8 @@ import {
 import Modal from "react-modal";
 import Image from "next/image";
 import Link from "next/link";
+import Tooltip from 'react-modern-tooltip'
+import 'react-modern-tooltip/dist/tooltip.css'
 
 import LikeButton from "../LikeButton/likeButton";
 import CommentButton from "../CommentButton/commentButton";
@@ -34,10 +36,16 @@ const Post = ({ isOwner, post }) => {
     });
   };
 
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalIsOpen1, setModalIsOpen1] = useState(false);
+  const [modalIsOpen2, setModalIsOpen2] = useState(false);
+
+  const handleOpenModal1 = () => setModalIsOpen1(true);
+  const handleOpenModal2 = () => setModalIsOpen2(true);
+
+  const handleCloseModal1 = () => setModalIsOpen1(false);
+  const handleCloseModal2 = () => setModalIsOpen2(false);
+
   const [postData, setPostUpdated] = useState(post);
-  const handleOpenModal = () => setModalIsOpen(true);
-  const handleCloseModal = () => setModalIsOpen(false);
   const [mapPost, setMapPost] = useState(true);
   const [showFullDescription, setShowFullDescription] = useState(false);
   const shortDescription = postData?.description.slice(0, 120);
@@ -84,7 +92,7 @@ const Post = ({ isOwner, post }) => {
               <div className="w-12/12">
                 <p
                   className="text-white font-bold text-lg hover:cursor-pointer"
-                  onClick={handleOpenModal}
+                  onClick={handleOpenModal1}
                 >
                   {postData.owner.name}
                 </p>
@@ -92,12 +100,12 @@ const Post = ({ isOwner, post }) => {
                   De{" "}
                   <span
                     className="text-primary hover:cursor-pointer"
-                    onClick={handleOpenModal}
+                    onClick={handleOpenModal1}
                   >{`${formatDate(postData.startdate.toString())}`}</span>{" "}
                   a{" "}
                   <span
                     className="text-primary hover:cursor-pointer"
-                    onClick={handleOpenModal}
+                    onClick={handleOpenModal1}
                   >
                     {postData.enddate &&
                       `${formatDate(postData.enddate.toString())}`}
@@ -107,7 +115,7 @@ const Post = ({ isOwner, post }) => {
             </div>
             <div className="w-2/12 flex items-stretch justify-end">
               <div className="flex">
-                <CommentButton postId={postData.id} modal={modalIsOpen} />
+                <CommentButton postId={postData.id} modal={modalIsOpen1} />
                 <LikeButton
                   likes={postData.likes}
                   id={postData.id}
@@ -123,7 +131,7 @@ const Post = ({ isOwner, post }) => {
       <div className="p-4 flex flex-col gap-2">
         <h3
           className="text-xl font-medium text-gray-900 hover:cursor-pointer"
-          onClick={handleOpenModal}
+          onClick={handleOpenModal1}
         >
           {postData.title}
         </h3>
@@ -144,15 +152,15 @@ const Post = ({ isOwner, post }) => {
       </div>
 
       <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={handleCloseModal}
+        isOpen={modalIsOpen1}
+        onRequestClose={handleCloseModal1}
         contentLabel="Post Modal"
         className="post-modal fixed top-0 left-0 z-50 p-5 md:p-0"
         data-modal-backdrop="static"
       >
         <div className="relative container p-0 md:p-5 min-h-90 md:min-h-90 lg:min-h-80 max-h-90 md:max-h-90 lg:max-h-80 flex flex-col md:flex-row gap-0 justify-between items-stretch bg-light rounded-md mx-auto overflow-x-hidden overflow-y-auto md:overflow-y-hidden">
           <button
-            onClick={handleCloseModal}
+            onClick={handleCloseModal1}
             className="absolute -top-3 right-4"
           >
             <FontAwesomeIcon
@@ -164,26 +172,40 @@ const Post = ({ isOwner, post }) => {
 
           <div className="w-12/12 md:w-7/12 p-4 flex flex-col items-start border-0 md:border-r border-gray-200 gap-5">
             <div className="w-full flex justify-start items-center gap-1">
-              <button
-                onClick={handleMap}
-                name="info"
-                className={`py-2 px-6 font-bold text-sm rounded-md ${!mapPost
-                  ? "bg-white text-gray-400 border border-gray-200"
-                  : " bg-gray-200 text-dark border border-gray-200"
-                  }`}
+              <Tooltip
+                placement='bottom'
+                color='gray'
+                content='Ver info'
+                rounded={false}
               >
-                <FontAwesomeIcon icon={faInfoCircle} size={20} />
-              </button>
-              <button
-                onClick={handleMap}
-                name="map"
-                className={`py-2 px-6 font-bold text-sm rounded-md ${mapPost
-                  ? "bg-white text-gray-400 border border-gray-200"
-                  : " bg-gray-200 text-dark border border-gray-200"
-                  }`}
+                <button
+                  onClick={handleMap}
+                  name="info"
+                  className={`py-2 px-6 font-bold text-sm rounded-md ${!mapPost
+                    ? "bg-white text-gray-400 border border-gray-200"
+                    : " bg-gray-200 text-dark border border-gray-200"
+                    }`}
+                >
+                  <FontAwesomeIcon icon={faInfoCircle} size={20} />
+                </button>
+              </Tooltip>
+              <Tooltip
+                placement='bottom'
+                color='gray'
+                content='Ver mapa'
+                rounded={false}
               >
-                <FontAwesomeIcon icon={faLocationDot} size={20} />
-              </button>
+                <button
+                  onClick={handleMap}
+                  name="map"
+                  className={`py-2 px-6 font-bold text-sm rounded-md ${mapPost
+                    ? "bg-white text-gray-400 border border-gray-200"
+                    : " bg-gray-200 text-dark border border-gray-200"
+                    }`}
+                >
+                  <FontAwesomeIcon icon={faLocationDot} size={20} />
+                </button>
+              </Tooltip>
             </div>
             {mapPost ? (
               <>
@@ -192,25 +214,47 @@ const Post = ({ isOwner, post }) => {
                   alt="Post Image"
                   width={800}
                   height={500}
-                  className="max-h-50% object-cover"
+                  className="max-h-50% object-cover cursor-pointer"
+                  onClick={handleOpenModal2}
                 />
+                <Modal
+                  isOpen={modalIsOpen2}
+                  onRequestClose={handleCloseModal2}
+                  contentLabel="Delete Modal"
+                  className="post-modal fixed top-0 left-0 z-50 p-5 md:p-0"
+                  data-modal-backdrop="static"
+                >
+                  <div className="relative">
+                    <button onClick={handleCloseModal2} className='absolute -top-3 right-4'>
+                      <FontAwesomeIcon className="fixed text-dark bg-light rounded-full p-2" icon={faTimes} size={30} />
+                    </button>
+                    <Image
+                      src={postData.image}
+                      alt="cover picture"
+                      width={768}
+                      height={500}
+                      className="cursor-pointer"
+                      onClick={handleOpenModal2}
+                    />
+                  </div>
+                </Modal>
                 <h2 className="text-2xl font-bold">{postData.title}</h2>
                 <p className="text-dark text-sm -mt-5">
                   De{" "}
                   <span
                     className="text-primary font-bold hover:text-dark hover:cursor-pointer"
-                    onClick={handleOpenModal}
+                    onClick={handleOpenModal1}
                   >{`${formatDate(postData.startdate.toString())}`}</span>{" "}
                   a{" "}
                   <span
                     className="text-primary font-bold hover:text-dark hover:cursor-pointer"
-                    onClick={handleOpenModal}
+                    onClick={handleOpenModal1}
                   >
                     {postData.enddate &&
                       `${formatDate(postData.enddate.toString())}`}
                   </span>
                 </p>
-                <p className="text-gray-600 overflow-visible scrollbar scrollbar-thin scrollbar-thumb-secondary scrollbar-track-gray-200">{postData.description}</p>
+                <p className="text-gray-600 overflow-y-visible scrollbar scrollbar-thin scrollbar-thumb-secondary scrollbar-track-gray-200">{postData.description}</p>
 
               </>
             ) : (
@@ -223,7 +267,7 @@ const Post = ({ isOwner, post }) => {
           </div>
           <div className="w-12/12 md:w-5/12 flex flex-col justify-start items-start p-4 gap-5">
             <div className="flex justify-start items-start gap-3">
-              <Link href={`/ong/${postData.owner}`}>
+              <Link href={`/ong/${postData.owner.id}`}>
                 <Image
                   src={postData.owner.image}
                   alt="Post Image"
