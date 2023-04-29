@@ -10,6 +10,9 @@ const handle = app.getRequestHandler();
 const routes = require("./config/routes.config")
 const cookieParser = require('cookie-parser');
 
+const swaggerUi = require('swagger-ui-express')
+const swaggerFile = require('../swagger_output.json')
+
 app
   .prepare()
   .then(() => {
@@ -20,6 +23,8 @@ app
     // server.use(express.urlencoded({ extended: true }));
     server.use(express.json());
     server.use("/api", routes);
+
+    server.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
     server.get("*", (req, res) => {
       return handle(req, res);
