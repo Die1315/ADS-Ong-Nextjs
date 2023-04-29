@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Post from '../Post/post';
 
-const PostsList = ({ posts, search, isOwner, updatePost }) => {
+const PostsList = ({ posts, search, isOwner}) => {
     
     return (
         <div className="w-full flex flex-col gap-2">

@@ -2,15 +2,16 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image';
 import Link from 'next/link';
-
 import Loading from "../components/Loading/loading";
+import { useRouter } from 'next/router';
+import RecoveryForm from '../components/recoveryComponent/recoveryComponent';
 
 const logo = require("../src/images/logo.svg")
 
 export default function Recover() {
-    //const router = useRouter()
-    //const { id } = router.query
-
+    const router = useRouter()
+    const { id } = router.query
+    const [data,setData] = useState({password:""})
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -20,6 +21,14 @@ export default function Recover() {
 
         return () => clearTimeout(timeoutId);
     }, []);
+    const handleSubmit = ()=>{
+
+    }
+    const handleChange = (event) => {
+       setEmail({
+            [event.target.name]: event.target.value,
+        });
+    }    
 
     return (
         <>
@@ -38,12 +47,21 @@ export default function Recover() {
                     </Link>
                     <div className="w-11/12 md:w-6/12 flex flex-col gap-3">
                         <h1 className='text-center text-4xl font-bold'>Recupera tu contraseña</h1>
-                        <p className='text-center mb-3'>Ingresa tu correo electrónico:</p>
-                        <form className='w-full flex flex-col justify-center gap-3'>
-                            <input
-                                type="email"
-                                placeholder="correo electrónico"
+                        <p className='text-center mb-3'>Digita nueva contraseña:</p>
+                        <form onSubmit={handleSubmit} className='w-full flex flex-col justify-center gap-3'>
+                        <input
+                                type="password"
+                                placeholder="Constraseña"
                                 className='w-full'
+                                required
+                                onChange={handleChange}
+                            ></input>
+                            <input
+                                type="password"
+                                placeholder="Confirmar contraseña"
+                                className='w-full'
+                                required
+                                onChange={handleChange}
                             ></input>
                             <button type='submit' className='w-48 mx-auto bg-primary rounded-md px-6 py-2 font-bold text-white hover:bg-dark'>Enviar</button>
                         </form>

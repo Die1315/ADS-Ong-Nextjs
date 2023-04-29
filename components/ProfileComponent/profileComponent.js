@@ -12,7 +12,7 @@ import ConnectionsList from "../ConnectionsList/connectionsList";
 import EditCover from "../EditCover/editCover";
 import EditProfile from "../EditProfile/editProfile";
 import ProjectForm from "../ProjectForm/projectForm";
-import Following from "../ConnectionFollowing/connectionfollowing";
+import Connections from "../Connections/connections";
 import Footer from "../Footer/footer";
 import OngContext from "../../context/ongContext";
 
@@ -28,13 +28,13 @@ function ProfileComponent({ isOwner, idOng }) {
       //console.log(posts)
       setPosts(posts);
     });
-         getCurrentOng(isOwner, null || idOng).then((ong) => {
-         setDataOng(ong);
-         currentOngID.setState(ong.id)
-         setCoverPicture(ong.coverPicture);
-      });
-      
-  }, [idOng]); 
+    getCurrentOng(isOwner, null || idOng).then((ong) => {
+      setDataOng(ong);
+      currentOngID.setState(ong.id)
+      setCoverPicture(ong.coverPicture);
+    });
+
+  }, [idOng]);
 
   return (
     <div className="py-5 px-5 md:px-0">
@@ -85,21 +85,21 @@ function ProfileComponent({ isOwner, idOng }) {
             </div>
           )}
           {activeItem === "Proyectos" && (
-            <PostsList posts={posts} search={""} isOwner={isOwner} updatePost={setPosts}/>
+            <PostsList posts={posts} search={""} isOwner={isOwner} updatePost={setPosts} />
           )}
-          {activeItem === "Conexiones" && <ConnectionsList isOwner={isOwner} currentOng={currentOng}/>}
+          {activeItem === "Conexiones" && <ConnectionsList isOwner={isOwner} currentOng={currentOng} />}
           {activeItem === "Información" && (
             <InfoProfile isOwner={isOwner} ong={currentOng} />
           )}
-          {isOwner ? activeItem === "Perfil" && <EditProfile setUpdateProfile={setDataOng} ongToUpdate={currentOng} setActiveItem={setActiveItem}/> : null}
+          {isOwner ? activeItem === "Perfil" && <EditProfile setUpdateProfile={setDataOng} ongToUpdate={currentOng} setActiveItem={setActiveItem} /> : null}
           {isOwner
             ? activeItem === "Portada" && (
-                <EditCover setCoverPicture={setCoverPicture} setActiveItem={setActiveItem} />
-              )
+              <EditCover setCoverPicture={setCoverPicture} setActiveItem={setActiveItem} />
+            )
             : null}
         </div>
         <div className="w-12/12 order-3 md:order-3 md:w-3/12">
-          {isOwner && <Following />}
+          {isOwner && <Connections filter="new"/>}
           <Footer />
         </div>
       </div>

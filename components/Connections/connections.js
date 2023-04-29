@@ -1,10 +1,9 @@
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-
 import FollowButton from '../FollowButton/followButton'
-
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { getConnections } from '../../service/data-service';
+import { formatDate } from '../../utils/dateUtils';
 
 
 const Contact = ({ ong }) => {
@@ -33,24 +32,36 @@ const Contact = ({ ong }) => {
   );
 };
 
-const Newest = () => {
+const Connections = (props) => {
   const [trendingConnections, setConnections] = useState([]);
   useEffect(() => {
-    getConnections().then((ongs) => {
+    getConnections(5).then((ongs) => {
       setConnections(ongs)
     })
   }, [])
 
+  let filterTitle = ""
+
+  if (props.filter === "latest") {
+    filterTitle = "ONGs con proyectos recientes:"
+  } if (props.filter === "trending") {
+    filterTitle = "ONGs más populares:"
+  } if (props.filter === "new") {
+    filterTitle = "ONGs más nuevas:"
+  }
+
   return (
-    <div className="w-full bg-white border border-gray-200 rounded-md shadow-sm p-4 flex flex-col gap-5">
-      <h3 className="font-medium text-gray-900 mb-4">ONGs con más interacción:</h3>
+    <div className="w-full bg-white rounded-md shadow-sm p-4 hidden md:flex flex-col gap-5">
+
+      <h3 className="font-medium text-gray-900 mb-4">{filterTitle}</h3>
       {trendingConnections.sort((x, y) => y.updatedAt.localeCompare(x.updatedAt)).map((ong) => {
         return (
           <Contact key={ong.name} ong={ong} />
         )
       })}
+      {props.filter != "trending" && <Link href='/connections' className='w-full text-center text-primary text-sm font-semibold'>Ver más...</Link>}
     </div>
   );
 };
 
-export default Newest;
+export default Connections;

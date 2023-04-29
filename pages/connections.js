@@ -4,7 +4,7 @@ import Loading from "../components/Loading/loading";
 import Navbar from "../components/Navbar/navbar";
 import CardConexion from "../components/CardConexion/cardConexion";
 import SearchBar from "../components/SearchBar/searchBar";
-import Trends from "../components/ConnectionTrends/connectionTrends";
+import Connections from "../components/Connections/connections";
 import Footer from "../components/Footer/footer"
 
 import { getConnections } from "../service/data-service";
@@ -40,13 +40,13 @@ function Conexiones() {
                         <div className="w-12/12 md:w-9/12 flex flex-col gap-5">
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                                 {trendingConnections.filter((ong) => ong.name.includes(search)).map((ong, i) => (
-                                    <CardConexion ong={ong} key={i}/>
+                                    <CardConexion ong={ong} key={i} />
                                 ))}
                             </div>
                         </div>
                         <div className="w-12/12 md:w-3/12 flex flex-col gap-5">
                             <SearchBar search={search} onSearch={setSearch} />
-                            <Trends />
+                            <Connections filter="trending"/>
                             <Footer />
                         </div>
                     </div>

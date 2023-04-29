@@ -1,17 +1,15 @@
-import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faLink,
-    faCircleInfo,
     faEnvelope,
-    faIdBadge
+    faIdBadge,
+    faPeopleGroup
 } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import Link from "next/link";
 
 
-function ProfileDetails({ong}) {
-    
+function ProfileDetails({ ong }) {
 
     const webpage = ong.webPage
     const facebook = ong.facebook
@@ -24,6 +22,7 @@ function ProfileDetails({ong}) {
                 <FontAwesomeIcon
                     icon={faEnvelope}
                     style={{ fontSize: 15 }}
+                    className="w-6 text-left"
                 />
                 {ong.email}
             </div>
@@ -31,15 +30,16 @@ function ProfileDetails({ong}) {
                 <FontAwesomeIcon
                     icon={faIdBadge}
                     style={{ fontSize: 15 }}
+                    className="w-6 text-left"
                 />
                 {ong.CIF}
             </div>
             <div className="flex justify-start items-center gap-5">
                 <FontAwesomeIcon
-                    icon={faCircleInfo}
+                    icon={faPeopleGroup}
                     style={{ fontSize: 15 }}
+                    className="w-6 text-left"
                 />
-                {ong.description}
                 {ong.category}
             </div>
             <div className="flex justify-start items-center gap-5">
