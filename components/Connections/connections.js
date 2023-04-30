@@ -54,7 +54,7 @@ const Connections = (props) => {
     <div className="w-full bg-white rounded-md shadow-sm p-4 hidden md:flex flex-col gap-5">
 
       <h3 className="font-medium text-gray-900 mb-4">{filterTitle}</h3>
-      {trendingConnections.sort((x, y) => y.updatedAt.localeCompare(x.updatedAt)).map((ong) => {
+      {trendingConnections.map((ong) => {
         return (
           <Contact key={ong.name} ong={ong} />
         )

@@ -10,7 +10,7 @@ function Profile() {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
+    }, 1500);
 
     return () => clearTimeout(timeoutId);
   }, []);

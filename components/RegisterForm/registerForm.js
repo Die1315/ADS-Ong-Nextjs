@@ -55,7 +55,7 @@ function RegisterForm({ setUpdateProfile, ongToUpdate, setActiveItem }) {
                                     } else {
                                         router.push("/login");
                                     }
-                                    console.log(response);
+                                    //console.log(response);
                                 })
                                 .catch((err) => {
                                     console.log(err.message);
@@ -137,7 +137,7 @@ function RegisterForm({ setUpdateProfile, ongToUpdate, setActiveItem }) {
                     onChange={handleChange}
                     name="category"
                     placeholder="Categoría"
-                    maxlength="25"
+                    maxLength="25"
                 />
                 <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3">
                     <input

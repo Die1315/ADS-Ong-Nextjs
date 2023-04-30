@@ -43,12 +43,17 @@ export function getCurrentOng(owner = false, ongToSearch) {
       .catch((err) => err);
   }
 }
+export function activateOng(token){
+  return axios
+        .put(`/api/ongs/activate`, {token:token})
+        .then((response)=> response.data)
+        .catch((err) => err)  
+}
 export function updateProfile(dataUpdated){
   return axios
     .put('/api/ongs/edit', dataUpdated)
     .then((response)=> response.data)
     .catch((err) => err)
-
 }
 
 export function registerProject(data) {
@@ -196,3 +201,4 @@ export function getFollowedUsers() {
     .then((response) => response)
     .catch((err) => err);
 }
+

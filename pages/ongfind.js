@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar/navbar";
 import Loading from "../components/Loading/loading";
 import OngList from "../components/ong-list/OngList";
 import MapView from "../components/map-box/map";
+import { getGLobalPosts } from "../service/data-service";
 
 function OngFind() {
   //TODO TEST ONLY, THIS IS NOT USED IN THIS LIST VIEW
@@ -35,15 +36,12 @@ function OngFind() {
 
   // data from DB, post list
   const [postList, setPostList] = useState(null);
-  const fetchPostList = async () => {
-    const response = await axios
-      .get("/api/postsall", {})
-      .then((response) => response.data);
-
-    setPostList(response);
-  };
+  
   useEffect(() => {
-    fetchPostList();
+    getGLobalPosts().then((response)=>{
+      setPostList(response);
+    })
+    
   }, []);
 
   return (<>
@@ -54,7 +52,7 @@ function OngFind() {
         <Navbar />
         <div className="container mx-auto p-5 flex flex-col-reverse md:flex-row items-center md:items-stretch gap-5">
           <div className="w-full md:w-6/12 flex flex-col gap-5">
-            <OngList data={ongList} />
+            {/* <OngList data={ongList} /> */}
           </div>
           <div className="w-full md:w-6/12 flex flex-col gap-5 pt-0 md:pt-20">
             <MapView data={postList} />

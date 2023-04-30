@@ -36,6 +36,7 @@ function LoginPage() {
     const handleSubmit = (event) => {
         event.preventDefault();
         login(credentials).then((res) => {
+            console.log(credentials)
             if (res.code === "ERR_BAD_REQUEST") {
                 setError(res.response.data.message || res.response.data.error);
             } else {

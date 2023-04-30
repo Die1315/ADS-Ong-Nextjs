@@ -9,13 +9,10 @@ import Modal from "react-modal";
 import Image from "next/image";
 import Link from "next/link";
 import Tooltip from 'react-modern-tooltip'
-import 'react-modern-tooltip/dist/tooltip.css'
-
 import LikeButton from "../LikeButton/likeButton";
 import CommentButton from "../CommentButton/commentButton";
 import EditPostButton from "../EditPostButton/editPostButton";
 import CommentsBox from "../CommentsBox/commentsBox";
-
 import { formatDate } from "../../utils/dateUtils";
 import MapView from "../map-box/map";
 import DeletePostButton from "../DeletePostButton/deletePostButton";

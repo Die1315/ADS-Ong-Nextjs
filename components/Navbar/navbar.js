@@ -15,7 +15,6 @@ import {
     faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 import Tooltip from 'react-modern-tooltip'
-import 'react-modern-tooltip/dist/tooltip.css'
 
 import CreateProjectButton from "../CreateProjectButton/createProjectButton";
 import NotificationsContainer from "../NotificationsContainer/notificationsContainer";

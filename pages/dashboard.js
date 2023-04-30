@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect, createContext, useContext} from "react";
 
 import Loading from "../components/Loading/loading";
 import Navbar from "../components/Navbar/navbar";
@@ -7,9 +7,11 @@ import CardDashboard from "../components/CardDashboard/cardDashboard";
 import Connections from "../components/Connections/connections";
 import PostsList from "../components/PostsList/postsList";
 import Project from '../components/Project/project';
-import { getGLobalPosts, getPostFollowing } from "../service/data-service";
+import { getCurrentOng, getGLobalPosts, getPostFollowing } from "../service/data-service";
 import SearchBar from "../components/SearchBar/searchBar";
 import CardTags from "../components/Tags/tags";
+import OngContext from "../context/ongContext";
+
 
 const logo = require("../src/images/logo.svg")
 
@@ -20,19 +22,12 @@ export const DashboardContext = createContext();
 function Dashboard() {
 
   const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
-
-    return () => clearTimeout(timeoutId);
-  }, []);
-
   const [mostrarPostsList, setMostrarPostsList] = useState(true);
   const [posts, setPosts] = useState([]);
   const [search, setSearch] = useState("");
   const [typePosts, setToggleGlobalPosts] = useState(true);
+  const [currentOng, setDataOng] = useState([]);
+  const currentOngID = useContext(OngContext)
 
   const handlePosts = (event) => {
     //console.log(event.target.name)
@@ -42,20 +37,32 @@ function Dashboard() {
       setToggleGlobalPosts(false);
     }
   }
-
-  useEffect(() => {
-    if (typePosts) {
+ useEffect(() => {
+    if (typePosts) {      
       getGLobalPosts().then((posts) => {
-        setPosts(posts);
+        setPosts(posts);        
       })
     } else {
       getPostFollowing().then((posts) => {
         setPosts(posts);
       });
 
-    }
+    }    
   }, [typePosts]);
+  useEffect(() => {
+    getCurrentOng(true).then((ong) => {
+      setDataOng(ong);
+      currentOngID.setState(currentOng.id)      
+    })
+  }, [currentOng]);
+  
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
 
+    return () => clearTimeout(timeoutId);
+  }, []);
 
   return (
     <>
@@ -68,9 +75,8 @@ function Dashboard() {
           <div className="container mx-auto px-2 md:px-0 py-5 flex flex-col md:flex-row gap-5">
             <div className="w-12/12 md:w-3/12 relative flex flex-col gap-5">
               <CardDashboard
-                name="Nombre ONG"
-                imageSrc={logo}
-                onClick={() => setMostrarPostsList(!mostrarPostsList)} />
+              currentOng={currentOng}
+                 />
               <CardTags title="Categorías:" categories={categories} />
             </div>
             <div className="w-12/12 md:w-6/12 flex flex-col gap-5">

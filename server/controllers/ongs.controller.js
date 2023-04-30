@@ -16,7 +16,16 @@ module.exports.create = async (req, res, next) => {
     active: false,
   })
     .then((ong) => {
-      url_activate = `${domain}/api/ongs/${ong._id}/activate`;
+      const token = jwt.sign(
+        {
+          email: ong.email,
+          username: ong.name,
+          id: ong.id,
+        },
+        process.env.JWT_SECRET,
+        { expiresIn: "24h" }
+      );
+      url_activate = `${domain}/ong/activate/${token}`;
       email_receiver = ong.email;
       // console.log(ong.email);
       const mail = {
@@ -38,7 +47,6 @@ module.exports.create = async (req, res, next) => {
 module.exports.login = (req, res, next) => {
   //console.log(req.body);
   const { email, password } = req.body.credentials;
-
   Ong.findOne({ email })
     .then((ong) => {
       if (ong) {
@@ -53,12 +61,11 @@ module.exports.login = (req, res, next) => {
             if (match) {
               const token = jwt.sign(
                 {
-                  //exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 2,
                   email: ong.email,
                   username: ong.name,
                   id: ong.id,
                 },
-                "secret",
+                process.env.JWT_SECRET,
                 { expiresIn: "24h" }
               );
 
@@ -77,6 +84,7 @@ module.exports.login = (req, res, next) => {
             }
           })
           .catch((err) => {
+            console.log(err)
             next(createError(400, "Password Required"));
           });
       } else {
@@ -95,9 +103,12 @@ module.exports.logout = (req, res, next) => {
 };
 
 module.exports.activate = (req, res, next) => {
-  const { id } = req.params;
-  Ong.findOneAndUpdate(
-    { _id: id },
+  const { token } = req.body;
+  //console.log(token, req.body)
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);  
+    Ong.findOneAndUpdate(
+    { _id: decoded.id },
     { active: true },
     { new: true, runValidators: true }
   )
@@ -107,9 +118,10 @@ module.exports.activate = (req, res, next) => {
       } else {
         next();
       }
-    })
-
-    .catch(next);
+    }).catch(next);
+  } catch {
+    next(createError(401, "Unautorized: invalid token "));
+  }
 };
 
 module.exports.profile = (req, res, next) => {
@@ -182,7 +194,7 @@ const { size } = req.query;
 let following = currentOng.following
 following.push(currentOng.id)
 //console.log(currentOng.following)
-Ong.find({ _id : { $nin : following}}).limit(parseInt(size) || null).then((ongs)=>{
+Ong.find({ _id : { $nin : following}}).limit(parseInt(size) || null).sort({updatedAt: -1}).then((ongs)=>{
   //console.log(posts)
   res.status(200).json(ongs)
 })
@@ -208,21 +220,5 @@ module.exports.followingOng = async (req, res, next) =>{
 
 }
 
-module.exports.ongWithPost = (req, res, next) => {
-  Ong.aggregate([
-    { $match: {} },
-    {
-      $lookup: {
-        from: "posts",
-        localField: "_id",
-        foreignField: "owner",
-        as: "post_list",
-      },
-    },
-  ])
-    // Devuelve HTTP 200 OK con el listado JSON de ongs almacenados en la Base de Datos en memoria
-    .then((ongs) => res.json(ongs))
-    .catch(next);
-};
 
 

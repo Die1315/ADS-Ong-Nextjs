@@ -12,7 +12,7 @@ module.exports.auth = (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, "secret"); //secreto de firma
+    const decoded = jwt.verify(token, process.env.JWT_SECRET); //secreto de firma
     // console.log(decoded.id);
     // next();
     Ong.findOne({ _id: decoded.id, active: true })
