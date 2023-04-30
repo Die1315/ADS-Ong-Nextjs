@@ -6,7 +6,7 @@ import Picker, { Theme } from "emoji-picker-react";
 import { BsEmojiSmileFill } from "react-icons/bs";
 
 import { v4 as uuidv4 } from "uuid";
-import { io } from "socket.io-client";
+//import { io } from "socket.io-client";
 import Link from "next/link";
 
 function ChatContact({currentChat, currentUser, socket}) {

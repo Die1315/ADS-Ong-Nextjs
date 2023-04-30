@@ -9,7 +9,7 @@ export default function RecoveryForm({ toggleForm }) {
     const [email, setEmail] = useState()
 
     const handleSubmit = () => {
-
+        
     }
     const handleChange = (event) => {
         setEmail({

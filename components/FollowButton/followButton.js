@@ -9,14 +9,15 @@ const FollowButton = ({ ong }) => {
     
     const currentOng = useContext(OngContext)
     useEffect(()=>{
-       if(ong.followers.includes(currentOng.state)){
+        console.log(ong.followers.includes(currentOng.state))
+       if(ong.followers.includes(currentOng.state)){        
         toggleButton(true)
        }
 
-    },[])
-    const handleFollow = () => {
-        
+    },[buttomState])
+    const handleFollow = () => {        
         followUnfollow(ong.id).then((res)=>{
+            console.log(res)
              toggleButton(res.follow)
         })
     }

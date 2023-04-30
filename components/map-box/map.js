@@ -8,6 +8,8 @@ import Map, {
   GeolocateControl,
 } from "react-map-gl";
 import configData from "./map.config.json";
+import Post from "../Post/post";
+
 
 function MapView({ data, setLngLat, initialViewState, locationToUpdate }) {
   // map viewstate

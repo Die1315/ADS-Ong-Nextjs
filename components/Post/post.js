@@ -14,7 +14,6 @@ import LikeButton from "../LikeButton/likeButton";
 import CommentButton from "../CommentButton/commentButton";
 import EditPostButton from "../EditPostButton/editPostButton";
 import CommentsBox from "../CommentsBox/commentsBox";
-
 import { formatDate } from "../../utils/dateUtils";
 import MapView from "../map-box/map";
 import DeletePostButton from "../DeletePostButton/deletePostButton";

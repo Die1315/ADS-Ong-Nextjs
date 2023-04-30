@@ -11,7 +11,7 @@ module.exports.create = async (req, res, next) => {
    .then((post) => {
       currentOng.posts.push(post);
       currentOng.save();
-      post.populate("owner", "name image").execPopulate()
+      post.populate("owner", "name image category").execPopulate()
       .then(()=>res.status(201).json(post))      
     })
     .catch((error) => next(error));
@@ -22,7 +22,7 @@ module.exports.postByOng = async (req, res, next) => {
   if (!id) {
     id = req.ong.id;
   }
-  let postsByOng = await Post.find({ owner: id }).populate("owner", "name image");
+  let postsByOng = await Post.find({ owner: id }).populate("owner", "name image category");
   res.status(200).json(postsByOng);
 };
 
@@ -30,7 +30,7 @@ module.exports.postsGlobal = async (req, res, next) => {
   const currentOng = req.ong;
   //console.log(currentOng.id);
   let postsAll = await Post.find({ owner: { $ne: currentOng.id } })
-    .populate("owner", "name image")
+    .populate("owner", "name image category")
     .then((posts) => {
       //console.log(posts);
       res.status(200).json(posts);
@@ -42,7 +42,7 @@ module.exports.postsGlobal = async (req, res, next) => {
 module.exports.postEdit = async (req, res, next) => {
   const data = req.body;
    // console.log(req.params.id, data)
-    Post.findByIdAndUpdate(req.params.id, data, {new : true}).populate("owner", "name image")
+    Post.findByIdAndUpdate(req.params.id, data, {new : true}).populate("owner", "name image category")
     .then((post) => {
       if (post) {
         res.status(200).json(post);
@@ -71,7 +71,7 @@ module.exports.postDelete = (req, res, next) => {
 module.exports.postList = (req, res, next) => {
   const currentOng = req.ong;
    Post.find({ owner: { $in: currentOng.following } })
-    .populate("owner","name image")
+    .populate("owner","name image category")
     .then((posts) => {
       console.log(posts)
       res.status(200).json(posts);

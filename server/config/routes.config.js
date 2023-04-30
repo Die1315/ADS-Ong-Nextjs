@@ -18,10 +18,10 @@ router.post("/logout", ongs.logout )
 //Ongs
 router.post('/ongs', ongs.create);
 //router.get('/ongs', secure.auth, ongs.list);
-router.get('/ongwithpostlist', secure.auth, ongs.ongWithPost);
+//router.get('/ongwithpostlist', secure.auth, ongs.ongWithPost);
 router.get('/ongs/:id/profile', secure.auth, ongs.profile);
 router.get('/ongs/profile', secure.auth, ongs.profile); //owner profile
-router.get('/ongs/:id/activate', ongs.activate);
+router.put('/ongs/activate', ongs.activate);
 router.put('/ongs/:id/follow', secure.auth, ongs.follow)
 router.get('/ongs/newConnections', secure.auth, ongs.Connections)
 router.get('/ongs/following', secure.auth, ongs.followingOng)

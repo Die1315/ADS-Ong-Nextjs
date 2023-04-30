@@ -9,12 +9,12 @@ export async function middleware(request) {
   try {
     const { payload } = await jwtVerify(
       jwt.value,
-      new TextEncoder().encode("secret")
+      new TextEncoder().encode(process.env.JWT_SECRET)
     );
     // console.log({ payload });
     return NextResponse.next();
   } catch (error) {
-    console.log(error)
+    //console.log(error)
     return NextResponse.redirect(new URL("/login", request.url));
   }
 }

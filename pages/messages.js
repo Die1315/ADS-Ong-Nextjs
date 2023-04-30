@@ -10,7 +10,7 @@ function Messages() {
 
     const [contacts, setContacts] = useState([]);
     const [currentUser, setCurrentUser] = useState();
-    const [currentChat, setCurrentChat] = useState(undefined);
+    const [currentChat, setCurrentChat] = useState([]));
     const [search, setSearch] = useState("");
 
     const host = (process.env.HOST || 'localhost') + ':' + (process.env.PORT || 3000);
