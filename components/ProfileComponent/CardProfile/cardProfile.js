@@ -1,12 +1,12 @@
-import Image from "next/image";
 import { useEffect, useState } from "react";
-import { getCurrentOng } from "../../../service/data-service";
-import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { Tooltip } from '@nextui-org/react';
+import Image from "next/image";
+import Link from "next/link";
 import Modal from 'react-modal';
-import Tooltip from 'react-modern-tooltip'
-import 'react-modern-tooltip/dist/tooltip.css'
+
+import { getCurrentOng } from "../../../service/data-service";
 
 Modal.setAppElement('#__next');
 
@@ -113,13 +113,7 @@ function CardProfile({ setActiveItem, activeItem, currentOng, isOwner, coverPict
             </p>
           </div>
           {isOwner &&
-
-            <Tooltip
-              placement='topStart'
-              color={activeItem === "Proyectos" ? 'yellow' : 'gray'}
-              content={activeItem === "Proyectos" ? 'Crear proyecto' : 'Ver proyectos'}
-              rounded={false}
-            >
+            <Tooltip content={activeItem === "Proyectos" ? "Crear proyecto" : "Ver proyectos"} placement="bottom" color={activeItem === "Proyectos" ? `warning` : `invert`}>
               <button
                 onClick={handlePosts}
                 className={

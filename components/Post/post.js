@@ -8,8 +8,7 @@ import {
 import Modal from "react-modal";
 import Image from "next/image";
 import Link from "next/link";
-import Tooltip from 'react-modern-tooltip'
-import 'react-modern-tooltip/dist/tooltip.css'
+import { Tooltip } from '@nextui-org/react';
 
 import LikeButton from "../LikeButton/likeButton";
 import CommentButton from "../CommentButton/commentButton";
@@ -172,12 +171,7 @@ const Post = ({ isOwner, post }) => {
 
           <div className="w-12/12 md:w-7/12 p-4 flex flex-col items-start border-0 md:border-r border-gray-200 gap-5">
             <div className="w-full flex justify-start items-center gap-1">
-              <Tooltip
-                placement='bottom'
-                color='gray'
-                content='Ver info'
-                rounded={false}
-              >
+              <Tooltip content={"Ver info"} placement="bottom" color={`invert`}>
                 <button
                   onClick={handleMap}
                   name="info"
@@ -189,12 +183,7 @@ const Post = ({ isOwner, post }) => {
                   <FontAwesomeIcon icon={faInfoCircle} size={20} />
                 </button>
               </Tooltip>
-              <Tooltip
-                placement='bottom'
-                color='gray'
-                content='Ver mapa'
-                rounded={false}
-              >
+              <Tooltip content={"Ver mapa"} placement="bottom" color={`invert`}>
                 <button
                   onClick={handleMap}
                   name="map"

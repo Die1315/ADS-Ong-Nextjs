@@ -25,7 +25,7 @@ const FollowButton = ({ ong }) => {
         <button onClick={handleFollow} className={buttomState ? "text-dark rounded-full" : "text-primary rounded-full"}>
             <FontAwesomeIcon
                 icon={buttomState ? faMinusCircle : faPlusCircle}
-                style={{ fontSize: 30 }}
+                style={{ fontSize: 25 }}
 
             />
         </button>

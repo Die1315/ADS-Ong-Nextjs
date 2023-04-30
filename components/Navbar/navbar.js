@@ -14,8 +14,8 @@ import {
     faArrowRightFromBracket,
     faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
-import Tooltip from 'react-modern-tooltip'
-import 'react-modern-tooltip/dist/tooltip.css'
+import { Tooltip } from '@nextui-org/react';
+
 
 import CreateProjectButton from "../CreateProjectButton/createProjectButton";
 import NotificationsContainer from "../NotificationsContainer/notificationsContainer";
@@ -202,12 +202,7 @@ const Navbar = ({ createPost }) => {
                             </Modal>
 
                             <div className="flex items-center border-l-2 border-gray-300 gap-5 px-5">
-                                <Tooltip
-                                    placement='bottom'
-                                    color='gray'
-                                    content='Ver perfil'
-                                    rounded={false}
-                                >
+                                <Tooltip content={"Ver perfil"} placement="bottom" color={`invert`}>
                                     <Link href="/profile" className="text-dark hover:text-primary">
                                         <FontAwesomeIcon
                                             icon={faUserCircle}
@@ -215,12 +210,7 @@ const Navbar = ({ createPost }) => {
                                         />
                                     </Link>
                                 </Tooltip>
-                                <Tooltip
-                                    placement='bottom'
-                                    color='gray'
-                                    content='Cerrar sesión'
-                                    rounded={false}
-                                >
+                                <Tooltip content={"Cerrar sesión"} placement="bottom" color={`invert`}>
                                     <button onClick={logout} className="text-dark hover:text-secondary">
                                         <FontAwesomeIcon
                                             icon={faArrowRightFromBracket}
