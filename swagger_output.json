@@ -180,7 +180,31 @@
     "/posts": {
       "post": {
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "credentials": {
+                  "$ref": "#/definitions/Post"
+                }
+              },
+              "example": { 
+                "dataRegister" : {
+                    "title": "proyecto 4",
+                    "description": "description 4",
+                    "lat": -13.428773,
+                    "lon": -76.133914,
+                    "startdate": "2023-02-28",
+                    "image": "https://res.cloudinary.com/disqrp2r2/image/upload/v1682696963/ong/flxlgqlqpf349qegbhrp.jpg",
+                    "owner": "640c910c73cb754954102edb"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
@@ -320,6 +344,22 @@
             "in": "path",
             "required": true,
             "type": "string"
+          }, {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "credentials": {
+                  "$ref": "#/definitions/Message"
+                }
+              },
+              "example": {
+                "dataComment": {
+                  "text": "demo message"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -437,13 +477,13 @@
     "Ong": {
       "type": "object",
       "properties": {
-        "email" : {
+        "email": {
           "type": "string"
         },
-        "password" : {
+        "password": {
           "type": "string"
         },
-        "name" : {
+        "name": {
           "type": "string"
         },
         "telephone": {
@@ -457,6 +497,38 @@
         },
         "CIF": {
           "type": "int32"
+        }
+      }
+    },
+    "Post": {
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "lat": {
+          "type": "int32"
+        },
+        "lon": {
+          "type": "int32"
+        },
+        "startdate": {
+          "type": "date"
+        },
+        "image": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        }
+      }
+    },
+    "Message": {
+      "properties": {
+        "text": {
+          "type": "string"
         }
       }
     }
