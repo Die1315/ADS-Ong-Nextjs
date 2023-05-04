@@ -72,13 +72,13 @@ function ChatContact({currentChat, currentUser, socket, setIsViewed,isViewed}) {
 
     return (
         <>
-            <div className={`hidden lg:col-span-2 lg:block ${currentChat == '' ? 'invisible' : ''}`}>
+            <div className={`w-full md:w-8/12 ${currentChat == '' ? 'invisible' : ''}`}>
                 <div className="w-full">
                     <div className="relative flex items-center p-3 border-b border-gray-300">
                         <img className="object-cover w-10 h-10 rounded-full" src={currentChat?.image} alt="username" />
                         <Link href={`/ong/${currentChat.id}`}><h4 className="block ml-2 font-bold text-gray-600 font-bold">{currentChat?.name}</h4></Link>
                     </div>
-                    <div className="relative w-full p-6 overflow-y-auto h-[40rem] scrollbar scrollbar-thin scrollbar-thumb-secondary scrollbar-track-gray-200">
+                    <div className="relative w-full p-6 overflow-y-auto h-[30rem] md:h-[40rem] scrollbar scrollbar-thin scrollbar-thumb-secondary scrollbar-track-gray-200">
                     
                         {messages.map((message) => {
                             return (

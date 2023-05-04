@@ -16,7 +16,7 @@ import Connections from "../Connections/connections";
 import Footer from "../Footer/footer";
 import OngContext from "../../context/ongContext";
 
-function ProfileComponent({ isOwner, idOng,setIsLoading }) {
+function ProfileComponent({ isOwner, idOng }) {
   const [posts, setPosts] = useState([]);
   const [coverPicture, setCoverPicture] = useState("");
   const [currentOng, setDataOng] = useState([]);
@@ -27,14 +27,12 @@ function ProfileComponent({ isOwner, idOng,setIsLoading }) {
     getPostsOwner(null || idOng).then((posts) => {
       //console.log(posts)
       setPosts(posts);
-      setIsLoading(false);
     });
     getCurrentOng(isOwner, null || idOng).then((ong) => {
       setDataOng(ong);
       currentOngID.setState(ong.id)
       setCoverPicture(ong.coverPicture);
-      setIsLoading(false);
-      
+
     });
 
   }, [idOng]);
@@ -102,7 +100,7 @@ function ProfileComponent({ isOwner, idOng,setIsLoading }) {
             : null}
         </div>
         <div className="w-12/12 order-3 md:order-3 md:w-3/12">
-          {isOwner && <Connections filter="createdAt"/>}
+          {isOwner && <Connections filter="createdAt" />}
           <Footer />
         </div>
       </div>

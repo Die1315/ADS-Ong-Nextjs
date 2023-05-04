@@ -50,7 +50,7 @@ function OngFind() {
     ) : (
       <div>
         <Navbar />
-        <div className="container mx-auto h-[calc(100vh-65px)] p-5 flex flex-col-reverse md:flex-row items-center md:items-stretch gap-5">
+        <div className="container mx-auto max-h-50 h-[calc(100vh-65px)] md:max-h-90 p-5 flex flex-col-reverse md:flex-row items-center md:items-stretch gap-5">
           <div className="w-full pt-8">
             <MapView data={postList} />
           </div>
