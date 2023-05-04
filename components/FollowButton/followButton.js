@@ -9,15 +9,15 @@ const FollowButton = ({ ong }) => {
     
     const currentOng = useContext(OngContext)
     useEffect(()=>{
-        console.log(ong.followers.includes(currentOng.state))
+        //console.log(ong.followers.includes(currentOng.state))
        if(ong.followers.includes(currentOng.state)){        
         toggleButton(true)
        }
 
-    },[buttomState])
+    },[])
     const handleFollow = () => {        
         followUnfollow(ong.id).then((res)=>{
-            console.log(res)
+            //console.log(res)
              toggleButton(res.follow)
         })
     }
@@ -25,7 +25,7 @@ const FollowButton = ({ ong }) => {
     return (
         <button onClick={handleFollow} className={buttomState ? "text-dark rounded-full" : "text-primary rounded-full"}>
             <FontAwesomeIcon
-                icon={buttomState ? faMinusCircle : faPlusCircle}
+               icon={buttomState ? faMinusCircle : faPlusCircle}
                 style={{ fontSize: 25 }}
 
             />

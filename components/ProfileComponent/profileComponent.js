@@ -16,22 +16,25 @@ import Connections from "../Connections/connections";
 import Footer from "../Footer/footer";
 import OngContext from "../../context/ongContext";
 
-function ProfileComponent({ isOwner, idOng }) {
+function ProfileComponent({ isOwner, idOng,setIsLoading }) {
   const [posts, setPosts] = useState([]);
   const [coverPicture, setCoverPicture] = useState("");
   const [currentOng, setDataOng] = useState([]);
   const [activeItem, setActiveItem] = useState("Proyectos");
   const currentOngID = useContext(OngContext)
-  const [deletedPost, setDeleted] = useState("")
+
   useEffect(() => {
     getPostsOwner(null || idOng).then((posts) => {
       //console.log(posts)
       setPosts(posts);
+      setIsLoading(false);
     });
     getCurrentOng(isOwner, null || idOng).then((ong) => {
       setDataOng(ong);
       currentOngID.setState(ong.id)
       setCoverPicture(ong.coverPicture);
+      setIsLoading(false);
+      
     });
 
   }, [idOng]);
@@ -99,7 +102,7 @@ function ProfileComponent({ isOwner, idOng }) {
             : null}
         </div>
         <div className="w-12/12 order-3 md:order-3 md:w-3/12">
-          {isOwner && <Connections filter="new"/>}
+          {isOwner && <Connections filter="createdAt"/>}
           <Footer />
         </div>
       </div>

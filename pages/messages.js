@@ -12,7 +12,7 @@ function Messages() {
     const [currentUser, setCurrentUser] = useState();
     const [currentChat, setCurrentChat] = useState(undefined);
     const [search, setSearch] = useState("");
-
+    const [isViewed, setIsViewed] = useState(false)
     const host = (process.env.HOST || 'localhost') + ':' + (process.env.PORT || 3000);
     const socket = useRef();
 
@@ -56,9 +56,12 @@ function Messages() {
                             <BannerContact 
                                 contacts={contacts} 
                                 currentUser={currentUser} 
+                                currentChat={currentChat}
                                 changeChat={handleChatChange}
                                 search={search}
-                                setSearch={setSearch}/>
+                                setSearch={setSearch}
+                                isViewed={isViewed}
+                                setIsViewed={setIsViewed}/>
                             {
                                 currentChat === undefined ?
                                 (
@@ -70,6 +73,8 @@ function Messages() {
                                         currentChat={currentChat}
                                         currentUser={currentUser}
                                         socket={socket}
+                                        isViewed={isViewed}
+                                        setIsViewed={setIsViewed}
                                         />
                                 )
                             }                            

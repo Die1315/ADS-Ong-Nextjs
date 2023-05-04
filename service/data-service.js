@@ -101,10 +101,14 @@ export function deletePost(id){
     .then((response) => response.data)
     .catch((err) => err);
 }
-export function getConnections(size) {
+export function getConnections(size,trend) {
+  console.log(trend)
   if(size){
+    let url= `/api/ongs/newConnections?size=${size}` 
+   if(trend) url = url.concat(`&trend=${trend}`)
+   //console.log(url)
     return axios
-    .get(`/api/ongs/newConnections?size=${size}`)
+    .get(url)
     .then((response) => response.data)
     .catch((err) => err);
   } else {
@@ -193,6 +197,18 @@ export function getMessages(from, to) {
   return axios.post('/api/getMessages', {from, to})
               .then((response) => response.data)
               .catch((err)=>err);
+}
+export function setAsRead(from, to){
+  return axios
+    .put("/api/message/read", {from, to})
+    .then((response) => response.data)
+    .catch((err)=>err);
+}
+export function areThereUnRead(from,to){
+  return axios
+    .get("/api/message/isRead", {from, to})
+    .then((response) => response.data)
+    .catch((err)=>err);
 }
 
 export function getFollowedUsers() {

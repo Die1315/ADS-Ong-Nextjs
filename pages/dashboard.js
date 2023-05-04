@@ -15,8 +15,6 @@ import OngContext from "../context/ongContext";
 
 const logo = require("../src/images/logo.svg")
 
-const categories = ['Caridad', 'Servicios', 'Participación', 'Empoderamiento'];
-
 export const DashboardContext = createContext();
 
 function Dashboard() {
@@ -38,6 +36,7 @@ function Dashboard() {
     }
   }
  useEffect(() => {
+  console.log("posts dahsboard")
     if (typePosts) {      
       getGLobalPosts().then((posts) => {
         setPosts(posts);        
@@ -50,11 +49,12 @@ function Dashboard() {
     }    
   }, [typePosts]);
   useEffect(() => {
+    console.log("dashboard")
     getCurrentOng(true).then((ong) => {
       setDataOng(ong);
       currentOngID.setState(currentOng.id)      
     })
-  }, [currentOng]);
+  }, [currentOngID]);
   
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -62,8 +62,8 @@ function Dashboard() {
     }, 2000);
 
     return () => clearTimeout(timeoutId);
-  }, []);
-
+  }, [currentOng,posts]);
+  const filter="updatedAt"
   return (
     <>
       {isLoading ? (
@@ -77,7 +77,7 @@ function Dashboard() {
               <CardDashboard
               currentOng={currentOng}
                  />
-              <CardTags title="Categorías:" categories={categories} />
+              {/* <CardTags title="Categorías:" categories={categories} /> */}
             </div>
             <div className="w-12/12 md:w-6/12 flex flex-col gap-5">
               {mostrarPostsList ? <div className="flex justify-around items-center gap-1">
@@ -92,7 +92,7 @@ function Dashboard() {
             </div>
             <div className="w-12/12 md:w-3/12 flex flex-col gap-5">
               <SearchBar search={search} onSearch={setSearch} displayOnResponsive={false} />
-              <Connections filter="latest"/>
+              <Connections filter={filter}/>
               <Footer />
             </div>
           </div>

@@ -150,30 +150,19 @@ module.exports.editProfile = ( req, res, next)=>{
      }).catch(next)
 }
 
-module.exports.follow = (req, res, next) => {
+module.exports.follow = async  (req, res, next) => {
   const { id } = req.params;
   const currentOng = req.ong;
-
+  try{
+  const ong = await Ong.findById(id);
   if (id === currentOng.id) {
     next(createError(400, "You cannot follow yourself"));
   }
-
-  if (
-    currentOng.following.filter((following) => following.toString() === id)
-      .length > 0
-  ) {
-    currentOng.following.splice(
-      currentOng.following.findIndex((e) => e.id === id),
-      1
-    );
-    currentOng.save();
-    Ong.findById(id).then((ongToUnfollow) => {
-      ongToUnfollow.followers.splice(
-        ongToUnfollow.followers.findIndex((e) => e.id === id),
-        1
-      );
-      ongToUnfollow.save();
-    });
+  if (currentOng.following.includes(id)) {
+    currentOng.following.pull(id)
+    ong.followers.pull(currentOng.id)
+    await ong.save();
+    await currentOng.save();
     res.status(200).json({ follow: false, message: "unfollow" });
   } else {
     Ong.findById(id).then((ongToFollow) => {
@@ -183,18 +172,26 @@ module.exports.follow = (req, res, next) => {
       currentOng.save();
     });
     res.status(200).json({ follow: true, message: "follow" });
+  }} catch(err){
+    next()
+    console.log(err)
   }
 };
 
 
 module.exports.Connections =  (req,res,next) => {
 const currentOng = req.ong;
-const { size } = req.query;
-//console.log(size)
+const { size,trend } = req.query;
+console.log(trend)
 let following = currentOng.following
 following.push(currentOng.id)
+let sortby = {}
+sortby[trend]= -1
+console.log(sortby)
 //console.log(currentOng.following)
-Ong.find({ _id : { $nin : following}}).limit(parseInt(size) || null).sort({updatedAt: -1}).then((ongs)=>{
+Ong.find({ _id : { $nin : following}}).sort(sortby)
+.limit(parseInt(size) || null)
+.then((ongs)=>{
   //console.log(posts)
   res.status(200).json(ongs)
 })
@@ -209,13 +206,17 @@ module.exports.followingOng = async (req, res, next) =>{
   const {id} =  req.params
   if(id){
     const ong = await Ong.findById(id)
-    Ong.find({_id : { $in : ong.following}})
+    let following = ong.following
+    Ong.find({_id : { $in : following}})
     .then((ongs) => res.json(ongs))
     .catch(next);  
   } else {
-  Ong.find({_id : { $in : currentOng.following}})
+    let following = currentOng.following
+    console.log(currentOng.id)
+  Ong.find({_id : { $in : following}})
     .then((ongs) => res.json(ongs))
     .catch(next);
+
   }
 
 }
