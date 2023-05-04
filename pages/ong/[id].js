@@ -5,17 +5,13 @@ import ProfileComponent from '../../components/ProfileComponent/profileComponent
 import Navbar from '../../components/Navbar/navbar'
 import Loading from "../../components/Loading/loading";
 
-import { getCurrentOng } from '../../service/data-service'
+
 
 export default function ProfilePage() {
-
+  
   const router = useRouter()
   const { id } = router.query
-  console.log(id)
-  const [idOng, setId] = useState()
-  const [ong, setOng] = useState({})
-
-  const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -24,16 +20,6 @@ export default function ProfilePage() {
 
     return () => clearTimeout(timeoutId);
   }, []);
-
-  useEffect(() => {
-    if (router.isReady) {
-      setId(id)
-      getCurrentOng(false, id).then((ong) => {
-        setOng(ong)
-
-      })
-    }
-  }, [router.isReady])
 
 
   return (

@@ -23,18 +23,13 @@ function BannerContact({ contacts, currentUser, changeChat, search, setSearch, s
             <div className="border-r border-gray-200 lg:col-span-1 p-4">
                 <h2 className="text-dark font-bold text-lg">Chats</h2>
                 <div className="relative text-gray-600">
-                    {/* <SearchBar search={search} onSearch={setSearch} displayOnResponsive={true} /> */}
-                    <SearchBar search={search} onSearch={setSearch} displayOnResponsive={false} />
+                   <SearchBar search={search} onSearch={setSearch} displayOnResponsive={false} />
                 </div>
 
 
                 <ul className="overflow-auto mt-5 h-auto">
                     {
                         contacts?.filter((contact)=> contact.name.toLowerCase().includes(search) || contact.email.toLowerCase().includes(search))
-                        // .sort((x,y)=>y.messages.createdAt?.localeCompare(x.messages.createdAt))
-                        // .sort((x,y)=> y.messages.createdAt > x.messages.createdAt)
-                        .sort((x,y)=> { return y.messages.updatedAt - x.messages.updatedAt})
-                        // .sort((x,y)=> console.log(x,y))
                         .map((contact, i) => (
                             <>
                             <li key={i} onClick={() => handleClick(contact)} className={isActive == contact ? 'bg-gray-100' : ''}>
@@ -50,9 +45,7 @@ function BannerContact({ contacts, currentUser, changeChat, search, setSearch, s
                                     </div>
                                 </a>
                             </li>
-                            {/* {console.log(contact)} */}
-                            {/* {console.log()} */}
-                            </>
+                        </>
                         ))
                     }
                 </ul>

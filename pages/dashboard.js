@@ -36,7 +36,7 @@ function Dashboard() {
     }
   }
  useEffect(() => {
-  console.log("posts dahsboard")
+  //console.log("posts dahsboard")
     if (typePosts) {      
       getGLobalPosts().then((posts) => {
         setPosts(posts);        
@@ -49,7 +49,7 @@ function Dashboard() {
     }    
   }, [typePosts]);
   useEffect(() => {
-    console.log("dashboard")
+    //console.log("dashboard")
     getCurrentOng(true).then((ong) => {
       setDataOng(ong);
       currentOngID.setState(currentOng.id)      

@@ -102,7 +102,7 @@ export function deletePost(id){
     .catch((err) => err);
 }
 export function getConnections(size,trend) {
-  console.log(trend)
+  //console.log(trend)
   if(size){
     let url= `/api/ongs/newConnections?size=${size}` 
    if(trend) url = url.concat(`&trend=${trend}`)
@@ -139,7 +139,7 @@ export function getGLobalPosts() {
 }
 export function getPostFollowing() {
   return axios
-    .get("/api/posts/followers")
+    .get("/api/posts/following")
     .then((response) => response.data)
     .catch((err) => err);
 }

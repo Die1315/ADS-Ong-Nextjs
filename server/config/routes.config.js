@@ -35,7 +35,7 @@ router.get('/posts/:id/ong', secure.auth, posts.postByOng);
 router.get('/posts/ong', secure.auth, posts.postByOng);
 router.get('/posts/Global', secure.auth, posts.postsGlobal);
 router.put('/post/:id/edit', secure.auth, posts.postEdit);
-router.get('/posts/followers', secure.auth, posts.postList);
+router.get('/posts/following', secure.auth, posts.postList);
 router.delete('/post/:id', secure.auth, posts.postDelete);
 router.put('/post/:id/like', secure.auth, posts.likeToggle);
 router.get('/post/:id/comments', secure.auth, posts.getCommentByPost);

@@ -28,8 +28,9 @@ module.exports.postByOng = async (req, res, next) => {
 
 module.exports.postsGlobal = async (req, res, next) => {
   const currentOng = req.ong;
+  let ongs = currentOng.following.concat(currentOng.id) 
   //console.log(currentOng.id);
-  let postsAll = await Post.find({ owner: { $ne: currentOng.id } })
+  let postsAll = await Post.find({ owner: { $nin : ongs } })
     .populate("owner", "name image category")
     .then((posts) => {
       //console.log(posts);
@@ -53,13 +54,14 @@ module.exports.postEdit = async (req, res, next) => {
     .catch(next);
 };
 
-module.exports.postDelete = (req, res, next) => {
+module.exports.postDelete = async (req, res, next) => {
   const currentOng = req.ong
   const {id} = req.params
   Post.findOneAndDelete({_id: id, owner:currentOng.id})
     .then((post) => {
       if (post) {
-        //console.log(post)
+        currentOng.posts.pull(post.id)
+        currentOng.save()
         res.status(200).json(post);
       } else {
         next(createError(404, "post not found"));
@@ -73,7 +75,7 @@ module.exports.postList = (req, res, next) => {
    Post.find({ owner: { $in: currentOng.following } })
     .populate("owner","name image category")
     .then((posts) => {
-      console.log(posts)
+      //console.log(posts)
       res.status(200).json(posts);
     })
     .catch(next);
@@ -116,11 +118,5 @@ module.exports.getPost = (req,res,next)=>{
   Post.findById(id).then((post)=> res.status(200).json(post))
   .catch(next)
 }
-// const currentOng = req.ong;
-//     Post.find({ owner : currentOng.id})
-//     .then((posts)=>{
-//         res.status(200).json(posts)
-//     }).catch(next)
-
 
 
