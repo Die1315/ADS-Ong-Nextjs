@@ -137,6 +137,7 @@ function RegisterForm({ setUpdateProfile, ongToUpdate, setActiveItem }) {
                     onChange={handleChange}
                     name="category"
                     placeholder="Categoría"
+                    defaultValue={ongToUpdate?.category || ""}
                     maxLength="25"
                 />
                 <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3">

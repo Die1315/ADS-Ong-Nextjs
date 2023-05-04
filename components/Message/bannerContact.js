@@ -3,7 +3,7 @@ import SearchBar from "../SearchBar/searchBar";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 
 
-function BannerContact({ contacts, currentUser, changeChat, search, setSearch}) {
+function BannerContact({ contacts, currentUser, changeChat, search, setSearch, setIsViewed,isViewed}) {
 
     const [isActive, setIsActive] = useState(false);
 
@@ -13,8 +13,6 @@ function BannerContact({ contacts, currentUser, changeChat, search, setSearch}) 
         setIsActive(contact);
         changeChat(contact);
     };
-
-    const [isViewed, setIsViewed] = useState(false)
 
     const handleView = () => {
         setIsViewed(!isViewed)
@@ -35,7 +33,7 @@ function BannerContact({ contacts, currentUser, changeChat, search, setSearch}) 
                         contacts?.filter((contact)=> contact.name.toLowerCase().includes(search) || contact.email.toLowerCase().includes(search))
                         // .sort((x,y)=>y.messages.createdAt?.localeCompare(x.messages.createdAt))
                         // .sort((x,y)=> y.messages.createdAt > x.messages.createdAt)
-                        .sort((x,y)=> { return y.messages.createdAt - x.messages.createdAt})
+                        .sort((x,y)=> { return y.messages.updatedAt - x.messages.updatedAt})
                         // .sort((x,y)=> console.log(x,y))
                         .map((contact, i) => (
                             <>

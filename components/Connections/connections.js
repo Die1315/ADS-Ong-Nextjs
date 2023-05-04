@@ -32,34 +32,35 @@ const Contact = ({ ong }) => {
   );
 };
 
-const Connections = (props) => {
+const Connections = ({filter}) => {
   const [trendingConnections, setConnections] = useState([]);
   useEffect(() => {
-    getConnections(5).then((ongs) => {
+    console.log(filter)
+    getConnections(5, filter || null).then((ongs) => {
+      //console.log(ongs)
       setConnections(ongs)
     })
-  }, [])
+  }, [filter])
 
   let filterTitle = ""
 
-  if (props.filter === "latest") {
+  if (filter === "updatedAt") {
     filterTitle = "ONGs con proyectos recientes:"
-  } if (props.filter === "trending") {
+  } if (filter === "followers") {
     filterTitle = "ONGs más populares:"
-  } if (props.filter === "new") {
+  } if (filter === "createdAt") {
     filterTitle = "ONGs más nuevas:"
   }
-
   return (
     <div className="w-full bg-white rounded-md shadow-sm p-4 hidden md:flex flex-col gap-5">
-
       <h3 className="font-medium text-gray-900 mb-4">{filterTitle}</h3>
       {trendingConnections.map((ong) => {
+        console.log(ong.followers.length)
         return (
           <Contact key={ong.name} ong={ong} />
         )
       })}
-      {props.filter != "trending" && <Link href='/connections' className='w-full text-center text-primary text-sm font-semibold'>Ver más...</Link>}
+      {filter != "followers" && <Link href='/connections' className='w-full text-center text-primary text-sm font-semibold'>Ver más...</Link>}
     </div>
   );
 };

@@ -10,7 +10,7 @@ function Profile() {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setIsLoading(false);
-    }, 1500);
+    }, 2000);
 
     return () => clearTimeout(timeoutId);
   }, []);
@@ -22,7 +22,7 @@ function Profile() {
       ) : (
         <div>
           <Navbar createPost={false} />
-          <ProfileComponent isOwner={true} />
+          <ProfileComponent isOwner={true} setIsLoading={setIsLoading}/>
         </div>
 
       )}

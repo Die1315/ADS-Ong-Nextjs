@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from "uuid";
 //import { io } from "socket.io-client";
 import Link from "next/link";
 
-function ChatContact({currentChat, currentUser, socket}) {
+function ChatContact({currentChat, currentUser, socket, setIsViewed,isViewed}) {
 
     const [msg, setMsg] = useState("");
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);

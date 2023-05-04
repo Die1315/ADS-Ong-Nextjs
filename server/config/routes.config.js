@@ -47,5 +47,6 @@ router.delete('/comment/:id/delete', secure.auth, comments.deleteComment);
 router.post("/addMessage", secure.auth, messages.addMessage);
 router.post("/getMessages", secure.auth, messages.getAllMessages);
 router.post("/getFollowedUsers", secure.auth, messages.getFollowedUsers);
-
+router.put("/message/read", secure.auth, messages.setAsRead)
+router.get("/message/isRead",secure.auth, messages.areThereUnRead)
 module.exports = router;

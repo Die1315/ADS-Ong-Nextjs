@@ -28,7 +28,7 @@ function Conexiones() {
 
         return () => clearTimeout(timeoutId);
     }, [])
-
+    const filter = "followers"
     return (
         <>
             {isLoading ? (
@@ -39,14 +39,14 @@ function Conexiones() {
                     <div className="container mx-auto py-5 flex flex-col md:flex-row gap-5 p-5">
                         <div className="w-12/12 md:w-9/12 flex flex-col gap-5">
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                {trendingConnections.filter((ong) => ong.name.includes(search)).map((ong, i) => (
+                                {trendingConnections.filter((ong) => ong.name.includes(search) || ong.category.includes(search)).map((ong, i) => (
                                     <CardConexion ong={ong} key={i} />
                                 ))}
                             </div>
                         </div>
                         <div className="w-12/12 md:w-3/12 flex flex-col gap-5">
                             <SearchBar search={search} onSearch={setSearch} />
-                            <Connections filter="trending"/>
+                            <Connections filter={filter}/>
                             <Footer />
                         </div>
                     </div>

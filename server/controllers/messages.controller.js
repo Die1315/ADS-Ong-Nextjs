@@ -58,10 +58,32 @@ module.exports.getAllMessages = async (req, res, next) => {
 
 module.exports.getFollowedUsers = async (req, res, next) => {
     const currentUser = req.ong;
-    await Ong.find({ _id: { $in :currentUser.following}}).populate("messages","createdAt")
+    await Ong.find({ _id: { $in :currentUser.following.concat(currentUser.followers)}}).populate("messages","createdAt")
             // .select(["id", "name", "image", "email"])
             .then((followings)=>{
                 res.status(200).json(followings)
             })
             .catch(next);
 };
+module.exports.setAsRead = async (req,res,next) =>{
+    const {from, to} = req.body;
+    // const currentOng = req.ong;
+    Message.findOneAndUpdate({ users: { $all: [from, to] } }, {unRead:false}, {new:true})
+            .then((msgs)=>{
+           res.status(200),json(msgs)
+            }                           
+            )
+
+}
+module.exports.areThereUnRead = async (req,res,next) =>{
+    const {from, to} = req.body;
+    console.log(from,to)
+    Message.find({ users: { $all: [from, to] }
+        , unRead:true })
+            .then((msgs)=>{
+               // console.log(msgs)
+           res.status(200).json(msgs)
+            }                           
+            )
+
+}
