@@ -16,12 +16,16 @@ module.exports = {
         'pattern': "url('https://res.cloudinary.com/de9uql5fm/image/upload/v1681394890/background_o8csro.svg')",
         'recover': "url(https://res.cloudinary.com/de9uql5fm/image/upload/v1682526747/pexels-rodnae-productions-6646890_q1b40f.jpg)"
       },
+      width: {
+        '120': '500px',
+      },
       minWidth: {
         '30': '30vw'
       },
       maxHeight: {
         '50': '50vh',
         '80': '80vh',
+        '85': '85vh',
         '90': '90vh',
         '50%': '50%',
         '70%': '70%',
@@ -29,6 +33,7 @@ module.exports = {
       minHeight: {
         '50': '50vh',
         '80': '80vh',
+        '85': '85vh',
         '90': '90vh',
         '50%': '50%',
         '70%': '70%',
