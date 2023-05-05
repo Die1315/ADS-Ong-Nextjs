@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import MapView from "../map-box/map";
 import { editPost, registerProject, uploadCloudinary } from "../../service/data-service";
-
+import Image from "next/image";
 
 const ProjectForm = ({ postToUpdate, setPostUpdate, closeModal, posts, setPosts, setMostrarPostsList,mostrarPostsList, }) => {
     const [error, setError] = useState();
@@ -207,7 +207,7 @@ const ProjectForm = ({ postToUpdate, setPostUpdate, closeModal, posts, setPosts,
                                         setPreview(imgPreview);
                                     }}
                                 />
-                                {preview && <img src={preview} alt="Preview" className="mt-5" />}
+                                {preview && <Image src={preview} alt="Preview" className="mt-5" />}
                             </label>
                         </div>
                         <p className="text-xs text-gray-500">

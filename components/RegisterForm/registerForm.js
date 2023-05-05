@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { register, updateProfile, uploadCloudinary } from "../../service/data-service";
+import Image from "next/image";
 
 function RegisterForm({ setUpdateProfile, ongToUpdate, setActiveItem }) {
     const [error, setError] = useState();
@@ -222,7 +223,7 @@ function RegisterForm({ setUpdateProfile, ongToUpdate, setActiveItem }) {
                                             setPreview(imgPreview);
                                         }}
                                     />
-                                    {preview && <img src={preview} alt="Preview" className="mt-5" />}
+                                    {preview && <Image src={preview} alt="Preview" className="mt-5" />}
                                 </label>
                             </div>
                             <p className="text-xs text-gray-500">
