@@ -72,7 +72,9 @@ module.exports.postDelete = async (req, res, next) => {
 
 module.exports.postList = (req, res, next) => {
   const currentOng = req.ong;
-   Post.find({ owner: { $in: currentOng.following } })
+  let following = currentOng.following
+  
+   Post.find({ owner: { $in:following } })
     .populate("owner","name image category")
     .then((posts) => {
       //console.log(posts)

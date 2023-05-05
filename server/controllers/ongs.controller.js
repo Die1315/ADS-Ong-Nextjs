@@ -209,7 +209,7 @@ module.exports.followingOng = async (req, res, next) =>{
     .catch(next);  
   } else {
     let following = currentOng.following
-    console.log(currentOng.id)
+    //console.log(currentOng.id)
   Ong.find({_id : { $in : following}})
     .then((ongs) => res.json(ongs))
     .catch(next);

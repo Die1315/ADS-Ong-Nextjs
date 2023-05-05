@@ -37,15 +37,24 @@ function Dashboard() {
   }
  useEffect(() => {
   //console.log("posts dahsboard")
+  setIsLoading(true);
+  let mounted = true;
     if (typePosts) {      
       getGLobalPosts().then((posts) => {
-        setPosts(posts);        
+        if(mounted) {
+        setPosts(posts);
+        setIsLoading(false);} 
+
       })
     } else {
+      setIsLoading(true);
       getPostFollowing().then((posts) => {
+        if(mounted) {
         setPosts(posts);
+        setIsLoading(false);
+      }
       });
-
+      return () => mounted = false;
     }    
   }, [typePosts]);
   useEffect(() => {
@@ -62,7 +71,7 @@ function Dashboard() {
     }, 2000);
 
     return () => clearTimeout(timeoutId);
-  }, [currentOng,posts]);
+  }, []);
   const filter="updatedAt"
   return (
     <>

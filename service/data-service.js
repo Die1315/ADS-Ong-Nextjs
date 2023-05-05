@@ -2,219 +2,296 @@ import axios from "axios"
 
 
 
-export function login(credentials) {
-  return axios
-    .post("/api/login", {
-      credentials,
-    })
-    .then((response) => response.data)
-    .catch((err) => {
-      console.error(err);
-      return err;
-    });
-}
-
-export function register(dataRegister) {
-  return axios
-    .post("/api/ongs", {
-      dataRegister,
-    })
-    .then((response) => response.data)
-    .catch((err) => {
-      //console.error(err)
-      return err;
-    });
-}
-
-export function getCurrentOng(owner = false, ongToSearch) {
-  if (owner === true) {
-    return axios
-      .get(`/api/ongs/profile`)
-      .then((res) => {
-        return res.data;
-      })
-      .catch((err) => err);
-  } else {
-    return axios
-      .get(`/api/ongs/${ongToSearch}/profile`)
-      .then((res) => {
-        return res.data;
-      })
-      .catch((err) => err);
+export async function login(credentials) {
+  try {
+    const response = await axios
+      .post("/api/login", {
+        credentials,
+      });
+    return response.data;
+  } catch (err) {
+    console.error(err);
+    return err;
   }
 }
-export function activateOng(token){
-  return axios
-        .put(`/api/ongs/activate`, {token:token})
-        .then((response)=> response.data)
-        .catch((err) => err)  
-}
-export function updateProfile(dataUpdated){
-  return axios
-    .put('/api/ongs/edit', dataUpdated)
-    .then((response)=> response.data)
-    .catch((err) => err)
+
+export async function register(dataRegister) {
+  try {
+    const response = await axios
+      .post("/api/ongs", {
+        dataRegister,
+      });
+    return response.data;
+  } catch (err) {
+    return err;
+  }
 }
 
-export function registerProject(data) {
+export async function getCurrentOng(owner = false, ongToSearch) {
+  if (owner === true) {
+    try {
+      const res = await axios
+        .get(`/api/ongs/profile`);
+      return res.data;
+    } catch (err) {
+      return err;
+    }
+  } else {
+    try {
+      const res_1 = await axios
+        .get(`/api/ongs/${ongToSearch}/profile`);
+      return res_1.data;
+    } catch (err_1) {
+      return err_1;
+    }
+  }
+}
+export async function activateOng(token){
+  try {
+    const response = await axios
+      .put(`/api/ongs/activate`, { token: token });
+    return response.data;
+  } catch (err) {
+    return err;
+  }  
+}
+export async function updateProfile(dataUpdated){
+  try {
+    const response = await axios
+      .put('/api/ongs/edit', dataUpdated);
+    return response.data;
+  } catch (err) {
+    return err;
+  }
+}
+
+export async function registerProject(data) {
   let dataRegister = {
     ...data,
   };
   // console.log(dataRegister);
-  return axios
-    .post("/api/post", { dataRegister })
-    .then((response) => response.data)
-    .catch((err) => {
-      return err;
-    });
+  try {
+    const response = await axios
+      .post("/api/post", { dataRegister });
+    return response.data;
+  } catch (err) {
+    return err;
+  }
 }
-export function editPost(id,dataUpdate){
+export async function editPost(id,dataUpdate){
   //console.log(dataUpdate)
-  return axios.put(`/api/post/${id}/edit`, dataUpdate)
-              .then((response) => response.data)
-              .catch((err) => err)
+  try {
+    const response = await axios.put(`/api/post/${id}/edit`, dataUpdate);
+    return response.data;
+  } catch (err) {
+    return err;
+  }
 }
 
-export function getPostsOwner(id) {
+export async function getPostsOwner(id) {
   if(id){
-    return axios
-    .get(`/api/posts/${id}/ong`)
-    .then((response) => response.data)
-    .catch((err) => err);
+    try {
+      const response = await axios
+        .get(`/api/posts/${id}/ong`);
+      return response.data;
+    } catch (err) {
+      return err;
+    }
   } else {
-  return axios
-    .get("/api/posts/ong/")
-    .then((response) => response.data)
-    .catch((err) => err);
+  try {
+      const response_1 = await axios
+        .get("/api/posts/ong/");
+      return response_1.data;
+    } catch (err_1) {
+      return err_1;
+    }
 }}
 
-export function getPost(id){
-  return axios
-    .get(`/api/post/${id}`)
-    .then((response) => response.data)
-    .catch((err) => err);
+export async function getPost(id){
+  try {
+    const response = await axios
+      .get(`/api/post/${id}`);
+    return response.data;
+  } catch (err) {
+    return err;
+  }
 }
 
-export function deletePost(id){
-  return axios
-    .delete(`/api/post/${id}`)
-    .then((response) => response.data)
-    .catch((err) => err);
+export async function deletePost(id){
+  try {
+    const response = await axios
+      .delete(`/api/post/${id}`);
+    return response.data;
+  } catch (err) {
+    return err;
+  }
 }
-export function getConnections(size,trend) {
+export async function getConnections(size,trend) {
   //console.log(trend)
   if(size){
     let url= `/api/ongs/newConnections?size=${size}` 
    if(trend) url = url.concat(`&trend=${trend}`)
    //console.log(url)
-    return axios
-    .get(url)
-    .then((response) => response.data)
-    .catch((err) => err);
+    try {
+      const response = await axios
+        .get(url);
+      return response.data;
+    } catch (err) {
+      return err;
+    }
   } else {
-  return axios
-    .get("/api/ongs/newConnections")
-    .then((response) => response.data)
-    .catch((err) => err);
+  try {
+      const response_1 = await axios
+        .get("/api/ongs/newConnections");
+      return response_1.data;
+    } catch (err_1) {
+      return err_1;
+    }
   }
 }
-export function getFollowing(id){
+export async function getFollowing(id){
   if(id){
-    return axios
-      .get(`/api/ongs/${id}/following`)
-      .then((response) => response.data)
-      .catch((err) => err);
+    try {
+      const response = await axios
+        .get(`/api/ongs/${id}/following`);
+      return response.data;
+    } catch (err) {
+      return err;
+    }
     } else {
-    return axios
-      .get(`/api/ongs/following`)
-      .then((response) => response.data)
-      .catch((err) => err);
+    try {
+      const response_1 = await axios
+        .get(`/api/ongs/following`);
+      return response_1.data;
+    } catch (err_1) {
+      return err_1;
+    }
   }
 }
-export function getGLobalPosts() {
-  return axios
-    .get("/api/posts/Global")
-    .then((response) => response.data)
-    .catch((err) => err);
+export async function getGLobalPosts() {
+  try {
+    const response = await axios
+      .get("/api/posts/Global");
+    return response.data;
+  } catch (err) {
+    return err;
+  }
 }
-export function getPostFollowing() {
-  return axios
-    .get("/api/posts/following")
-    .then((response) => response.data)
-    .catch((err) => err);
+export async function getPostFollowing() {
+  try {
+    const response = await axios
+      .get("/api/posts/following");
+    return response.data;
+  } catch (err) {
+    return err;
+  }
 }
-export function followUnfollow(id) {
-  return axios
-    .put(`/api/ongs/${id}/follow`)
-    .then((response) => response.data)
-    .catch((err) => err);
+export async function followUnfollow(id) {
+  try {
+    const response = await axios
+      .put(`/api/ongs/${id}/follow`);
+    return response.data;
+  } catch (err) {
+    return err;
+  }
 }
 //Comments
-export function getComments(id) {
-   return axios
-    .get(`/api/post/${id}/comments`)
-    .then((response) => response.data)
-    .catch((err) => err);
+export async function getComments(id) {
+   try {
+    const response = await axios
+      .get(`/api/post/${id}/comments`);
+    return response.data;
+  } catch (err) {
+    return err;
+  }
 }
-export function createComment(id, dataComment) {
-  return axios
-    .post(`/api/comment/${id}/create`, {
-      dataComment,
-    })
-    .then((response) => response.data)
-    .catch((err) => err);
+export async function createComment(id, dataComment) {
+  try {
+    const response = await axios
+      .post(`/api/comment/${id}/create`, {
+        dataComment,
+      });
+    return response.data;
+  } catch (err) {
+    return err;
+  }
 }
-export function deleteComment(id) {
-  return axios
-    .delete(`/api/comment/${id}/delete`)
-    .then((response) => response.data)
-    .catch((err) => err);
+export async function deleteComment(id) {
+  try {
+    const response = await axios
+      .delete(`/api/comment/${id}/delete`);
+    return response.data;
+  } catch (err) {
+    return err;
+  }
 }
 
 // Cloudinary
-export function uploadCloudinary(data) {
-  return axios.post(
-    "https://api.cloudinary.com/v1_1/disqrp2r2/image/upload",
-    data
-  ).catch((err)=>err)
+export async function uploadCloudinary(data) {
+  try {
+    return await axios.post(
+      "https://api.cloudinary.com/v1_1/disqrp2r2/image/upload",
+      data
+    );
+  } catch (err) {
+    return err;
+  }
 };
 
-export function toggleLike(id) {
-  return axios
-    .put(`/api/post/${id}/like`)
-    .then((response) => response.data)
-    .catch((err) => err);
+export async function toggleLike(id) {
+  try {
+    const response = await axios
+      .put(`/api/post/${id}/like`);
+    return response.data;
+  } catch (err) {
+    return err;
+  }
 }
 
 // Contact Message
-export function addMessage(from, to, message, image = "") {
-  return axios.post('/api/addMessage', {from, to, message, image})
-              .then((response) => response.data)
-              .catch((err)=>err);
+export async function addMessage(from, to, message, image = "") {
+  try {
+    const response = await axios.post('/api/addMessage', { from, to, message, image });
+    return response.data;
+  } catch (err) {
+    return err;
+  }
 }
 
-export function getMessages(from, to) {
-  return axios.post('/api/getMessages', {from, to})
-              .then((response) => response.data)
-              .catch((err)=>err);
+export async function getMessages(from, to) {
+  try {
+    const response = await axios.post('/api/getMessages', { from, to });
+    return response.data;
+  } catch (err) {
+    return err;
+  }
 }
-export function setAsRead(from, to){
-  return axios
-    .put("/api/message/read", {from, to})
-    .then((response) => response.data)
-    .catch((err)=>err);
+export async function setAsRead(from, to){
+  try {
+    const response = await axios
+      .put("/api/message/read", { from, to });
+    return response.data;
+  } catch (err) {
+    return err;
+  }
 }
-export function areThereUnRead(from,to){
-  return axios
-    .get("/api/message/isRead", {from, to})
-    .then((response) => response.data)
-    .catch((err)=>err);
+export async function areThereUnRead(from,to){
+  try {
+    const response = await axios
+      .get("/api/message/isRead", { from, to });
+    return response.data;
+  } catch (err) {
+    return err;
+  }
 }
 
-export function getFollowedUsers() {
-  return axios
-    .post("/api/getFollowedUsers")
-    .then((response) => response)
-    .catch((err) => err);
+export async function getFollowedUsers() {
+  try {
+    const response = await axios
+      .post("/api/getFollowedUsers");
+    return response;
+  } catch (err) {
+    return err;
+  }
 }
 
