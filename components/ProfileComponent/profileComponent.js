@@ -35,7 +35,7 @@ function ProfileComponent({ isOwner, idOng}) {
       currentOngID.setState(ong.id)
       setCoverPicture(ong.coverPicture);
 
-    });
+    }});
 
   }, [idOng]);
 
