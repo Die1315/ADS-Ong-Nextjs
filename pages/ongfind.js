@@ -15,13 +15,6 @@ function OngFind() {
   const [ongList, setOngList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchOngList = async () => {
-    const response = await axios
-      .get("/api/ongs", {})
-      .then((response) => response.data);
-    setOngList(response);
-  };
-
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setIsLoading(false);
@@ -30,9 +23,6 @@ function OngFind() {
     return () => clearTimeout(timeoutId);
   }, []);
 
-  useEffect(() => {
-    fetchOngList();
-  }, []);
 
   // data from DB, post list
   const [postList, setPostList] = useState(null);
@@ -42,7 +32,9 @@ function OngFind() {
       setPostList(response);
     })
 
-  }, []);
+  }, [
+    
+  ]);
 
   return (<>
     {isLoading ? (

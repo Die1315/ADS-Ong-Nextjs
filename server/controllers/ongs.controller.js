@@ -187,12 +187,9 @@ let following = currentOng.following
 following.push(currentOng.id)
 let sortby = {}
 sortby[trend]= -1
-console.log(sortby)
-//console.log(currentOng.following)
 Ong.find({ _id : { $nin : following}}).sort(sortby)
 .limit(parseInt(size) || null)
 .then((ongs)=>{
-  //console.log(posts)
   res.status(200).json(ongs)
 })
 }
@@ -212,7 +209,7 @@ module.exports.followingOng = async (req, res, next) =>{
     .catch(next);  
   } else {
     let following = currentOng.following
-    console.log(currentOng.id)
+    //console.log(currentOng.id)
   Ong.find({_id : { $in : following}})
     .then((ongs) => res.json(ongs))
     .catch(next);

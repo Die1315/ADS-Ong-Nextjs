@@ -3,15 +3,19 @@ import { jwtVerify } from "jose"; // No funciona jwbtoken no soporta la red edge
 
 
 export async function middleware(request) {
+ 
   const jwt = request.cookies.get("myTokenName");
   if (!jwt) return NextResponse.redirect(new URL("/login", request.url));
-
+  
+  if (request.nextUrl.pathname=== "/") {
+    return NextResponse.rewrite(new URL('/dashboard', request.url));
+  }
   try {
     const { payload } = await jwtVerify(
       jwt.value,
       new TextEncoder().encode(process.env.JWT_SECRET)
     );
-    // console.log({ payload });
+    //console.log({ payload });
     return NextResponse.next();
   } catch (error) {
     //console.log(error)
@@ -20,5 +24,5 @@ export async function middleware(request) {
 }
 
 export const config = {
-  matcher: ["/index", "/dashboard","/profile","/connections", "/createProject","/messages","/"],
+  matcher: ["/index", "/dashboard","/profile","/connections", "/createProject","/messages","/","/ong/:id*"]
 };

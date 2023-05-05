@@ -15,14 +15,15 @@ import ProjectForm from "../ProjectForm/projectForm";
 import Connections from "../Connections/connections";
 import Footer from "../Footer/footer";
 import OngContext from "../../context/ongContext";
+import SearchBar from '../../components/SearchBar/searchBar';
 
-function ProfileComponent({ isOwner, idOng }) {
+function ProfileComponent({ isOwner, idOng}) {
   const [posts, setPosts] = useState([]);
   const [coverPicture, setCoverPicture] = useState("");
   const [currentOng, setDataOng] = useState([]);
   const [activeItem, setActiveItem] = useState("Proyectos");
   const currentOngID = useContext(OngContext)
-
+  const [search, setSearch] = useState("")
   useEffect(() => {
     getPostsOwner(null || idOng).then((posts) => {
       //console.log(posts)
@@ -30,10 +31,11 @@ function ProfileComponent({ isOwner, idOng }) {
     });
     getCurrentOng(isOwner, null || idOng).then((ong) => {
       setDataOng(ong);
+      if(isOwner){
       currentOngID.setState(ong.id)
       setCoverPicture(ong.coverPicture);
 
-    });
+    }});
 
   }, [idOng]);
 
@@ -86,9 +88,9 @@ function ProfileComponent({ isOwner, idOng }) {
             </div>
           )}
           {activeItem === "Proyectos" && (
-            <PostsList posts={posts} search={""} isOwner={isOwner} updatePost={setPosts} />
+            <PostsList posts={posts} search={search} isOwner={isOwner} updatePost={setPosts} />
           )}
-          {activeItem === "Conexiones" && <ConnectionsList isOwner={isOwner} currentOng={currentOng} />}
+          {activeItem === "Conexiones" && <ConnectionsList isOwner={isOwner} currentOng={currentOng} search={search}/>}
           {activeItem === "Información" && (
             <InfoProfile isOwner={isOwner} ong={currentOng} />
           )}
@@ -100,7 +102,8 @@ function ProfileComponent({ isOwner, idOng }) {
             : null}
         </div>
         <div className="w-12/12 order-3 md:order-3 md:w-3/12">
-          {isOwner && <Connections filter="createdAt" />}
+          {isOwner && <Connections filter="createdAt"/>}
+          <SearchBar search={search} onSearch={setSearch} />
           <Footer />
         </div>
       </div>
