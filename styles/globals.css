@@ -1,7 +1,7 @@
 @tailwind base;
 
 * {
-  @apply p-0 m-0 transition duration-200 delay-0 box-border outline-none ease-linear;
+  @apply p-0 m-0 transition duration-200 delay-0 box-border outline-none ease-linear ;
 }
 *:focus,
 *:hover {
@@ -14,7 +14,7 @@ body {
 }
 
 body {
-  @apply font-Raleway bg-pattern bg-fixed bg-cover;
+  @apply font-Raleway bg-pattern bg-fixed bg-cover break-words;
 }
 a {
   @apply text-inherit no-underline;

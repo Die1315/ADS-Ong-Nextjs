@@ -28,15 +28,13 @@ function ProfileComponent({ isOwner, idOng}) {
     getPostsOwner(null || idOng).then((posts) => {
       //console.log(posts)
       setPosts(posts);
-      
     });
     getCurrentOng(isOwner, null || idOng).then((ong) => {
       setDataOng(ong);
       if(isOwner){
       currentOngID.setState(ong.id)
-      }
-      setCoverPicture(ong.coverPicture);      
-      
+      setCoverPicture(ong.coverPicture);
+
     });
 
   }, [idOng]);

@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import SearchBar from "../SearchBar/searchBar";
 import { faL } from "@fortawesome/free-solid-svg-icons";
+import Image from 'next/image';
 
 
-function BannerContact({ contacts, currentUser, changeChat, search, setSearch, setIsViewed,isViewed}) {
+function BannerContact({ contacts, currentUser, changeChat, search, setSearch, setIsViewed, isViewed }) {
 
     const [isActive, setIsActive] = useState(false);
 
@@ -19,9 +20,9 @@ function BannerContact({ contacts, currentUser, changeChat, search, setSearch, s
     }
 
     return (
-        <div>
-            <div className="border-r border-gray-200 lg:col-span-1 p-4">
-                <h2 className="text-dark font-bold text-lg">Chats</h2>
+        <div className="w-full md:w-4/12 overflow-hidden">
+            <div className="border-r border-gray-200 px-0 md:px-4">
+                <h2 className="text-dark font-bold text-lg p-4 md:p-0">Chats</h2>
                 <div className="relative text-gray-600">
                    <SearchBar search={search} onSearch={setSearch} displayOnResponsive={false} />
                 </div>
