@@ -28,9 +28,9 @@ module.exports.postByOng = async (req, res, next) => {
 
 module.exports.postsGlobal = async (req, res, next) => {
   const currentOng = req.ong;
-  let ongs = currentOng.following.concat(currentOng.id) 
+  //let ongs = currentOng.following.concat(currentOng.id) 
   //console.log(currentOng.id);
-  let postsAll = await Post.find({ owner: { $nin : ongs } })
+  let postsAll = await Post.find({ owner: { $nin : currentOng.id } })
     .populate("owner", "name image category")
     .then((posts) => {
       //console.log(posts);

@@ -32,9 +32,7 @@ function MapView({ data, setLngLat, initialViewState, locationToUpdate }) {
   // map viewstate
   const [viewState, setViewState] = useState(
     initialViewState || {
-      latitude: 0,
-      longitude: 0,
-      zoom: 0,
+      zoom:0
     }
   );
 
@@ -66,6 +64,7 @@ function MapView({ data, setLngLat, initialViewState, locationToUpdate }) {
   return (
     <Map
       {...viewState}
+      initialViewState={viewState}
       style={{ minHeight: "300px", minWidth: "100%" }}
       // trackResize={true}
       // projection="globe"
@@ -76,7 +75,7 @@ function MapView({ data, setLngLat, initialViewState, locationToUpdate }) {
       onClick={(e) => {
         setLngLat && setLngLat(e.lngLat);
         setSelectedLngLat(e.lngLat);
-        console.log(e.lngLat)
+        //console.log(e.lngLat)
       }}
     >
       <NavigationControl position="top-right" />
@@ -108,8 +107,8 @@ function MapView({ data, setLngLat, initialViewState, locationToUpdate }) {
         // General loop for adding markers as per provided data
         data &&
         data.map((post) =>
-          Math.abs(post.lat) < 90 && Math.abs(post.lon) < 180 ? ( // lat lon validation
-            <Marker key={post.id} latitude={post.lat} longitude={post.lon}>
+          Math.abs(post.location.coordinates[1]) < 90 && Math.abs(post.location.coordinates[0]) < 180 ? ( // lat lon validation
+            <Marker key={post.id} latitude={post.location.coordinates[1]} longitude={post.location.coordinates[0]}>
               <button
                 onClick={(e) => {
                   e.preventDefault();
@@ -134,8 +133,8 @@ function MapView({ data, setLngLat, initialViewState, locationToUpdate }) {
           <Popup
             closeOnClick={false}
             anchor="left"
-            latitude={selectedPost.lat}
-            longitude={selectedPost.lon}
+            latitude={selectedPost.location.coordinates[1]}
+            longitude={selectedPost.location.coordinates[0]}
             onClose={() => {
               setSelectedPost(null);
             }}
