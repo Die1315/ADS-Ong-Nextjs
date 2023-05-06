@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import MapView from "../map-box/map";
 import { editPost, registerProject, uploadCloudinary } from "../../service/data-service";
 import Image from "next/image";
@@ -11,8 +10,9 @@ const ProjectForm = ({ postToUpdate, setPostUpdate, closeModal, posts, setPosts,
     const [uploadFile, setUploadFile] = useState("");
     const [preview, setPreview] = useState(postToUpdate?.image || null);
     const location = {
-        lat: postToUpdate?.lat || 0,
-        lng: postToUpdate?.lon || 0
+        lat: postToUpdate?.location.coordinates[1] || 0,
+        lng: postToUpdate?.location.coordinates[0] || 0,
+        zoom: 0
     }
 
     useEffect(() => {
@@ -24,8 +24,12 @@ const ProjectForm = ({ postToUpdate, setPostUpdate, closeModal, posts, setPosts,
         setUserLngLat(lngLat);
         setDataRegister({
             ...dataRegister,
-            lon: lngLat.lng,
-            lat: lngLat.lat,
+            location: {
+                type: 'Point',
+                // Place longitude first, then latitude
+                coordinates: [lngLat.lng,lngLat.lat]
+            }
+           
         });
     }
 
@@ -207,7 +211,7 @@ const ProjectForm = ({ postToUpdate, setPostUpdate, closeModal, posts, setPosts,
                                         setPreview(imgPreview);
                                     }}
                                 />
-                                {preview && <Image src={preview} alt="Preview" className="mt-5" />}
+                                {preview && <Image src={preview} width={500} height={500} alt="Preview" className="mt-5" /> }
                             </label>
                         </div>
                         <p className="text-xs text-gray-500">

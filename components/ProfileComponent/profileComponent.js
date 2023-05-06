@@ -33,9 +33,10 @@ function ProfileComponent({ isOwner, idOng}) {
       setDataOng(ong);
       if(isOwner){
       currentOngID.setState(ong.id)
+      }
       setCoverPicture(ong.coverPicture);
 
-    }});
+    });
 
   }, [idOng]);
 
@@ -102,8 +103,8 @@ function ProfileComponent({ isOwner, idOng}) {
             : null}
         </div>
         <div className="w-12/12 order-3 md:order-3 md:w-3/12">
-          {isOwner && <Connections filter="createdAt"/>}
-          <SearchBar search={search} onSearch={setSearch} />
+        <SearchBar search={search} onSearch={setSearch} />
+          {isOwner && <Connections filter="createdAt"/>}          
           <Footer />
         </div>
       </div>

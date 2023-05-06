@@ -16,18 +16,6 @@ const postSchema = new Schema(
         required: true
       }
     },
-    lat: {
-      type: Number,
-      required: true,
-      min: [-90, "Latitude value: must be between -90 and 90"],
-      max: [90, "Latitude value: must be between -90 and 90"],
-    },
-    lon: {
-      type: Number,
-      required: true,
-      min: [-180, "Longitude value: must be between -180 and 180"],
-      max: [180, "Longitude value: must be between -180 and 180"],
-    },
     startdate: { type: Date, required: true },
     enddate: { type: Date },
     resources: { type: String },

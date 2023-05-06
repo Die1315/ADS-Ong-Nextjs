@@ -35,7 +35,7 @@ const Contact = ({ ong }) => {
 const Connections = ({filter}) => {
   const [trendingConnections, setConnections] = useState([]);
   useEffect(() => {
-    console.log(filter)
+    //console.log(filter)
     getConnections(5, filter || null).then((ongs) => {
       //console.log(ongs)
       setConnections(ongs)

@@ -84,7 +84,7 @@ module.exports.login = (req, res, next) => {
             }
           })
           .catch((err) => {
-            console.log(err)
+            //console.log(err)
             next(createError(400, "Password Required"));
           });
       } else {
@@ -110,6 +110,27 @@ module.exports.activate = (req, res, next) => {
     Ong.findOneAndUpdate(
     { _id: decoded.id },
     { active: true },
+    { new: true, runValidators: true }
+  )
+    .then((ong) => {
+      if (ong) {
+        res.status(200).json(ong);
+      } else {
+        next();
+      }
+    }).catch(next);
+  } catch {
+    next(createError(401, "Unautorized: invalid token "));
+  }
+};
+module.exports.updatePassword= (req, res, next) => {
+  const { token,password } = req.body;
+  //console.log(token, req.body)
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);  
+    Ong.findOneAndUpdate(
+    { _id: decoded.id },
+    { password: password },
     { new: true, runValidators: true }
   )
     .then((ong) => {
@@ -173,8 +194,8 @@ module.exports.follow = async  (req, res, next) => {
     });
     res.status(200).json({ follow: true, message: "follow" });
   }} catch(err){
-    next()
-    console.log(err)
+    next(err)
+    
   }
 };
 
@@ -182,7 +203,6 @@ module.exports.follow = async  (req, res, next) => {
 module.exports.Connections =  (req,res,next) => {
 const currentOng = req.ong;
 const { size,trend } = req.query;
-console.log(trend)
 let following = currentOng.following
 following.push(currentOng.id)
 let sortby = {}
