@@ -138,10 +138,10 @@ function MapView({ data, setLngLat, initialViewState, locationToUpdate }) {
             onClose={() => {
               setSelectedPost(null);
             }}
-            className="min-w-30 max-h-content"
+            className="min-w-20 max-w-20 max-h-50 md:max-h-content overflow-hidden"
           >
-            <div className="relative w-full container p-0 md:p-5 min-h-90 md:min-h-90 lg:min-h-50 max-h-90 md:max-h-90 lg:max-h-80 flex flex-col md:flex-row gap-0 justify-between items-stretch bg-light rounded-md mx-auto overflow-x-hidden overflow-y-auto md:overflow-y-hidden">
-              <div className="w-full p-4 flex flex-col items-start gap-5">
+            <div className="relative w-full container p-0 md:p-5 min-h-50 md:min-h-60 lg:min-h-50 max-h-90 md:max-h-90 lg:max-h-80 flex flex-col md:flex-row gap-0 justify-between items-stretch bg-light rounded-md mx-auto overflow-x-hidden overflow-y-auto md:overflow-y-hidden">
+              <div className="w-full p-2 flex flex-col items-start gap-5">
                 <div className="flex justify-start items-start gap-3">
                   <Link href={`/ong/${selectedPost.owner.id}`}>
                     <Image
@@ -190,7 +190,7 @@ function MapView({ data, setLngLat, initialViewState, locationToUpdate }) {
                     />
                   </div>
                 </Modal>
-                <h2 className="text-2xl font-bold">{selectedPost.title}</h2>
+                <h2 className="text-lg md:text-2xl font-bold">{selectedPost.title}</h2>
                 <p className="text-dark text-sm -mt-5">
                   De{" "}
                   <span
