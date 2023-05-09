@@ -14,6 +14,26 @@ export async function login(credentials) {
     return err;
   }
 }
+export async function recoverRequest(data){
+  try {
+    //console.log(data)
+    const response = await axios
+    .post('/api/ongs/recoverRequest',data)
+    //console.log(response)
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+}
+export async function passwordUpdate(data){
+  try {
+    const response = await axios
+    .put('/api/ongs/recover',data)
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+}
 
 export async function register(dataRegister) {
   try {
@@ -116,7 +136,15 @@ export async function getPost(id){
     return err;
   }
 }
-
+export async function getNearPost(coordinates,distance){
+  try {
+    const response = await axios
+      .get(`/api/posts/nearPost?lng=${coordinates.lng}&lat=${coordinates.lat}&dist=${distance}`);
+      return response.data;
+    } catch (err) {
+      return err;
+    }
+}
 export async function deletePost(id){
   try {
     const response = await axios

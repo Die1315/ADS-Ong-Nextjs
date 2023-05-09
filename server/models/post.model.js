@@ -1,21 +1,21 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
-
+const pointSchema = new mongoose.Schema({
+  type: {
+    type: String,
+    enum: ['Point'],
+    required: true
+  },
+  coordinates: {
+    type: [Number],
+    required: true
+  }
+});
 const postSchema = new Schema(
   {
     title: { type: String, required: true, minlength: 5 },
     description: { type: String, required: true },
-    location: {
-      type: {
-        type: String, // Don't do `{ location: { type: String } }`
-        enum: ['Point'], // 'location.type' must be 'Point'
-        required: true
-      },
-      coordinates: {
-        type: [Number],
-        required: true
-      }
-    },
+    location: pointSchema,
     startdate: { type: Date, required: true },
     enddate: { type: Date },
     resources: { type: String },
@@ -56,6 +56,7 @@ const postSchema = new Schema(
   }
 
 );
-
+postSchema.index({ location: '2dsphere' });
 const Post = mongoose.models.Post || mongoose.model("Post", postSchema);
+
 module.exports = Post;
