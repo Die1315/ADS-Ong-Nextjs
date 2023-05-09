@@ -16,7 +16,7 @@ function BannerContact({ contacts, currentUser, changeChat, search, setSearch, s
     };
 
     const handleView = () => {
-        setIsViewed(!isViewed)
+        //setIsViewed(!isViewed)
     }
 
     return (
