@@ -4,13 +4,17 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Loading from '../../../components/Loading/loading';
+import { useCurrentState } from '@nextui-org/react';
+import { passwordUpdate } from '../../../service/data-service';
+
 const logo = require("../../../src/images/logo.svg")
 
 function RecoveryForm(){
     const router = useRouter()
     const { token } = router.query
-    const [data,setData] = useState({password:""})
+    const [data,setData] = useState({})
     const [isLoading, setIsLoading] = useState(true);
+    const [error,setError] = useCurrentState()
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
@@ -19,12 +23,27 @@ function RecoveryForm(){
 
         return () => clearTimeout(timeoutId);
     }, []);
-    const handleSubmit = ()=>{
-
+    const handleSubmit = (event)=>{
+        event.preventDefault()
+       
+        if (data.password === data.passwordConfirmation) {
+            passwordUpdate(data).then((response)=>{
+                if (response.code === "ERR_BAD_REQUEST") {
+                    setError(response.response.data.message || response.response.data.error);
+                } else {                    
+                    router.push("/login");
+                }
+            })
+        } else {
+            setError("Las contraseñas no coinciden.")
+        }
     }
     const handleChange = (event) => {
+        //console.log(data)
        setData({
+        ...data,
             [event.target.name]: event.target.value,
+            token:token
         });
     }    
 
@@ -48,6 +67,7 @@ function RecoveryForm(){
                 <form onSubmit={handleSubmit} className='w-full flex flex-col justify-center gap-3'>
                 <input
                         type="password"
+                        name="password"
                         placeholder="Constraseña"
                         className='w-full'
                         required
@@ -55,6 +75,7 @@ function RecoveryForm(){
                     ></input>
                     <input
                         type="password"
+                        name="passwordConfirmation"
                         placeholder="Confirmar contraseña"
                         className='w-full'
                         required
@@ -62,6 +83,7 @@ function RecoveryForm(){
                     ></input>
                     <button type='submit' className='w-48 mx-auto bg-primary rounded-md px-6 py-2 font-bold text-white hover:bg-dark'>Enviar</button>
                 </form>
+                {error && <div className="alert alert-danger w-full bg-dark text-secondary text-lg text-center">{error}</div>}
             </div>
         </div>
     </div>

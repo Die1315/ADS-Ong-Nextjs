@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { register, updateProfile, uploadCloudinary } from "../../service/data-service";
+import { recoverRequest, register, updateProfile, uploadCloudinary } from "../../service/data-service";
 import Image from "next/image";
+import Link from "next/link";
+import  axios  from "axios";
+
+
 
 function RegisterForm({ setUpdateProfile, ongToUpdate, setActiveItem }) {
     const [error, setError] = useState();
@@ -73,6 +77,10 @@ function RegisterForm({ setUpdateProfile, ongToUpdate, setActiveItem }) {
             }
         }
     };
+    const logout = () => {
+        recoverRequest({email:ongToUpdate?.email}).then(()=>
+        axios.post("/api/logout")
+        )};
 
     return (
         <div>
@@ -133,7 +141,7 @@ function RegisterForm({ setUpdateProfile, ongToUpdate, setActiveItem }) {
                         placeholder="CIF ONG*"
                         required
                     />)}
-
+                {ongToUpdate && <Link className="text-sm text-primary w-full text-center md:text-right" href="/login" onClick={logout}>Cambiar contraseña</Link>}
                 <input
                     onChange={handleChange}
                     name="category"
@@ -141,6 +149,7 @@ function RegisterForm({ setUpdateProfile, ongToUpdate, setActiveItem }) {
                     defaultValue={ongToUpdate?.category || ""}
                     maxLength="25"
                 />
+                
                 <div className="input-group flex flex-col md:flex-row justify-between items-center gap-3">
                     <input
                         onChange={handleChange}
@@ -223,7 +232,7 @@ function RegisterForm({ setUpdateProfile, ongToUpdate, setActiveItem }) {
                                             setPreview(imgPreview);
                                         }}
                                     />
-                                    {preview && <Image src={preview} alt="Preview" className="mt-5" />}
+                                    {preview && <Image src={preview} width={500} height={500} alt="Preview" className="mt-5" />}
                                 </label>
                             </div>
                             <p className="text-xs text-gray-500">
