@@ -27,6 +27,7 @@ router.get('/ongs/newConnections', secure.auth, ongs.Connections)
 router.get('/ongs/following', secure.auth, ongs.followingOng)
 router.get('/ongs/:id/following', secure.auth, ongs.followingOng)
 router.put('/ongs/edit', secure.auth, ongs.editProfile)
+router.post('/ongs/recoverRequest', ongs.requestUpdatePassword)
 router.put('/ongs/recover',ongs.updatePassword)
 // Post
 router.post('/post', secure.auth, posts.create);

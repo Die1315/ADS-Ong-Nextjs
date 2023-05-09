@@ -14,6 +14,26 @@ export async function login(credentials) {
     return err;
   }
 }
+export async function recoverRequest(data){
+  try {
+    //console.log(data)
+    const response = await axios
+    .post('/api/ongs/recoverRequest',data)
+    //console.log(response)
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+}
+export async function passwordUpdate(data){
+  try {
+    const response = await axios
+    .put('/api/ongs/recover',data)
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+}
 
 export async function register(dataRegister) {
   try {

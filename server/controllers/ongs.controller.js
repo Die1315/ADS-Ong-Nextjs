@@ -116,25 +116,63 @@ module.exports.activate = (req, res, next) => {
       if (ong) {
         res.status(200).json(ong);
       } else {
-        next();
+        next(createError(404, "Not Found: invalid token "));
       }
     }).catch(next);
   } catch {
     next(createError(401, "Unautorized: invalid token "));
   }
 };
+module.exports.requestUpdatePassword = async (req, res, next) => {
+   const {email} = req.body
+   
+  await Ong.findOne({
+    email
+  })
+    .then((ong) => {
+      //console.log(ong)
+      if(ong){        
+      const token = jwt.sign(
+        {
+          email: ong.email,
+          username: ong.name,
+          id: ong.id,
+        },
+        process.env.JWT_SECRET,
+        { expiresIn: "10m" }
+      );
+      url_activate = `${domain}/ong/recover/${token}`;
+      email_receiver = ong.email;
+      // console.log(ong.email);
+      const mail = {
+        to: email_receiver, // list of receivers
+        from: `"Helpgo 👻" <${process.env.USER_MAIL}>`, // sender address
+        subject: "Solicitud cambio de contraseña ✔", // Subject line
+        text: "helpgo te recuerda que no debescompartir este link.", // plain text body
+        html: `<b>Por favor abra el link y digite su nueva contraseña.</b>
+        <a>${url_activate}<a/>`, // html body
+      };
+      sendMail.sendMail(mail).catch((err) => console.error(err));
+      res.status(201).json(ong);
+    } else {
+      next(createError(404, "Not found "))
+    }})
+    .catch((err) => {
+      next(err);
+    });
+};
 module.exports.updatePassword= (req, res, next) => {
   const { token,password } = req.body;
-  //console.log(token, req.body)
+  //console.log(token, password)
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);  
-    Ong.findOneAndUpdate(
-    { _id: decoded.id },
-    { password: password },
-    { new: true, runValidators: true }
+    Ong.findOne(
+    { _id: decoded.id }
   )
     .then((ong) => {
       if (ong) {
+        ong.password = password
+        ong.save()
         res.status(200).json(ong);
       } else {
         next();
