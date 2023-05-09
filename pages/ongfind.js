@@ -5,15 +5,14 @@ import Navbar from "../components/Navbar/navbar";
 import Loading from "../components/Loading/loading";
 import OngList from "../components/ong-list/OngList";
 import MapView from "../components/map-box/map";
-import { getGLobalPosts } from "../service/data-service";
+import { getGLobalPosts, getNearPost } from "../service/data-service";
 
 function OngFind() {
-  //TODO TEST ONLY, THIS IS NOT USED IN THIS LIST VIEW
-  // const [userLngLat, setUserLngLat] = useState(null);
-
   // data from DB, ong list
-  const [ongList, setOngList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [postList, setPostList] = useState(null);
+  const [userLngLat, setUserLngLat] = useState(null);
+  const [distance, setDistance] = useState(1000)
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -24,18 +23,25 @@ function OngFind() {
   }, []);
 
 
-  // data from DB, post list
-  const [postList, setPostList] = useState(null);
 
   useEffect(() => {
-    getGLobalPosts().then((response) => {
-      setPostList(response);
+    // getGLobalPosts().then((response) => {
+    //   setPostList(response);
+    // })
+    if(userLngLat){
+    getNearPost(userLngLat,distance).then((posts)=>{
+      //console.log(posts)
+      setPostList(posts)
     })
+  }
 
-  }, [
-    
-  ]);
-
+  }, [userLngLat]);
+  const setLngLat = (lngLat) => {
+    setUserLngLat(lngLat);    
+}
+const handleChange = (event) => {
+  setDistance(event.target.value);
+}
   return (<>
     {isLoading ? (
       <Loading />
@@ -44,7 +50,16 @@ function OngFind() {
         <Navbar />
         <div className="container mx-auto max-h-50 h-[calc(100vh-65px)] md:max-h-90 p-5 flex flex-col-reverse md:flex-row items-center md:items-stretch gap-5">
           <div className="w-full pt-8">
-            <MapView data={postList} />
+          <input
+                        className="w-10/12 h-12 bg-gray-100 rounded-l-full py-2 px-4 text-gray-700 leading-tight focus:outline-none text-sm"
+                        onChange={handleChange}
+                        name="Distance"
+                        type="number"
+                        placeholder="Distancia en Km"
+                        value={distance}
+                    />
+            <label>Distncia en Km</label>
+            <MapView data={postList} setLngLat={setLngLat}  />
           </div>
         </div>
       </div>
