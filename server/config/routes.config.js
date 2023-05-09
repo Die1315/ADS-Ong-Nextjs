@@ -17,8 +17,6 @@ router.post("/logout", ongs.logout )
 
 //Ongs
 router.post('/ongs', ongs.create);
-//router.get('/ongs', secure.auth, ongs.list);
-//router.get('/ongwithpostlist', secure.auth, ongs.ongWithPost);
 router.get('/ongs/:id/profile', secure.auth, ongs.profile);
 router.get('/ongs/profile', secure.auth, ongs.profile); //owner profile
 router.put('/ongs/activate', ongs.activate);
@@ -40,6 +38,7 @@ router.get('/posts/following', secure.auth, posts.postList);
 router.delete('/post/:id', secure.auth, posts.postDelete);
 router.put('/post/:id/like', secure.auth, posts.likeToggle);
 router.get('/post/:id/comments', secure.auth, posts.getCommentByPost);
+router.get('/posts/nearPost', secure.auth, posts.getNearPosts);
 // Comment
 router.post('/comment/:id/create', secure.auth, comments.createComment);
 router.delete('/comment/:id/delete', secure.auth, comments.deleteComment);

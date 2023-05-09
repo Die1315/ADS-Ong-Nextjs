@@ -136,7 +136,15 @@ export async function getPost(id){
     return err;
   }
 }
-
+export async function getNearPost(coordinates,distance){
+  try {
+    const response = await axios
+      .get(`/api/posts/nearPost?lng=${coordinates.lng}&lat=${coordinates.lat}&dist=${distance}`);
+      return response.data;
+    } catch (err) {
+      return err;
+    }
+}
 export async function deletePost(id){
   try {
     const response = await axios

@@ -121,4 +121,26 @@ module.exports.getPost = (req,res,next)=>{
   .catch(next)
 }
 
-
+module.exports.getNearPosts = (req,res,next)=>{
+  const currentOng = req.ong;
+  const {lng,lat,dist} = req.query;
+  const distance =  parseInt(dist) * 1000
+  //console.log(req.query, distance)
+  Post.find({
+    location: {
+      $nearSphere: {
+        $geometry: {
+           type: "Point" ,
+           coordinates:  [parseFloat(lng),parseFloat(lat)] 
+        },
+        $maxDistance: distance
+      }
+    }, 
+    owner: { $nin : currentOng.id }
+ }).populate("owner", "name image category")
+ .then((posts) => {
+   //console.log(posts);
+   res.status(200).json(posts);
+ })
+ .catch(next);
+}
