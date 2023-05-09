@@ -3,7 +3,6 @@ import axios from "axios";
 
 import Navbar from "../components/Navbar/navbar";
 import Loading from "../components/Loading/loading";
-import OngList from "../components/ong-list/OngList";
 import MapView from "../components/map-box/map";
 import { getGLobalPosts, getNearPost } from "../service/data-service";
 
@@ -28,38 +27,42 @@ function OngFind() {
     // getGLobalPosts().then((response) => {
     //   setPostList(response);
     // })
-    if(userLngLat){
-    getNearPost(userLngLat,distance).then((posts)=>{
-      //console.log(posts)
-      setPostList(posts)
-    })
-  }
+    if (userLngLat) {
+      getNearPost(userLngLat, distance).then((posts) => {
+        //console.log(posts)
+        setPostList(posts)
+      })
+    }
 
   }, [userLngLat]);
   const setLngLat = (lngLat) => {
-    setUserLngLat(lngLat);    
-}
-const handleChange = (event) => {
-  setDistance(event.target.value);
-}
+    setUserLngLat(lngLat);
+  }
+  const handleChange = (event) => {
+    setDistance(event.target.value);
+  }
   return (<>
     {isLoading ? (
       <Loading />
     ) : (
       <div>
         <Navbar />
-        <div className="container mx-auto max-h-50 h-[calc(100vh-65px)] md:max-h-90 p-5 flex flex-col-reverse md:flex-row items-center md:items-stretch gap-5">
-          <div className="w-full pt-8">
-          <input
-                        className="w-10/12 h-12 bg-gray-100 rounded-l-full py-2 px-4 text-gray-700 leading-tight focus:outline-none text-sm"
-                        onChange={handleChange}
-                        name="Distance"
-                        type="number"
-                        placeholder="Distancia en Km"
-                        value={distance}
-                    />
-            <label>Distncia en Km</label>
-            <MapView data={postList} setLngLat={setLngLat}  />
+        <div className="container mx-auto max-h-50 min-h-90 md:max-h-90 p-5 flex flex-col-reverse md:flex-row items-center md:items-stretch gap-5">
+          <div className="w-full flex flex-col gap-3">
+            <h3 className="self-center underline">Haz click sobre la zona que deseas explorar</h3>
+            <div className="flex justify-center items-center gap-3">
+
+              <label className="font-bold">Distancia en kms: </label>
+              <input
+                className="w-24 text-center bg-white rounded full py-2 px-4 text-dark focus:outline-none"
+                onChange={handleChange}
+                name="Distance"
+                type="number"
+                placeholder="Distancia en Km"
+                value={distance}
+              />
+            </div>
+            <MapView data={postList} setLngLat={setLngLat} />
           </div>
         </div>
       </div>
