@@ -20,6 +20,11 @@ module.exports = {
         '120': '500px',
       },
       minWidth: {
+        '20': '20vw',
+        '30': '30vw'
+      },
+      maxWidth: {
+        '20': '20vw',
         '30': '30vw'
       },
       maxHeight: {
