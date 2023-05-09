@@ -21,18 +21,7 @@ import DeletePostButton from "../DeletePostButton/deletePostButton";
 Modal.setAppElement("#__next");
 
 const Post = ({ isOwner, post }) => {
-  const location = {
-    lat: post?.lat || 0,
-    lng: post?.lon || 0,
-  };
-
-  const setLngLat = (lngLat) => {
-    setDataRegister({
-      ...dataRegister,
-      lon: lngLat.lng,
-      lat: lngLat.lat,
-    });
-  };
+ 
 
   const [modalIsOpen1, setModalIsOpen1] = useState(false);
   const [modalIsOpen2, setModalIsOpen2] = useState(false);
@@ -48,6 +37,11 @@ const Post = ({ isOwner, post }) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
   const shortDescription = postData?.description.slice(0, 120);
   const [deletedPost, setDeleted] = useState(true)
+  const location = {
+    lat: postData?.location.coordinates[1] || 0,
+    lng: postData?.location.coordinates[0] || 0,
+     zoom: 0
+  };
   const toggleDescription = () => {
     setShowFullDescription(!showFullDescription);
   };
@@ -247,10 +241,8 @@ const Post = ({ isOwner, post }) => {
               </>
             ) : (
               <MapView
-                setLngLat={setLngLat}
-                initialViewState={location}
-                locationToUpdate={location}
-              />
+                location={location}
+               />
             )}
           </div>
           <div className="w-12/12 md:w-5/12 flex flex-col justify-start items-start p-4 gap-5">

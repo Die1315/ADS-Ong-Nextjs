@@ -21,7 +21,7 @@ import { formatDate } from "../../utils/dateUtils";
 
 Modal.setAppElement("#__next");
 
-function MapView({ data, setLngLat, initialViewState, locationToUpdate }) {
+function MapView({ data, setLngLat, initialViewState, locationToUpdate, location }) {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -36,7 +36,7 @@ function MapView({ data, setLngLat, initialViewState, locationToUpdate }) {
     }
   );
 
-  const [selectedLngLat, setSelectedLngLat] = useState(null);
+  const [selectedLngLat, setSelectedLngLat] = useState()
 
   // map selected post popup
   const [selectedPost, setSelectedPost] = useState(null);
@@ -102,6 +102,11 @@ function MapView({ data, setLngLat, initialViewState, locationToUpdate }) {
             element="default"
           ></Marker>
         )
+      }
+      { location &&  
+      <Marker latitude={location.lat} longitude={location.lng}/>
+      
+
       }
       {
         // General loop for adding markers as per provided data
