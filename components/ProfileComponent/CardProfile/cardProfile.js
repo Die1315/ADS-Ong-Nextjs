@@ -68,7 +68,7 @@ function CardProfile({ setActiveItem, activeItem, currentOng, isOwner, coverPict
         </Modal>
       </div>
       <div className="flex justify-between items-end p-4 pt-0">
-        <div className="w-12/12 md:w-3/12 flex items-end gap-5 px-0 ml-0 md:ml-5 -translate-y-4">
+        <div className="w-12/12 md:w-auto flex items-end gap-5 px-0 ml-0 md:ml-5 -translate-y-4">
           <Image
             src={currentOng.image}
             alt="profile picture"

@@ -223,7 +223,7 @@ function RegisterForm({ setUpdateProfile, ongToUpdate, setActiveItem }) {
                                             setPreview(imgPreview);
                                         }}
                                     />
-                                    {preview && <Image src={preview} alt="Preview" className="mt-5" />}
+                                    {preview && <Image src={preview} alt="Preview" width={`350`} height={`350`} className="mt-5" />}
                                 </label>
                             </div>
                             <p className="text-xs text-gray-500">
