@@ -34,9 +34,9 @@ const ongSchema = new Schema(
     active: { type: Boolean, default: false },
     admin: { type: Boolean, default: false },
     aprovalState: { type: Boolean, default: false },
-    webPage: { type: String, unique: true },
-    instagram: { type: String, unique: true },
-    facebook: { type: String, unique: true },
+    webPage: { type: String, unique: true,  sparse: true },
+    instagram: { type: String, unique: true,  sparse: true },
+    facebook: { type: String, unique: true,  sparse: true },
     posts: [{
       type: Schema.Types.ObjectId,
       ref: "Post"
