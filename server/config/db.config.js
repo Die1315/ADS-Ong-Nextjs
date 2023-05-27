@@ -11,7 +11,7 @@ mongoose.connect(
     useCreateIndex: true
   },
   () => {
-    console.log("mongdb is connected");
+    console.log("mongdb is connected")
   }
 );
 
