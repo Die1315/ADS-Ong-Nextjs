@@ -1,4 +1,33 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+🌍 ADS ONG – Collaborative Platform for NGOs
+ADS ONG is a social networking platform designed to help non-governmental organizations (NGOs) connect, collaborate, and support each other through shared projects. The platform enables real-time communication and geographical project visualization, fostering transparency and cooperation across causes and regions.
+
+🚀 Features
+Interactive Map Interface:
+Built with react-map-gl, the map displays NGO-led projects by location, allowing users to discover initiatives and partners near them or in areas of interest.
+
+Real-time Chat System:
+Uses WebSockets to enable seamless, real-time communication between users and project collaborators.
+
+Project Collaboration Tools:
+NGOs can create, manage, and collaborate on projects, share updates, and invite others to join their efforts.
+
+User Profiles and NGO Pages:
+Organizations can showcase their mission, current projects, and impact, and connect with other like-minded NGOs.
+
+🛠️ Tech Stack
+Frontend: React, Next.js, TypeScript
+
+Maps: react-map-gl (Mapbox)
+
+Real-time Communication: WebSockets
+
+Backend: Node.js (Express)
+
+Database: PostgreSQL
+
+🌱 Goal
+ADS ONG was developed as part of a master's degree project, with the goal of creating a centralized, accessible platform that empowers NGOs to network, exchange resources, and work together to amplify their impact.
+
 
 ## Getting Started
 
