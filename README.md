@@ -23,7 +23,7 @@ Real-time Communication: WebSockets
 
 Backend: Node.js (Express)
 
-Database: PostgreSQL
+Database: MongoDB
 
 🌱 Goal
 ADS ONG was developed as part of a master's degree project, with the goal of creating a centralized, accessible platform that empowers NGOs to network, exchange resources, and work together to amplify their impact.
