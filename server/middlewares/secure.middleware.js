@@ -4,17 +4,15 @@ const jwt = require("jsonwebtoken");
 const Ong = require("../models/ong.model");
 
 module.exports.auth = (req, res, next) => {
-  // console.log(req.cookies);
   const token = req.cookies.myTokenName;
-  
+
   if (!token) {
     return next(createError(401, "Unauthorized: Missing cookie"));
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET); //secreto de firma
-    // console.log(decoded.id);
-    // next();
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
     Ong.findOne({ _id: decoded.id, active: true })
       .then((user) => {
         if (user) {
@@ -29,5 +27,3 @@ module.exports.auth = (req, res, next) => {
     next(createError(401, "Unautorized: invalid token "));
   }
 };
-
-

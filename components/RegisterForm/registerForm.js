@@ -35,8 +35,8 @@ function RegisterForm({ setUpdateProfile, ongToUpdate, setActiveItem }) {
         formData.append("upload_preset", "ovclfrex");
         if (ongToUpdate) {
             if (uploadFile) {
-                uploadCloudinary(formData).then((response) => {
-                    updateProfile({ ...dataRegister, image: response.data.secure_url })
+                uploadCloudinary(uploadFile).then((response) => {
+                    updateProfile({ ...dataRegister, image: response.secure_url })
                         .then((ong) => {
                             setUpdateProfile(ong)
                         })
@@ -53,21 +53,20 @@ function RegisterForm({ setUpdateProfile, ongToUpdate, setActiveItem }) {
                 if (uploadFile) {
                     uploadCloudinary(formData)
                         .then((response) => {
-                            register({ ...dataRegister, image: response.data.secure_url })
+                            register({ ...dataRegister, image: response.url })
                                 .then((response) => {
                                     if (response.code === "ERR_BAD_REQUEST") {
                                         setError(response.response.data.message || response.response.data.error);
                                     } else {
                                         router.push("/login");
                                     }
-                                    //console.log(response);
                                 })
                                 .catch((err) => {
-                                    console.log(err.message);
+                                    console.error(err.message);
                                 });
                         })
                         .catch((error) => {
-                            console.log(error);
+                            console.error(error);
                         });
                 } else {
                     setError("Debe agregar una imagen")
@@ -80,12 +79,12 @@ function RegisterForm({ setUpdateProfile, ongToUpdate, setActiveItem }) {
     const logout = () => {
         recoverRequest({email:ongToUpdate?.email}).then(()=>
         axios.post("/api/logout")
-        )};
+        )};        
 
     return (
         <div>
             <form
-                autoComplete="off"
+                //autoComplete="off"
                 onSubmit={handleSubmit}
                 className="w-full flex flex-col justify-center items-stretch gap-5"
             >

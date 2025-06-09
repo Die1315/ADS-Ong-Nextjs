@@ -35,7 +35,6 @@ function Messages() {
         const getContacts = async() => {
             if (currentUser) {
                 const { data } = await getFollowedUsers();
-                // console.log(data);
                 setContacts(data);
             }
         };

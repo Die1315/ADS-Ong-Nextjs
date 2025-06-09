@@ -5,10 +5,8 @@ const ongs = require("../controllers/ongs.controller")
 const posts = require("../controllers/posts.controller")
 const comments = require("../controllers/comments.controller")
 const messages = require("../controllers/messages.controller");
-
+const multer = require('multer');
 //DAshboard and posts
-//router.get("/dashboard" )
-
 
 //Login 
 router.post("/login", ongs.login)
@@ -27,6 +25,7 @@ router.get('/ongs/:id/following', secure.auth, ongs.followingOng)
 router.put('/ongs/edit', secure.auth, ongs.editProfile)
 router.post('/ongs/recoverRequest', ongs.requestUpdatePassword)
 router.put('/ongs/recover',ongs.updatePassword)
+router.post('/ongs/upload', multer().single('file'), ongs.uploadImage)
 // Post
 router.post('/post', secure.auth, posts.create);
 router.get('/post/:id', secure.auth, posts.getPost);

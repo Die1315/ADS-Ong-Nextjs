@@ -11,9 +11,7 @@ const LikeButton = ({ likes, id, post, setPostUpdated }) => {
     const [likeColor, setLikeColor] = useState(false)
 
     const handleLikeClick = () => {
-        //console.log(id)
-        toggleLike(id).then((res) => {
-            //console.log(res)
+        toggleLike(id).then((res) => {            
             let updatedLikes = post.likes 
             if (res.state === false) {
                 updatedLikes = post.likes.filter((ids) => ids!=currentOngId.state)
@@ -24,8 +22,7 @@ const LikeButton = ({ likes, id, post, setPostUpdated }) => {
         })
     };
 
-    useEffect(() => {
-        //console.log(post, currentOngId)
+    useEffect(() => {        
         if (post.likes.includes(currentOngId.state)) {
             setLikeColor(true)
         } else {

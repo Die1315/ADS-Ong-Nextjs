@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons"
-import { Tooltip } from '@nextui-org/react';
+import { Tooltip } from '@heroui/react';
 import Link from "next/link"
 
 import { DashboardContext } from '../../pages/dashboard';

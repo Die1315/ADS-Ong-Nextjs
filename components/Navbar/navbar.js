@@ -14,7 +14,7 @@ import {
     faArrowRightFromBracket,
     faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
-import { Tooltip } from '@nextui-org/react';
+import { Tooltip } from '@heroui/react';
 
 
 import CreateProjectButton from "../CreateProjectButton/createProjectButton";

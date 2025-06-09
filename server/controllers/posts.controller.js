@@ -4,15 +4,15 @@ const createError = require("http-errors");
 // const Ong = require("../models/ong.model");
 
 module.exports.create = async (req, res, next) => {
-  //console.log(req.body.dataRegister);
   const currentOng = req.ong;
 
   await Post.create({ ...req.body.dataRegister, owner: currentOng.id })
-   .then((post) => {
+    .then((post) => {
       currentOng.posts.push(post);
       currentOng.save();
-      post.populate("owner", "name image category").execPopulate()
-      .then(()=>res.status(201).json(post))      
+      post
+        .populate("owner", "name image category")
+        .then(() => res.status(201).json(post));
     })
     .catch((error) => next(error));
 };
@@ -22,28 +22,28 @@ module.exports.postByOng = async (req, res, next) => {
   if (!id) {
     id = req.ong.id;
   }
-  let postsByOng = await Post.find({ owner: id }).populate("owner", "name image category");
+  let postsByOng = await Post.find({ owner: id }).populate(
+    "owner",
+    "name image category"
+  );
   res.status(200).json(postsByOng);
 };
 
 module.exports.postsGlobal = async (req, res, next) => {
   const currentOng = req.ong;
-  //let ongs = currentOng.following.concat(currentOng.id) 
-  //console.log(currentOng.id);
-  let postsAll = await Post.find({ owner: { $nin : currentOng.id } })
+ 
+  let postsAll = await Post.find({ owner: { $nin: currentOng.id } })
     .populate("owner", "name image category")
     .then((posts) => {
-      //console.log(posts);
       res.status(200).json(posts);
     })
     .catch(next);
 };
 
-
 module.exports.postEdit = async (req, res, next) => {
   const data = req.body;
-   // console.log(req.params.id, data)
-    Post.findByIdAndUpdate(req.params.id, data, {new : true}).populate("owner", "name image category")
+  Post.findByIdAndUpdate(req.params.id, data, { new: true })
+    .populate("owner", "name image category")
     .then((post) => {
       if (post) {
         res.status(200).json(post);
@@ -55,13 +55,13 @@ module.exports.postEdit = async (req, res, next) => {
 };
 
 module.exports.postDelete = async (req, res, next) => {
-  const currentOng = req.ong
-  const {id} = req.params
-  Post.findOneAndDelete({_id: id, owner:currentOng.id})
+  const currentOng = req.ong;
+  const { id } = req.params;
+  Post.findOneAndDelete({ _id: id, owner: currentOng.id })
     .then((post) => {
       if (post) {
-        currentOng.posts.pull(post.id)
-        currentOng.save()
+        currentOng.posts.pull(post.id);
+        currentOng.save();
         res.status(200).json(post);
       } else {
         next(createError(404, "post not found"));
@@ -72,12 +72,11 @@ module.exports.postDelete = async (req, res, next) => {
 
 module.exports.postList = (req, res, next) => {
   const currentOng = req.ong;
-  let following = currentOng.following
-  
-   Post.find({ owner: { $in:following } })
-    .populate("owner","name image category")
+  let following = currentOng.following;
+
+  Post.find({ owner: { $in: following } })
+    .populate("owner", "name image category")
     .then((posts) => {
-      //console.log(posts)
       res.status(200).json(posts);
     })
     .catch(next);
@@ -108,39 +107,39 @@ module.exports.likeToggle = (req, res, next) => {
     .catch(next);
 };
 
-module.exports.getCommentByPost = (req,res,next)=>{
-  const postId = req.params.id
-  Comment.find({post:postId}).populate("ong", "image")
-         .then((comments)=> res.status(200).json(comments))
-         .catch(next)
-
+module.exports.getCommentByPost = (req, res, next) => {
+  const postId = req.params.id;
+  Comment.find({ post: postId })
+    .populate("ong", "image")
+    .then((comments) => res.status(200).json(comments))
+    .catch(next);
 };
-module.exports.getPost = (req,res,next)=>{
-  const id= req.params.id
-  Post.findById(id).then((post)=> res.status(200).json(post))
-  .catch(next)
-}
+module.exports.getPost = (req, res, next) => {
+  const id = req.params.id;
+  Post.findById(id)
+    .then((post) => res.status(200).json(post))
+    .catch(next);
+};
 
-module.exports.getNearPosts = (req,res,next)=>{
+module.exports.getNearPosts = (req, res, next) => {
   const currentOng = req.ong;
-  const {lng,lat,dist} = req.query;
-  const distance =  parseInt(dist) * 1000
-  //console.log(req.query, distance)
+  const { lng, lat, dist } = req.query;
+  const distance = parseInt(dist) * 1000;
   Post.find({
     location: {
       $nearSphere: {
         $geometry: {
-           type: "Point" ,
-           coordinates:  [parseFloat(lng),parseFloat(lat)] 
+          type: "Point",
+          coordinates: [parseFloat(lng), parseFloat(lat)],
         },
-        $maxDistance: distance
-      }
-    }, 
-    owner: { $nin : currentOng.id }
- }).populate("owner", "name image category")
- .then((posts) => {
-   //console.log(posts);
-   res.status(200).json(posts);
- })
- .catch(next);
-}
+        $maxDistance: distance,
+      },
+    },
+    owner: { $nin: currentOng.id },
+  })
+    .populate("owner", "name image category")
+    .then((posts) => {
+      res.status(200).json(posts);
+    })
+    .catch(next);
+};

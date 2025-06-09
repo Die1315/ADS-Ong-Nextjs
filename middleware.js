@@ -17,10 +17,9 @@ export async function middleware(request) {
     if (request.nextUrl.pathname=== "/") {
       return NextResponse.rewrite(new URL('/dashboard', request.url));
     }
-    //console.log({ payload });
+    
     return NextResponse.next();
   } catch (error) {
-    //console.log(error)
     return NextResponse.redirect(new URL("/login", request.url));
   }
 }

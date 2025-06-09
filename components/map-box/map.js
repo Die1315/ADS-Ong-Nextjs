@@ -21,8 +21,13 @@ import { formatDate } from "../../utils/dateUtils";
 
 Modal.setAppElement("#__next");
 
-function MapView({ data, setLngLat, initialViewState, locationToUpdate, location }) {
-
+function MapView({
+  data,
+  setLngLat,
+  initialViewState,
+  locationToUpdate,
+  location,
+}) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const handleOpenModal = () => setModalIsOpen(true);
@@ -32,11 +37,11 @@ function MapView({ data, setLngLat, initialViewState, locationToUpdate, location
   // map viewstate
   const [viewState, setViewState] = useState(
     initialViewState || {
-      zoom:0
+      zoom: 0,
     }
   );
 
-  const [selectedLngLat, setSelectedLngLat] = useState()
+  const [selectedLngLat, setSelectedLngLat] = useState();
 
   // map selected post popup
   const [selectedPost, setSelectedPost] = useState(null);
@@ -75,7 +80,6 @@ function MapView({ data, setLngLat, initialViewState, locationToUpdate, location
       onClick={(e) => {
         setLngLat && setLngLat(e.lngLat);
         setSelectedLngLat(e.lngLat);
-        //console.log(e.lngLat)
       }}
     >
       <NavigationControl position="top-right" />
@@ -103,33 +107,34 @@ function MapView({ data, setLngLat, initialViewState, locationToUpdate, location
           ></Marker>
         )
       }
-      { location &&  
-      <Marker latitude={location.lat} longitude={location.lng}/>
-      
-
-      }
+      {location && <Marker latitude={location.lat} longitude={location.lng} />}
       {
         // General loop for adding markers as per provided data
         data &&
-        data.map((post) =>
-          Math.abs(post.location.coordinates[1]) < 90 && Math.abs(post.location.coordinates[0]) < 180 ? ( // lat lon validation
-            <Marker key={post.id} latitude={post.location.coordinates[1]} longitude={post.location.coordinates[0]}>
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setSelectedPost(post);
-                }}
+          data.map((post) =>
+            Math.abs(post.location.coordinates[1]) < 90 &&
+            Math.abs(post.location.coordinates[0]) < 180 ? ( // lat lon validation
+              <Marker
+                key={post.id}
+                latitude={post.location.coordinates[1]}
+                longitude={post.location.coordinates[0]}
               >
-                <Image
-                  src={markerImgSrc(post.projecttype)}
-                  alt="ONG"
-                  height={30}
-                  width={30}
-                />
-              </button>
-            </Marker>
-          ) : null
-        )
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setSelectedPost(post);
+                  }}
+                >
+                  <Image
+                    src={markerImgSrc(post.projecttype)}
+                    alt="ONG"
+                    height={30}
+                    width={30}
+                  />
+                </button>
+              </Marker>
+            ) : null
+          )
       }
 
       {
@@ -182,8 +187,15 @@ function MapView({ data, setLngLat, initialViewState, locationToUpdate, location
                   data-modal-backdrop="static"
                 >
                   <div className="relative">
-                    <button onClick={handleCloseModal} className='absolute -top-3 right-4'>
-                      <FontAwesomeIcon className="fixed text-dark bg-light rounded-full p-2" icon={faTimes} size={30} />
+                    <button
+                      onClick={handleCloseModal}
+                      className="absolute -top-3 right-4"
+                    >
+                      <FontAwesomeIcon
+                        className="fixed text-dark bg-light rounded-full p-2"
+                        icon={faTimes}
+                        size={30}
+                      />
                     </button>
                     <Image
                       src={selectedPost.image}
@@ -195,13 +207,17 @@ function MapView({ data, setLngLat, initialViewState, locationToUpdate, location
                     />
                   </div>
                 </Modal>
-                <h2 className="text-lg md:text-2xl font-bold">{selectedPost.title}</h2>
+                <h2 className="text-lg md:text-2xl font-bold">
+                  {selectedPost.title}
+                </h2>
                 <p className="text-dark text-sm -mt-5">
                   De{" "}
                   <span
                     className="text-primary font-bold hover:text-dark hover:cursor-pointer"
                     onClick={handleOpenModal}
-                  >{`${formatDate(selectedPost.startdate.toString())}`}</span>{" "}
+                  >{`${formatDate(
+                    selectedPost.startdate.toString()
+                  )}`}</span>{" "}
                   a{" "}
                   <span
                     className="text-primary font-bold hover:text-dark hover:cursor-pointer"
@@ -211,7 +227,9 @@ function MapView({ data, setLngLat, initialViewState, locationToUpdate, location
                       `${formatDate(selectedPost.enddate.toString())}`}
                   </span>
                 </p>
-                <p className="text-gray-600 overflow-y-visible scrollbar scrollbar-thin scrollbar-thumb-secondary scrollbar-track-gray-200">{selectedPost.description}</p>
+                <p className="text-gray-600 overflow-y-visible scrollbar scrollbar-thin scrollbar-thumb-secondary scrollbar-track-gray-200">
+                  {selectedPost.description}
+                </p>
               </div>
             </div>
           </Popup>

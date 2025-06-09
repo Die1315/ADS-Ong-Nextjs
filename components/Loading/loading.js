@@ -1,4 +1,4 @@
-import { JellyTriangle } from '@uiball/loaders'
+import {JellyTriangle } from 'ldrs/react'
 
 const Loading = () => (
     <div className="flex justify-center items-center h-screen">

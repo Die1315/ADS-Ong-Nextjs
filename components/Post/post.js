@@ -8,7 +8,7 @@ import {
 import Modal from "react-modal";
 import Image from "next/image";
 import Link from "next/link";
-import { Tooltip } from '@nextui-org/react';
+import { Tooltip } from '@heroui/react';
 
 import LikeButton from "../LikeButton/likeButton";
 import CommentButton from "../CommentButton/commentButton";
@@ -47,7 +47,6 @@ const Post = ({ isOwner, post }) => {
   };
 
   const handleMap = (event) => {
-    //console.log(event.target.name)
     if (event.target.name === "info") {
       setMapPost(true);
     } else if (event.target.name === "map") {

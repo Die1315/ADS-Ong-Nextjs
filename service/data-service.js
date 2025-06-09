@@ -1,34 +1,27 @@
-import axios from "axios"
-
-
+import axios from "axios";
 
 export async function login(credentials) {
   try {
-    const response = await axios
-      .post("/api/login", {
-        credentials,
-      });
+    const response = await axios.post("/api/login", {
+      credentials,
+    });
     return response.data;
   } catch (err) {
     console.error(err);
     return err;
   }
 }
-export async function recoverRequest(data){
+export async function recoverRequest(data) {
   try {
-    //console.log(data)
-    const response = await axios
-    .post('/api/ongs/recoverRequest',data)
-    //console.log(response)
+    const response = await axios.post("/api/ongs/recoverRequest", data);
     return response.data;
   } catch (error) {
     return error;
   }
 }
-export async function passwordUpdate(data){
+export async function passwordUpdate(data) {
   try {
-    const response = await axios
-    .put('/api/ongs/recover',data)
+    const response = await axios.put("/api/ongs/recover", data);
     return response.data;
   } catch (error) {
     return error;
@@ -37,10 +30,9 @@ export async function passwordUpdate(data){
 
 export async function register(dataRegister) {
   try {
-    const response = await axios
-      .post("/api/ongs", {
-        dataRegister,
-      });
+    const response = await axios.post("/api/ongs", {
+      dataRegister,
+    });
     return response.data;
   } catch (err) {
     return err;
@@ -50,35 +42,31 @@ export async function register(dataRegister) {
 export async function getCurrentOng(owner = false, ongToSearch) {
   if (owner === true) {
     try {
-      const res = await axios
-        .get(`/api/ongs/profile`);
+      const res = await axios.get(`/api/ongs/profile`);
       return res.data;
     } catch (err) {
       return err;
     }
   } else {
     try {
-      const res_1 = await axios
-        .get(`/api/ongs/${ongToSearch}/profile`);
+      const res_1 = await axios.get(`/api/ongs/${ongToSearch}/profile`);
       return res_1.data;
     } catch (err_1) {
       return err_1;
     }
   }
 }
-export async function activateOng(token){
+export async function activateOng(token) {
   try {
-    const response = await axios
-      .put(`/api/ongs/activate`, { token: token });
+    const response = await axios.put(`/api/ongs/activate`, { token: token });
     return response.data;
   } catch (err) {
     return err;
-  }  
+  }
 }
-export async function updateProfile(dataUpdated){
+export async function updateProfile(dataUpdated) {
   try {
-    const response = await axios
-      .put('/api/ongs/edit', dataUpdated);
+    const response = await axios.put("/api/ongs/edit", dataUpdated);
     return response.data;
   } catch (err) {
     return err;
@@ -89,17 +77,14 @@ export async function registerProject(data) {
   let dataRegister = {
     ...data,
   };
-  // console.log(dataRegister);
   try {
-    const response = await axios
-      .post("/api/post", { dataRegister });
+    const response = await axios.post("/api/post", { dataRegister });
     return response.data;
   } catch (err) {
     return err;
   }
 }
-export async function editPost(id,dataUpdate){
-  //console.log(dataUpdate)
+export async function editPost(id, dataUpdate) {
   try {
     const response = await axios.put(`/api/post/${id}/edit`, dataUpdate);
     return response.data;
@@ -109,87 +94,79 @@ export async function editPost(id,dataUpdate){
 }
 
 export async function getPostsOwner(id) {
-  if(id){
+  if (id) {
     try {
-      const response = await axios
-        .get(`/api/posts/${id}/ong`);
+      const response = await axios.get(`/api/posts/${id}/ong`);
       return response.data;
     } catch (err) {
       return err;
     }
   } else {
-  try {
-      const response_1 = await axios
-        .get("/api/posts/ong/");
+    try {
+      const response_1 = await axios.get("/api/posts/ong/");
       return response_1.data;
     } catch (err_1) {
       return err_1;
     }
-}}
+  }
+}
 
-export async function getPost(id){
+export async function getPost(id) {
   try {
-    const response = await axios
-      .get(`/api/post/${id}`);
+    const response = await axios.get(`/api/post/${id}`);
     return response.data;
   } catch (err) {
     return err;
   }
 }
-export async function getNearPost(coordinates,distance){
+export async function getNearPost(coordinates, distance) {
   try {
-    const response = await axios
-      .get(`/api/posts/nearPost?lng=${coordinates.lng}&lat=${coordinates.lat}&dist=${distance}`);
-      return response.data;
-    } catch (err) {
-      return err;
-    }
-}
-export async function deletePost(id){
-  try {
-    const response = await axios
-      .delete(`/api/post/${id}`);
+    const response = await axios.get(
+      `/api/posts/nearPost?lng=${coordinates.lng}&lat=${coordinates.lat}&dist=${distance}`
+    );
     return response.data;
   } catch (err) {
     return err;
   }
 }
-export async function getConnections(size,trend) {
-  //console.log(trend)
-  if(size){
-    let url= `/api/ongs/newConnections?size=${size}` 
-   if(trend) url = url.concat(`&trend=${trend}`)
-   //console.log(url)
+export async function deletePost(id) {
+  try {
+    const response = await axios.delete(`/api/post/${id}`);
+    return response.data;
+  } catch (err) {
+    return err;
+  }
+}
+export async function getConnections(size, trend) {
+  if (size) {
+    let url = `/api/ongs/newConnections?size=${size}`;
+    if (trend) url = url.concat(`&trend=${trend}`);
     try {
-      const response = await axios
-        .get(url);
+      const response = await axios.get(url);
       return response.data;
     } catch (err) {
       return err;
     }
   } else {
-  try {
-      const response_1 = await axios
-        .get("/api/ongs/newConnections");
+    try {
+      const response_1 = await axios.get("/api/ongs/newConnections");
       return response_1.data;
     } catch (err_1) {
       return err_1;
     }
   }
 }
-export async function getFollowing(id){
-  if(id){
+export async function getFollowing(id) {
+  if (id) {
     try {
-      const response = await axios
-        .get(`/api/ongs/${id}/following`);
+      const response = await axios.get(`/api/ongs/${id}/following`);
       return response.data;
     } catch (err) {
       return err;
     }
-    } else {
+  } else {
     try {
-      const response_1 = await axios
-        .get(`/api/ongs/following`);
+      const response_1 = await axios.get(`/api/ongs/following`);
       return response_1.data;
     } catch (err_1) {
       return err_1;
@@ -198,8 +175,7 @@ export async function getFollowing(id){
 }
 export async function getGLobalPosts() {
   try {
-    const response = await axios
-      .get("/api/posts/Global");
+    const response = await axios.get("/api/posts/Global");
     return response.data;
   } catch (err) {
     return err;
@@ -207,8 +183,7 @@ export async function getGLobalPosts() {
 }
 export async function getPostFollowing() {
   try {
-    const response = await axios
-      .get("/api/posts/following");
+    const response = await axios.get("/api/posts/following");
     return response.data;
   } catch (err) {
     return err;
@@ -216,8 +191,7 @@ export async function getPostFollowing() {
 }
 export async function followUnfollow(id) {
   try {
-    const response = await axios
-      .put(`/api/ongs/${id}/follow`);
+    const response = await axios.put(`/api/ongs/${id}/follow`);
     return response.data;
   } catch (err) {
     return err;
@@ -225,9 +199,8 @@ export async function followUnfollow(id) {
 }
 //Comments
 export async function getComments(id) {
-   try {
-    const response = await axios
-      .get(`/api/post/${id}/comments`);
+  try {
+    const response = await axios.get(`/api/post/${id}/comments`);
     return response.data;
   } catch (err) {
     return err;
@@ -235,10 +208,9 @@ export async function getComments(id) {
 }
 export async function createComment(id, dataComment) {
   try {
-    const response = await axios
-      .post(`/api/comment/${id}/create`, {
-        dataComment,
-      });
+    const response = await axios.post(`/api/comment/${id}/create`, {
+      dataComment,
+    });
     return response.data;
   } catch (err) {
     return err;
@@ -246,8 +218,7 @@ export async function createComment(id, dataComment) {
 }
 export async function deleteComment(id) {
   try {
-    const response = await axios
-      .delete(`/api/comment/${id}/delete`);
+    const response = await axios.delete(`/api/comment/${id}/delete`);
     return response.data;
   } catch (err) {
     return err;
@@ -257,19 +228,16 @@ export async function deleteComment(id) {
 // Cloudinary
 export async function uploadCloudinary(data) {
   try {
-    return await axios.post(
-      "https://api.cloudinary.com/v1_1/disqrp2r2/image/upload",
-      data
-    );
+    const response = await axios.post("/api/ongs/upload", data);
+    return response.data;
   } catch (err) {
     return err;
   }
-};
+}
 
 export async function toggleLike(id) {
   try {
-    const response = await axios
-      .put(`/api/post/${id}/like`);
+    const response = await axios.put(`/api/post/${id}/like`);
     return response.data;
   } catch (err) {
     return err;
@@ -279,7 +247,12 @@ export async function toggleLike(id) {
 // Contact Message
 export async function addMessage(from, to, message, image = "") {
   try {
-    const response = await axios.post('/api/addMessage', { from, to, message, image });
+    const response = await axios.post("/api/addMessage", {
+      from,
+      to,
+      message,
+      image,
+    });
     return response.data;
   } catch (err) {
     return err;
@@ -288,25 +261,23 @@ export async function addMessage(from, to, message, image = "") {
 
 export async function getMessages(from, to) {
   try {
-    const response = await axios.post('/api/getMessages', { from, to });
+    const response = await axios.post("/api/getMessages", { from, to });
     return response.data;
   } catch (err) {
     return err;
   }
 }
-export async function setAsRead(from, to){
+export async function setAsRead(from, to) {
   try {
-    const response = await axios
-      .put("/api/message/read", { from, to });
+    const response = await axios.put("/api/message/read", { from, to });
     return response.data;
   } catch (err) {
     return err;
   }
 }
-export async function areThereUnRead(from,to){
+export async function areThereUnRead(from, to) {
   try {
-    const response = await axios
-      .get("/api/message/isRead", { from, to });
+    const response = await axios.get("/api/message/isRead", { from, to });
     return response.data;
   } catch (err) {
     return err;
@@ -315,11 +286,9 @@ export async function areThereUnRead(from,to){
 
 export async function getFollowedUsers() {
   try {
-    const response = await axios
-      .post("/api/getFollowedUsers");
+    const response = await axios.post("/api/getFollowedUsers");
     return response;
   } catch (err) {
     return err;
   }
 }
-

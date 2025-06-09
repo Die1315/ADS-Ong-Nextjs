@@ -29,7 +29,6 @@ function OngFind() {
     // })
     if (userLngLat) {
       getNearPost(userLngLat, distance).then((posts) => {
-        //console.log(posts)
         setPostList(posts)
       })
     }

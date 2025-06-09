@@ -11,8 +11,7 @@ export default function RecoveryForm({ toggleForm }) {
     
     const handleSubmit = (event) => {
         event.preventDefault();
-        recoverRequest(email).then((response)=>{
-            //console.log(response)
+        recoverRequest(email).then((response)=>{            
             if (response.code === "ERR_BAD_REQUEST") {
                 setError(response.response.data.message || response.response.data.error || response.message);
             } else {                  

@@ -2,11 +2,37 @@
 
 const nextConfig = {
   reactStrictMode: true,
+  webpack: config => {
+    config.resolve.fallback = {
+        fs: false,
+      };
+  
+      return config;
+    }, 
  
    images: {
-    
-    domains: ['res.cloudinary.com', 'randomuser.me','temporary.png', 'www.linkedin.com','media.licdn.com']
-
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'randomuser.me',
+        pathname: '/**',
+      },
+      { 
+        protocol: 'https',
+        hostname: 'www.linkedin.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'media.licdn.com',
+        pathname: '/**',
+      }
+    ]
   },
     //useFileSystemPublicRoutes: false,
 }

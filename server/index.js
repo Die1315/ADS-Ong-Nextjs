@@ -14,6 +14,7 @@ app
   .prepare()
   .then(() => {
     require('./config/db.config'); 
+    require('./config/cloudinary.config');
     const socket = require("socket.io");
     const server = express();
     server.use(cookieParser());
@@ -37,7 +38,7 @@ app
       }
     
       if (error.status >= 500){
-        console.log(error);
+        console.error(error);
       }
     
       const data = {};
@@ -57,7 +58,7 @@ app
 
     const sr = server.listen(port, err => {
       if (err) throw err;
-      console.log(`> Ready on ${port}`);
+      console.info(`> Ready on ${port}`);
     });
 
     const io = socket(sr, {

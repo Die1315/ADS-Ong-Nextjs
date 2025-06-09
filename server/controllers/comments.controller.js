@@ -15,8 +15,7 @@ module.exports.createComment = (req, res, next) => {
   
   module.exports.deleteComment = (req, res, next) => {
     const currentOng = req.ong 
-    const commentId= req.params.id
-    console.log(currentOng.id,commentId)
+    const commentId= req.params.id    
     Comment.findOneAndDelete({ong:currentOng.id, _id:commentId})
             .then((comment) => {
               if(comment){

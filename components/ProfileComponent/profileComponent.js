@@ -15,29 +15,26 @@ import ProjectForm from "../ProjectForm/projectForm";
 import Connections from "../Connections/connections";
 import Footer from "../Footer/footer";
 import OngContext from "../../context/ongContext";
-import SearchBar from '../../components/SearchBar/searchBar';
+import SearchBar from "../../components/SearchBar/searchBar";
 
-function ProfileComponent({ isOwner, idOng}) {
+function ProfileComponent({ isOwner, idOng }) {
   const [posts, setPosts] = useState([]);
   const [coverPicture, setCoverPicture] = useState("");
   const [currentOng, setDataOng] = useState([]);
   const [activeItem, setActiveItem] = useState("Proyectos");
-  const currentOngID = useContext(OngContext)
-  const [search, setSearch] = useState("")
+  const currentOngID = useContext(OngContext);
+  const [search, setSearch] = useState("");
   useEffect(() => {
     getPostsOwner(null || idOng).then((posts) => {
-      //console.log(posts)
       setPosts(posts);
     });
     getCurrentOng(isOwner, null || idOng).then((ong) => {
       setDataOng(ong);
-      if(isOwner){
-      currentOngID.setState(ong.id)
+      if (isOwner) {
+        currentOngID.setState(ong.id);
       }
       setCoverPicture(ong.coverPicture);
-
     });
-
   }, [idOng]);
 
   return (
@@ -79,7 +76,11 @@ function ProfileComponent({ isOwner, idOng}) {
                 <FontAwesomeIcon icon={faTimes} style={{ fontSize: 20 }} />
               </button>
               <h2 className="text-xl font-bold">Crear proyecto</h2>
-              <ProjectForm posts={posts} setPosts={setPosts} setMostrarPostsList={setActiveItem} />
+              <ProjectForm
+                posts={posts}
+                setPosts={setPosts}
+                setMostrarPostsList={setActiveItem}
+              />
               <button
                 onClick={() => setActiveItem("Proyectos")}
                 className="btn-alt bg-dark"
@@ -89,22 +90,44 @@ function ProfileComponent({ isOwner, idOng}) {
             </div>
           )}
           {activeItem === "Proyectos" && (
-            <PostsList posts={posts} search={search} isOwner={isOwner} updatePost={setPosts} />
+            <PostsList
+              posts={posts}
+              search={search}
+              isOwner={isOwner}
+              updatePost={setPosts}
+            />
           )}
-          {activeItem === "Conexiones" && <ConnectionsList isOwner={isOwner} currentOng={currentOng} search={search}/>}
+          {activeItem === "Conexiones" && (
+            <ConnectionsList
+              isOwner={isOwner}
+              currentOng={currentOng}
+              search={search}
+            />
+          )}
           {activeItem === "Información" && (
             <InfoProfile isOwner={isOwner} ong={currentOng} />
           )}
-          {isOwner ? activeItem === "Perfil" && <EditProfile setUpdateProfile={setDataOng} ongToUpdate={currentOng} setActiveItem={setActiveItem} /> : null}
+          {isOwner
+            ? activeItem === "Perfil" && (
+                <EditProfile
+                  setUpdateProfile={setDataOng}
+                  ongToUpdate={currentOng}
+                  setActiveItem={setActiveItem}
+                />
+              )
+            : null}
           {isOwner
             ? activeItem === "Portada" && (
-              <EditCover setCoverPicture={setCoverPicture} setActiveItem={setActiveItem} />
-            )
+                <EditCover
+                  setCoverPicture={setCoverPicture}
+                  setActiveItem={setActiveItem}
+                />
+              )
             : null}
         </div>
         <div className="w-12/12 order-3 md:order-3 md:w-3/12">
-        <SearchBar search={search} onSearch={setSearch} />
-          {isOwner && <Connections filter="createdAt"/>}          
+          <SearchBar search={search} onSearch={setSearch} />
+          {isOwner && <Connections filter="createdAt" />}
           <Footer />
         </div>
       </div>
