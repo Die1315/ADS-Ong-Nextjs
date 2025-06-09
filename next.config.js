@@ -31,6 +31,11 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'media.licdn.com',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'ads-ong-nextjs.vercel.app',
+        pathname: '/**',
       }
     ]
   },
