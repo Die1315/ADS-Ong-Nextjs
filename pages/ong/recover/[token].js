@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Loading from "../../../components/Loading/loading";
-import { useCurrentState } from "@nextui-org/react";
 import { passwordUpdate } from "../../../service/data-service";
 
 const logo = require("../../../src/images/logo.svg");
@@ -13,7 +12,7 @@ function RecoveryForm() {
   const { token } = router.query;
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useCurrentState();
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
