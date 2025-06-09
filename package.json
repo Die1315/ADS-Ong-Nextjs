@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "engines": {
-    "node": "24.0.1"
+    "node": ">=24.0.0"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
