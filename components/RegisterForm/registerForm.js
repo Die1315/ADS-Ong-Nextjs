@@ -53,7 +53,7 @@ function RegisterForm({ setUpdateProfile, ongToUpdate, setActiveItem }) {
                 if (uploadFile) {
                     uploadCloudinary(formData)
                         .then((response) => {
-                            register({ ...dataRegister, image: response.url })
+                            register({ ...dataRegister, image: response.secure_url })
                                 .then((response) => {
                                     if (response.code === "ERR_BAD_REQUEST") {
                                         setError(response.response.data.message || response.response.data.error);
