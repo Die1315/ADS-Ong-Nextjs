@@ -14,6 +14,8 @@ app
   .prepare()
   .then(() => {
     require('./config/db.config'); 
+    require('./config/cloudinary.config');
+    const socket = require("socket.io");
     const server = express();
     server.use(cookieParser());
     // server.use(express.urlencoded({ extended: true }));
@@ -36,7 +38,7 @@ app
       }
     
       if (error.status >= 500){
-        console.log(error);
+        console.error(error);
       }
     
       const data = {};
@@ -54,10 +56,34 @@ app
     
     })
 
-    server.listen(port, err => {
+    const sr = server.listen(port, err => {
       if (err) throw err;
-      console.log(`> Ready on ${port}`);
+      console.info(`> Ready on ${port}`);
     });
+
+    const io = socket(sr, {
+      cors: {
+        origin: "*",
+        credentials: true,
+      },
+    });
+
+    
+    global.onlineUsers = new Map();
+
+    io.on("connection", (socket) => {
+      global.chatSocket = socket;  
+      socket.on("add-user", (userId) => {   
+        onlineUsers.set(userId, socket.id);
+      });
+      socket.on("send-msg", (data) => {
+        const sendUserSocket = onlineUsers.get(data.to);
+        if (sendUserSocket) {
+          socket.to(sendUserSocket).emit("msg-recieve", data.message);
+        }
+      });
+    });
+    
   })
   .catch(ex => {
     console.error(ex.stack);
