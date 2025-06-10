@@ -37,6 +37,11 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'ads-ong-nextjs.vercel.app',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'ads-ong-nextjs-production.up.railway.app',
+        pathname: '/**',
       }
     ]
   },
