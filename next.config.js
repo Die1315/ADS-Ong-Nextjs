@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  useFileSystemPublicRoutes: false,
+  useFileSystemPublicRoutes: true,
   reactStrictMode: true,
   webpack: config => {
     config.resolve.fallback = {
