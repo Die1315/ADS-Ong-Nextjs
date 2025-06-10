@@ -13,7 +13,6 @@ function Messages() {
     const [currentChat, setCurrentChat] = useState(undefined);
     const [search, setSearch] = useState("");
     const [isViewed, setIsViewed] = useState(false)
-    const host = (process.env.HOST || 'localhost') + ':' + (process.env.PORT || 3000);
     const socket = useRef();
 
     useEffect(() => {
@@ -26,7 +25,13 @@ function Messages() {
 
     useEffect(() => {
         if (currentUser) {
-          socket.current = io(host);
+          // In production, socket.io will automatically connect to the same host
+          // In development, we can specify localhost:3000
+          const socketURL = process.env.NODE_ENV === 'production' 
+            ? 'https://ads-ong-nextjs-production.up.railway.app/' // Let socket.io auto-detect the host
+            : 'http://localhost:3000';
+          
+          socket.current = io(socketURL);
           socket.current.emit("add-user", currentUser.id);
         }
       }, [currentUser]);
