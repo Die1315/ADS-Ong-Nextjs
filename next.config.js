@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
+  useFileSystemPublicRoutes: false,
   reactStrictMode: true,
   webpack: config => {
     config.resolve.fallback = {
@@ -39,8 +40,6 @@ const nextConfig = {
       }
     ]
   },
-    //useFileSystemPublicRoutes: false,
-}
+};
 
-module.exports = nextConfig
-
+module.exports = nextConfig;
